@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Starter App</string>
+    // GENERIC
+    <string name="generic.error.offline">Offline</string>
+    <string name="generic.error.timeout">Timeout</string>
+    <string name="generic.error.unknown">Unknown error</string>
+    <string name="generic.search.hint">Search</string>
+    <string name="hello_world">Hello World</string>
+</resources>

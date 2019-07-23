@@ -1,0 +1,105 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "pl.starter.android"
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "BASE_URL", '"http://test.pl/"'
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+ext {
+    support_version = '28.0.0'
+    dagger_version = '2.16'
+    lifecycle_version = "2.0.0"
+    timber_version = '4.6.1'
+    crashlytics_version = '2.9.4'
+    glide_version = '4.7.1'
+    rx_version = '2.0.2'
+    retrofit_version = '2.4.0'
+    ok_http_version = '3.10.0'
+    leak_cannary_version = '1.6.3'
+    tatarka_version = '3.0.0'
+    mockito_version = '2.18.0'
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation "com.android.support:appcompat-v7:$support_version"
+    implementation "com.android.support:design:$support_version"
+    implementation "com.android.support:customtabs:$support_version"
+    implementation "com.android.support:recyclerview-v7:$support_version"
+    implementation "com.android.support:cardview-v7:$support_version"
+    implementation "com.android.support.constraint:constraint-layout:1.1.3"
+
+    // ARCHITECTURE COMPONENTS
+    implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    // DAGGER - DEPENDENCY INJECTION
+    implementation "com.google.dagger:dagger:$dagger_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    kaptAndroidTest "com.google.dagger:dagger-compiler:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    kaptAndroidTest "com.google.dagger:dagger-android-processor:$dagger_version"
+
+    // RX
+    api "io.reactivex.rxjava2:rxandroid:$rx_version"
+    implementation 'com.jakewharton.rxrelay2:rxrelay:2.0.0'
+
+    // TIMBER
+    implementation "com.jakewharton.timber:timber:$timber_version"
+
+    // NETWORKING - RETROFIT, OKHTTP
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-scalars:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$ok_http_version"
+
+    // IMAGE LOADING - GLIDE
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+    implementation "com.github.bumptech.glide:okhttp3-integration:${glide_version}@aar"
+
+    //VIEW UTILS
+    api 'com.byoutline.secretsauce:secretsaucekt:0.8.0'
+    implementation 'androidx.core:core-ktx:1.0.1'
+
+    // LEAK CANNARY
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_cannary_version"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leak_cannary_version"
+
+    // TATARKA LIST BINDING
+    implementation "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:$tatarka_version"
+    implementation "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:$tatarka_version"
+
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
