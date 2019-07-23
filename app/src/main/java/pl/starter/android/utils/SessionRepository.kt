@@ -4,7 +4,7 @@ import android.content.SharedPreferences
 
 interface SessionRepository {
     fun saveToken(token: String)
-    fun getToken(): String
+    fun getToken(): String?
     fun removeToken()
 }
 
@@ -21,7 +21,7 @@ class SessionRepositoryImpl constructor(private val sharedPreferences: SharedPre
         sharedPreferences.edit().putString(API_TOKEN, token).apply()
     }
 
-    override fun getToken(): String {
-        return sharedPreferences.getString(API_TOKEN, "")
+    override fun getToken(): String? {
+        return sharedPreferences.getString(API_TOKEN, null)
     }
 }

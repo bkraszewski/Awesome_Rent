@@ -41,9 +41,9 @@ open class AppModule(private val app: BaseApp) {
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create()!!
 
-//    @Provides
-//    @Singleton
-//    fun provideTokenInterceptor(sessionsRepository: SessionRepository) = TokenInterceptor(sessionsRepository)
+    @Provides
+    @Singleton
+    fun provideTokenInterceptor(sessionsRepository: SessionRepository) = TokenInterceptor(sessionsRepository)
 
     @Singleton
     @Provides
@@ -100,13 +100,16 @@ open class AppModule(private val app: BaseApp) {
 
 
     @Singleton
+    @Provides
     fun provideSharedPreferences(context: Context) = PreferenceManager.getDefaultSharedPreferences(context)!!
 
 
     @Provides
+    @Singleton
     fun provideStringProvider(context: Context): StringProvider = ContextStringProvider(context)
 
     @Provides
+    @Singleton
     fun provideErrorHandler(stringProvider: StringProvider): ErrorHandler = ErrorHandlerImpl(
         stringProvider
     )

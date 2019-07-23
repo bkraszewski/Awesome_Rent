@@ -6,4 +6,6 @@
     <string name="generic.error.unknown">Unknown error</string>
     <string name="generic.search.hint">Search</string>
     <string name="hello_world">Hello World</string>
+    <string name="login_go_to_register">Register</string>
+    <string name="login_go_to_login">Login</string>
 </resources>

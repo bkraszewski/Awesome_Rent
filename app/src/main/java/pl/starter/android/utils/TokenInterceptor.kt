@@ -9,7 +9,7 @@ class TokenInterceptor(private val sessionsRepository: SessionRepository) : Inte
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
         val token = sessionsRepository.getToken()
-        if (token.isNotEmpty()) {
+        token?.let {
             builder.addHeader(AUTHORIZATION_HEADER, "Token $token")
         }
         return chain.proceed(builder.build())
