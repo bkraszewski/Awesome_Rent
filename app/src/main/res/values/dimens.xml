@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="normal_spacing">16dp</dimen>
+    <dimen name="unit_spacer">1dp</dimen>
+    <dimen name="quarter_spacer">2dp</dimen>
+    <dimen name="half_spacer">4dp</dimen>
+    <dimen name="three_quarter_spacer">6dp</dimen>
+    <dimen name="single_spacer">8dp</dimen>
+    <dimen name="single_quarter_half_spacer">10dp</dimen>
+    <dimen name="single_half_spacer">12dp</dimen>
+    <dimen name="single_quarter_spacer">14dp</dimen>
+    <dimen name="double_spacer">16dp</dimen>
+    <dimen name="double_quarter_spacer">18dp</dimen>
+    <dimen name="double_half_spacer">20dp</dimen>
+    <dimen name="double_half_quarter_spacer">22dp</dimen>
+    <dimen name="triple_spacer">24dp</dimen>
+    <dimen name="triple_half_spacer">28dp</dimen>
+    <dimen name="quadruple_spacer">32dp</dimen>
+    <dimen name="fivefold_spacer">40dp</dimen>
+    <dimen name="sixfold_spacer">48dp</dimen>
+    <dimen name="sevenfold_spacer">56dp</dimen>
+    <dimen name="eight_spacer">64dp</dimen>
+    <dimen name="ninth_spacer">72dp</dimen>
+
+    <dimen name="xsmall_text_size">10sp</dimen>
+    <dimen name="small_text_size">12sp</dimen>
+    <dimen name="normal_text_size">14sp</dimen>
+    <dimen name="large_text_size">16sp</dimen>
+    <dimen name="xlarge_text_size">18sp</dimen>
+    <dimen name="xxlarge_text_size">20sp</dimen>
+    <dimen name="xxxlarge_text_size">22sp</dimen>
+    <dimen name="auth_progress_size">32dp</dimen>
 </resources>

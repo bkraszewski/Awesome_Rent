@@ -1,4 +1,4 @@
-package pl.starter.android.auth
+package pl.starter.android.feature.auth
 
 import android.content.Context
 import android.content.Intent
@@ -8,8 +8,8 @@ import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import pl.starter.android.R
-import pl.starter.android.auth.login.LoginFragment
-import pl.starter.android.auth.register.RegisterFragment
+import pl.starter.android.feature.auth.login.LoginFragment
+import pl.starter.android.feature.auth.register.RegisterFragment
 import pl.starter.android.base.BaseActivity
 import pl.starter.android.databinding.ActivityAuthBinding
 import javax.inject.Inject

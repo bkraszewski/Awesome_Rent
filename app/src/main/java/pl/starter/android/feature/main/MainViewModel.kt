@@ -1,4 +1,4 @@
-package pl.starter.android.main
+package pl.starter.android.feature.main
 
 import androidx.databinding.ObservableField
 import pl.starter.android.R

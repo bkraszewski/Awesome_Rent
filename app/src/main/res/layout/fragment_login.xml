@@ -7,24 +7,84 @@
 
         <variable
             name="viewModel"
-            type="pl.starter.android.auth.login.LoginViewModel" />
+            type="pl.starter.android.feature.auth.login.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:padding="@dimen/single_spacer"
         android:layout_height="match_parent"
         android:background="#0f0">
 
         <TextView
             android:layout_width="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/normal_spacing"
-            android:layout_marginEnd="@dimen/normal_spacing"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/double_spacer"
+            android:layout_marginEnd="@dimen/double_spacer"
             android:onClick="@{() -> viewModel.onRegisterRequested()}"
-            app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/login_go_to_register"
-            android:layout_height="wrap_content" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loginEmailTL"
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:error="@{viewModel.loginError}"
+            android:layout_marginBottom="@dimen/double_spacer"
+            app:layout_constraintBottom_toTopOf="@+id/loginPasswordTL">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/TextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@={viewModel.login}"
+                android:hint="@string/login_email" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/loginPasswordTL"
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:error="@{viewModel.passwordError}"
+            android:layout_marginBottom="@dimen/double_spacer"
+            app:layout_constraintBottom_toTopOf="@+id/loginButton">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/TextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:text="@={viewModel.password}"
+                android:hint="@string/login_password" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/loginButton"
+            style="@style/Button"
+            android:enabled="@{!viewModel.inProgress}"
+            android:layout_width="match_parent"
+            android:onClick="@{()-> viewModel.onLogin()}"
+            android:layout_height="wrap_content"
+            android:text="@string/login_login_action"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <ProgressBar
+            android:layout_width="@dimen/auth_progress_size"
+            app:layout_constraintStart_toStartOf="@+id/loginButton"
+            android:elevation="@dimen/double_spacer"
+            android:layout_marginTop="@dimen/half_spacer"
+            app:visible="@{viewModel.inProgress}"
+            android:layout_marginStart="@dimen/half_spacer"
+            android:layout_marginBottom="@dimen/half_spacer"
+            app:layout_constraintTop_toTopOf="@+id/loginButton"
+            app:layout_constraintBottom_toBottomOf="@+id/loginButton"
+            android:layout_height="@dimen/auth_progress_size" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

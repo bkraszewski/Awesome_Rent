@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="pl.starter.android.splash.SplashActivity">
+        <activity android:name="pl.starter.android.feature.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,8 +20,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".main.MainActivity" />
-        <activity android:name=".auth.AuthActivity"  />
+        <activity android:name="pl.starter.android.feature.main.MainActivity" />
+        <activity android:name="pl.starter.android.feature.auth.AuthActivity"  />
     </application>
 
 </manifest>

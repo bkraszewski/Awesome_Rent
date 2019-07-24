@@ -1,4 +1,4 @@
-package pl.starter.android.splash
+package pl.starter.android.feature.splash
 
 import pl.starter.android.base.BaseView
 import pl.starter.android.base.BaseViewModel

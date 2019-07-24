@@ -1,9 +1,9 @@
-package pl.starter.android.auth.register
+package pl.starter.android.feature.auth.register
 
 import android.os.Bundle
 import android.view.View
 import pl.starter.android.R
-import pl.starter.android.auth.AuthNavListener
+import pl.starter.android.feature.auth.AuthNavListener
 import pl.starter.android.base.BaseFragment
 import pl.starter.android.databinding.FragmentRegisterBinding
 

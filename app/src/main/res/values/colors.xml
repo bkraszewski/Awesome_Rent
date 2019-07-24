@@ -3,4 +3,24 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="gold">#CEA600</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#222222</color>
+    <color name="grey">#777F85</color>
+    <color name="bg_grey">#F3F3F3</color>
+    <color name="bg_nav_icons">#B2B2B2</color>
+    <color name="bg_btn_grey">#66222222</color>
+    <color name="grey_2">#f2f2f2</color>
+    <color name="red">#DB2828</color>
+
+    <color name="text_black">#222222</color>
+    <color name="text_grey">#777F85</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_green">#4CAF50</color>
+    <color name="text_burgundy">#810B3B</color>
+    <color name="text_red">@color/red</color>
+    <color name="text_red_2">#D32536</color>
+    <color name="text_gold">@color/gold</color>
+
 </resources>

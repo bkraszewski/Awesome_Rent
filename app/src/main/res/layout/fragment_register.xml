@@ -7,23 +7,81 @@
 
         <variable
             name="viewModel"
-            type="pl.starter.android.auth.register.RegisterViewModel" />
+            type="pl.starter.android.feature.auth.register.RegisterViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
+        android:padding="@dimen/single_spacer"
         android:layout_height="match_parent"
         android:background="#00f">
 
         <TextView
             android:layout_width="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/normal_spacing"
-            android:layout_marginEnd="@dimen/normal_spacing"
+            android:layout_marginTop="@dimen/double_spacer"
+            android:layout_marginEnd="@dimen/double_spacer"
             android:onClick="@{() -> viewModel.onLoginRequested()}"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/login_go_to_login"
             android:layout_height="wrap_content" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerEmailTL"
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/double_spacer"
+            app:layout_constraintBottom_toTopOf="@+id/registerPasswordTL">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/TextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/register_email" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerPasswordTL"
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/double_spacer"
+            app:layout_constraintBottom_toTopOf="@+id/registerRepeatPasswordTL">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/TextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/register_password" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/registerRepeatPasswordTL"
+            style="@style/TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/double_spacer"
+            app:layout_constraintBottom_toTopOf="@+id/registerButton">
+
+            <com.google.android.material.textfield.TextInputEditText
+                style="@style/TextInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/register_password_repeat" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/registerButton"
+            style="@style/Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/register_register_action"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

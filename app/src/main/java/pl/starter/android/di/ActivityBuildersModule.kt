@@ -3,9 +3,9 @@ package pl.starter.android.di
 
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
-import pl.starter.android.auth.AuthActivity
-import pl.starter.android.main.MainActivity
-import pl.starter.android.splash.SplashActivity
+import pl.starter.android.feature.auth.AuthActivity
+import pl.starter.android.feature.main.MainActivity
+import pl.starter.android.feature.splash.SplashActivity
 
 @Module
 abstract class ActivityBuildersModule {

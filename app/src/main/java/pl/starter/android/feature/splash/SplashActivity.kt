@@ -1,11 +1,10 @@
-package pl.starter.android.splash
+package pl.starter.android.feature.splash
 
 import android.os.Bundle
 import pl.starter.android.R
-import pl.starter.android.auth.AuthActivity
+import pl.starter.android.feature.auth.AuthActivity
 import pl.starter.android.base.BaseActivity
 import pl.starter.android.databinding.ActivitySplashBinding
-import pl.starter.android.main.MainActivity
 
 class SplashActivity : BaseActivity<SplashView, SplashViewModel, ActivitySplashBinding>(), SplashView {
     override fun navigateToMain() {

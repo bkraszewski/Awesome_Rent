@@ -8,4 +8,14 @@
     <string name="hello_world">Hello World</string>
     <string name="login_go_to_register">Register</string>
     <string name="login_go_to_login">Login</string>
+    <string name="login_login_action">Login</string>
+    <string name="login_password">Password</string>
+    <string name="login_email">E-mail</string>
+    <string name="register_register_action">Register</string>
+    <string name="register_password">Password</string>
+    <string name="register_password_repeat">Repeat Password</string>
+    <string name="register_email">E-mail</string>
+    <string name="login_not_valid">E-mail is not valid</string>
+    <string name="login_password_not_valid">Password can\'t be empty</string>
+    <string name="login_error_server_side">Oops, something went wrong!</string>
 </resources>

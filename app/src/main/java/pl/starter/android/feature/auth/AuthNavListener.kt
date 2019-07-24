@@ -1,4 +1,4 @@
-package pl.starter.android.auth
+package pl.starter.android.feature.auth
 
 import pl.starter.android.base.BaseView
 

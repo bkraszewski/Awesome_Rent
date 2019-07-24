@@ -1,4 +1,4 @@
-package pl.starter.android.splash
+package pl.starter.android.feature.splash
 
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock

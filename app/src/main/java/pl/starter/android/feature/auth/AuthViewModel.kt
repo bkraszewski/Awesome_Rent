@@ -1,7 +1,5 @@
-package pl.starter.android.auth
+package pl.starter.android.feature.auth
 
-import androidx.databinding.ObservableField
-import pl.starter.android.R
 import pl.starter.android.base.BaseView
 import pl.starter.android.base.BaseViewModel
 import pl.starter.android.utils.StringProvider

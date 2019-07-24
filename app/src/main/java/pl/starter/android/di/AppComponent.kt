@@ -14,7 +14,7 @@ import javax.inject.Singleton
         ViewModelModule::class,
         UseCaseProvidersModule::class,
         RepositoryProvidersModule::class,
-        ManagerProviderModule::class,
+        ServiceProviderModule::class,
         AndroidSupportInjectionModule::class
     )
 )
