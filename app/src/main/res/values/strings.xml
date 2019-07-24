@@ -18,4 +18,8 @@
     <string name="login_not_valid">E-mail is not valid</string>
     <string name="login_password_not_valid">Password can\'t be empty</string>
     <string name="login_error_server_side">Oops, something went wrong!</string>
+    <string name="register_email_not_valid">E-mail not valid</string>
+    <string name="register_password_not_valid">Password is not valid</string>
+    <string name="register_passwords_are_not_same">Typed passwords are different!</string>
+    <string name="register_error_server_side">Ops, something wrong happened!</string>
 </resources>

@@ -4,6 +4,9 @@ import androidx.databinding.ObservableField
 import pl.starter.android.R
 import pl.starter.android.base.BaseView
 import pl.starter.android.base.BaseViewModel
+import pl.starter.android.feature.auth.EMAIL_REGEX
+import pl.starter.android.feature.auth.isEmailInvalid
+import pl.starter.android.feature.auth.isStringBlank
 import pl.starter.android.service.ApiRepository
 import pl.starter.android.utils.BaseSchedulers
 import pl.starter.android.utils.StringProvider
@@ -27,15 +30,6 @@ class LoginViewModel @Inject constructor(
     val loginError: ObservableField<String> = ObservableField("")
     val passwordError: ObservableField<String> = ObservableField("")
 
-    private val emailRegex = compile(
-        "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
-            "\\@" +
-            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
-            "(" +
-            "\\." +
-            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
-            ")+"
-    )
 
     override fun onAttach(view: LoginView) {
         super.onAttach(view)
@@ -90,11 +84,5 @@ class LoginViewModel @Inject constructor(
 
     }
 
-    private fun isEmailInvalid(email: String?): Boolean {
-        return !emailRegex.matcher(email).matches()
-    }
 
-    private fun isStringBlank(email: String?): Boolean {
-        return email?.isBlank() ?: true
-    }
 }

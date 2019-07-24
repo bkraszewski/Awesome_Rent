@@ -6,8 +6,10 @@ import pl.starter.android.R
 import pl.starter.android.feature.auth.AuthNavListener
 import pl.starter.android.base.BaseFragment
 import pl.starter.android.databinding.FragmentRegisterBinding
+import pl.starter.android.feature.main.MainActivity
 
 class RegisterFragment : BaseFragment<RegisterView, RegisterViewModel, FragmentRegisterBinding>(R.layout.fragment_register), RegisterView {
+
 
     var listener: AuthNavListener? = null
 
@@ -24,6 +26,10 @@ class RegisterFragment : BaseFragment<RegisterView, RegisterViewModel, FragmentR
     override fun onDestroyView() {
         listener = null
         super.onDestroyView()
+    }
+
+    override fun navigateToMain() {
+        MainActivity.start(requireContext())
     }
 
     companion object {

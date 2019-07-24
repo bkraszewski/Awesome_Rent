@@ -31,6 +31,7 @@
             style="@style/TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:error="@{viewModel.emailError}"
             android:layout_marginBottom="@dimen/double_spacer"
             app:layout_constraintBottom_toTopOf="@+id/registerPasswordTL">
 
@@ -38,6 +39,7 @@
                 style="@style/TextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@={viewModel.email}"
                 android:hint="@string/register_email" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -46,6 +48,7 @@
             android:id="@+id/registerPasswordTL"
             style="@style/TextInputLayout"
             android:layout_width="match_parent"
+            android:error="@{viewModel.passwordError}"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/double_spacer"
             app:layout_constraintBottom_toTopOf="@+id/registerRepeatPasswordTL">
@@ -53,6 +56,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/TextInputEditText"
                 android:layout_width="match_parent"
+                android:text="@={viewModel.password}"
                 android:layout_height="wrap_content"
                 android:hint="@string/register_password" />
 
@@ -69,6 +73,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/TextInputEditText"
                 android:layout_width="match_parent"
+                android:text="@={viewModel.repeatPassword}"
                 android:layout_height="wrap_content"
                 android:hint="@string/register_password_repeat" />
 
@@ -78,10 +83,24 @@
         <Button
             android:id="@+id/registerButton"
             style="@style/Button"
+            android:enabled="@{!viewModel.inProgress}"
+            android:onClick="@{()-> viewModel.onRegister()}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/register_register_action"
             app:layout_constraintBottom_toBottomOf="parent" />
+
+        <ProgressBar
+            android:layout_width="@dimen/auth_progress_size"
+            app:layout_constraintStart_toStartOf="@+id/registerButton"
+            android:elevation="@dimen/double_spacer"
+            android:layout_marginTop="@dimen/half_spacer"
+            app:visible="@{viewModel.inProgress}"
+            android:layout_marginStart="@dimen/half_spacer"
+            android:layout_marginBottom="@dimen/half_spacer"
+            app:layout_constraintTop_toTopOf="@+id/registerButton"
+            app:layout_constraintBottom_toBottomOf="@+id/registerButton"
+            android:layout_height="@dimen/auth_progress_size" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
