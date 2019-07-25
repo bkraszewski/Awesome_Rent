@@ -5,11 +5,12 @@ import pl.starter.android.R
 import pl.starter.android.feature.auth.AuthActivity
 import pl.starter.android.base.BaseActivity
 import pl.starter.android.databinding.ActivitySplashBinding
+import pl.starter.android.feature.main.MainActivity
 
 class SplashActivity : BaseActivity<SplashView, SplashViewModel, ActivitySplashBinding>(), SplashView {
     override fun navigateToMain() {
         finish()
-//        MainActivity.start(this)
+        MainActivity.start(this)
     }
 
     override fun navigateToAuth() {
