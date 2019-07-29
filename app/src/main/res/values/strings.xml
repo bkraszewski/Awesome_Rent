@@ -29,4 +29,6 @@
     <string name="profile_save_action">Save</string>
     <string name="profile_email">E-mail</string>
     <string name="profile_changed">Profile Saved</string>
+    <string name="explore_list">List</string>
+    <string name="explore_map">Map</string>
 </resources>

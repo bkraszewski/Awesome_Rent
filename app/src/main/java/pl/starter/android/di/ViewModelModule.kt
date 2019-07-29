@@ -9,6 +9,9 @@ import dagger.multibindings.IntoMap
 import pl.starter.android.feature.auth.AuthViewModel
 import pl.starter.android.feature.auth.login.LoginViewModel
 import pl.starter.android.feature.auth.register.RegisterViewModel
+import pl.starter.android.feature.explore.ExploreViewModel
+import pl.starter.android.feature.explore.list.RentListViewModel
+import pl.starter.android.feature.explore.map.RentMapViewModel
 
 import pl.starter.android.feature.main.MainViewModel
 import pl.starter.android.feature.profile.ProfileViewModel
@@ -48,5 +51,20 @@ internal abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(ProfileViewModel::class)
     abstract fun bindProfileViewModel(viewModel: ProfileViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ExploreViewModel::class)
+    abstract fun bindExploreViewModel(viewModel: ExploreViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RentListViewModel::class)
+    abstract fun bindRentListViewModel(viewModel: RentListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(RentMapViewModel::class)
+    abstract fun bindRentMapViewModel(viewModel: RentMapViewModel): ViewModel
 
 }

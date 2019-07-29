@@ -14,6 +14,7 @@ import pl.starter.android.base.BaseActivity
 import pl.starter.android.databinding.ActivityMainBinding
 import pl.starter.android.feature.auth.login.LoginFragment
 import pl.starter.android.feature.auth.register.RegisterFragment
+import pl.starter.android.feature.explore.ExploreFragment
 import pl.starter.android.feature.profile.ProfileFragment
 
 class MainActivity : BaseActivity<MainView, MainViewModel, ActivityMainBinding>(), MainView {
@@ -38,7 +39,7 @@ class MainActivity : BaseActivity<MainView, MainViewModel, ActivityMainBinding>(
         val fragmentList = mutableListOf<Fragment>()
         val menuItems = mutableListOf<Int>()
 
-        fragmentList.add(LoginFragment())
+        fragmentList.add(ExploreFragment())
         menuItems.add(R.id.navigation_explore)
 
         if (realtorTabVisible) {
