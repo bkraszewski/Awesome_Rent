@@ -53,7 +53,9 @@ class RentMapViewModel @Inject constructor(
             builder.include(latLng)
         }
 
-        it.second.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 0))
+        if(it.first.isNotEmpty()) {
+            it.second.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 0))
+        }
     }
 
 

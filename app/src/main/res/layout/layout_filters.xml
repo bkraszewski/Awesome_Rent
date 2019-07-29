@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <import type="pl.starter.android.R" />
+        <import type="androidx.databinding.ObservableBoolean" />
 
         <variable
             name="viewModel"
@@ -14,6 +16,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/filtersPanel"
         android:elevation="8dp"
+        android:padding="@dimen/double_spacer"
         android:visibility="invisible"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -28,6 +31,110 @@
             android:src="@drawable/ic_close_black_24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            tools:background="@color/red"
+            tools:text="Size"
+            android:text="@{viewModel.sizeFilterLabel}"
+            android:id="@+id/sizeFilterLabel"
+            android:layout_height="wrap_content" />
+
+        <io.apptik.widget.MultiSlider
+            android:id="@+id/sizeRangeSlider"
+            android:layout_width="match_parent"
+            tools:background="@color/red"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="@dimen/double_spacer"
+            android:layout_marginEnd="8dp"
+            app:drawThumbsApart="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sizeFilterLabel"
+            app:stepsThumbsApart="1"
+            app:thumbNumber="2" />
+
+        <TextView
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/sizeRangeSlider"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:text="@{viewModel.priceFilterLabel}"
+        tools:text="Price"
+        android:id="@+id/priceFilterLabel"
+        android:layout_height="wrap_content" />
+
+        <io.apptik.widget.MultiSlider
+            android:id="@+id/priceRangeSlider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:drawThumbsApart="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/priceFilterLabel"
+            app:stepsThumbsApart="1"
+            android:layout_marginTop="@dimen/double_spacer"
+            app:thumbNumber="2" />
+
+        <TextView
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/priceRangeSlider"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="?attr/actionBarSize"
+            android:text="@{viewModel.roomsFilterLabel}"
+            tools:text="Price"
+            android:id="@+id/roomsFilterLabel"
+            android:layout_height="wrap_content" />
+
+        <io.apptik.widget.MultiSlider
+            android:id="@+id/roomsRangeSlider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:drawThumbsApart="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/roomsFilterLabel"
+            app:stepsThumbsApart="0"
+            android:layout_marginTop="@dimen/double_spacer"
+            app:thumbNumber="2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            app:visible="@{viewModel.showStatusFilter}"
+            app:layout_constraintTop_toBottomOf="@+id/roomsRangeSlider"
+            android:layout_marginTop="@dimen/double_spacer"
+            android:layout_height="wrap_content">
+
+            <Switch
+                android:layout_width="match_parent"
+                android:id="@+id/switchShowAvailable"
+                android:checked="@{viewModel.showAvailableFilter}"
+                android:onClick="@{() -> viewModel.onToggleValue(viewModel.showAvailableFilter)}"
+                android:text="@string/filter_show_available"
+                android:layout_height="wrap_content" />
+
+            <Switch
+                android:layout_width="match_parent"
+                android:id="@+id/switchShowRented"
+                android:checked="@{viewModel.showRentedFilter}"
+                android:onClick="@{() -> viewModel.onToggleValue(viewModel.showRentedFilter)}"
+                android:text="@string/filter_show_rented"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            style="@style/Button"
+            android:onClick="@{() -> viewModel.onApplyFilters()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/filter_apply"
+            android:layout_height="wrap_content" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

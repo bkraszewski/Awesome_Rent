@@ -5,11 +5,14 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.TranslateAnimation
 import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableField
+import androidx.databinding.ObservableInt
 import androidx.databinding.ObservableList
 import androidx.databinding.ObservableList.OnListChangedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import io.apptik.widget.MultiSlider
 import kotlinx.android.synthetic.main.fragment_explore.*
 import kotlinx.android.synthetic.main.layout_filters.*
 import pl.starter.android.R
@@ -109,6 +112,32 @@ class ExploreFragment : BaseFragment<ExploreView, ExploreViewModel,
 
         setupTabbedUi()
         viewModel.apartments.addOnListChangedCallback(apartmentsChangedCallback)
+        setupFilterListeners()
+        viewModel.onSizeFiltersChanged()
+    }
+
+    private fun setupFilterListeners() {
+        setupRangeSlider(priceRangeSlider, viewModel.minPrice, viewModel.maxPrice) {viewModel.onPriceFiltersChanged()}
+        setupRangeSlider(sizeRangeSlider, viewModel.minSize, viewModel.maxSize) {viewModel.onSizeFiltersChanged()}
+        setupRangeSlider(roomsRangeSlider, viewModel.minRooms, viewModel.maxRooms) {viewModel.onRoomsFilterChanged()}
+    }
+
+    private fun setupRangeSlider(slider: MultiSlider, minValue: ObservableInt, maxValue: ObservableInt, onChangeAction: (()-> Unit)){
+
+        slider.min = minValue.get()
+        slider.max = maxValue.get()
+        slider.getThumb(0).value = minValue.get()
+        slider.getThumb(1).value = maxValue.get()
+        onChangeAction()
+
+        slider.setOnThumbValueChangeListener { multiSlider, thumb, thumbIndex, value ->
+            if(thumbIndex == 0){
+                minValue.set(value)
+            }else{
+                maxValue.set(value)
+            }
+            onChangeAction()
+        }
     }
 
     override fun onDestroyView() {

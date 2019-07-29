@@ -39,5 +39,12 @@
     <string name="explore_apartment_price">$%s/mo</string>
     <string name="explore_apartment_available">Available</string>
     <string name="explore_apartment_rented">Rented</string>
+    <string name="filter_size">Size (%s - %s)m²</string>
+    <string name="filter_price">Price $(%s - %s)/monthly</string>
+    <string name="filter_rooms">Rooms (%s - %s)</string>
+
+    <string name="filter_show_rented">Show rented</string>
+    <string name="filter_show_available">Show available</string>
+    <string name="filter_apply">Apply filters</string>
 
 </resources>

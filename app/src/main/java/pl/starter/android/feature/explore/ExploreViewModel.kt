@@ -1,6 +1,7 @@
 package pl.starter.android.feature.explore
 
 import androidx.databinding.ObservableArrayList
+import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import io.reactivex.Observable
@@ -37,10 +38,27 @@ class ExploreViewModel @Inject constructor(
 
     val apartments = ObservableArrayList<ApartmentRowItem>()
 
+    val minSize = ObservableInt(0)
+    val maxSize = ObservableInt(400)
+    val sizeFilterLabel = ObservableField("")
+
+    val minPrice = ObservableInt(0)
+    val maxPrice = ObservableInt(9999)
+    val priceFilterLabel = ObservableField("")
+
+    val minRooms = ObservableInt(1)
+    val maxRooms = ObservableInt(10)
+    val roomsFilterLabel = ObservableField("")
+
+    val showStatusFilter = ObservableBoolean(true)
+    val showAvailableFilter = ObservableBoolean(true)
+    val showRentedFilter = ObservableBoolean(false)
+
     override fun onAttach(view: ExploreView) {
         super.onAttach(view)
 
         val user = userRepository.getUser()
+        showStatusFilter.set(user.role != Role.USER)
 
         getApartments(user, view)
     }
@@ -78,5 +96,26 @@ class ExploreViewModel @Inject constructor(
 
     fun onCloseFilters(){
         view?.hideFilters()
+    }
+
+    fun onSizeFiltersChanged(){
+        sizeFilterLabel.set(String.format(stringProvider.getString(R.string.filter_size), minSize.get().toString(), maxSize.get().toString()))
+    }
+
+    fun onPriceFiltersChanged(){
+        priceFilterLabel.set(String.format(stringProvider.getString(R.string.filter_price), minPrice.get().toString(), maxPrice.get().toString()))
+    }
+
+    fun onRoomsFilterChanged() {
+        roomsFilterLabel.set(String.format(stringProvider.getString(R.string.filter_rooms), minRooms.get().toString(), maxRooms.get().toString()))
+    }
+
+    fun onToggleValue(value: ObservableBoolean){
+        value.set(!value.get())
+    }
+
+    fun onApplyFilters(){
+        view?.hideFilters()
+        //todo update filter params
     }
 }
