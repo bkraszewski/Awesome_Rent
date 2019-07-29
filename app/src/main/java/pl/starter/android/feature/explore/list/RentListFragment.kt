@@ -13,9 +13,5 @@ class RentListFragment : BaseFragment<RentListView, RentListViewModel,
         setup(this, RentListViewModel::class.java)
     }
 
-    override fun onResume() {
-        super.onResume()
 
-
-    }
 }

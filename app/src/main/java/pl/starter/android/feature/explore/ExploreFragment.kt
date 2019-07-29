@@ -22,11 +22,11 @@ class ExploreFragment : BaseFragment<ExploreView, ExploreViewModel,
     override fun showFilters() {
 
         val animate = TranslateAnimation(
-            0f, // fromXDelta
-            0f, // toXDelta
-            filtersPanel.height.toFloat(), // fromYDelta
-            0f)                // toYDelta
-        animate.duration = 500
+            0f,
+            0f,
+            filtersPanel.height.toFloat(),
+            0f)
+        animate.duration = 250
         animate.fillAfter = true
         animate.fillBefore = true
         animate.isFillEnabled = true
@@ -47,12 +47,11 @@ class ExploreFragment : BaseFragment<ExploreView, ExploreViewModel,
 
     override fun hideFilters() {
         val animate = TranslateAnimation(
-            0f, // fromXDelta
-            0f, // toXDelta
-            0f, // fromYDelta
-            filtersPanel.height.toFloat())                // toYDelta
-        animate.duration = 500
-//        animate.fillAfter = true
+            0f,
+            0f,
+            0f,
+            filtersPanel.height.toFloat())
+        animate.duration = 250
         animate.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationRepeat(animation: Animation?) {
             }
@@ -90,27 +89,27 @@ class ExploreFragment : BaseFragment<ExploreView, ExploreViewModel,
         tabLayout.setupWithViewPager(explorePager)
     }
 
+}
 
-    class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
-        private val fragmentTitleList = ArrayList<String>()
-        private val fragmentList = ArrayList<Fragment>()
+    private val fragmentTitleList = ArrayList<String>()
+    private val fragmentList = ArrayList<Fragment>()
 
-        override fun getItem(position: Int): Fragment {
-            return fragmentList[position]
-        }
+    override fun getItem(position: Int): Fragment {
+        return fragmentList[position]
+    }
 
-        override fun getCount(): Int {
-            return fragmentList.size
-        }
+    override fun getCount(): Int {
+        return fragmentList.size
+    }
 
-        override fun getPageTitle(position: Int): CharSequence? {
-            return fragmentTitleList[position]
-        }
+    override fun getPageTitle(position: Int): CharSequence? {
+        return fragmentTitleList[position]
+    }
 
-        fun addFragment(fragment: Fragment, title: String) {
-            fragmentList.add(fragment)
-            fragmentTitleList.add(title)
-        }
+    fun addFragment(fragment: Fragment, title: String) {
+        fragmentList.add(fragment)
+        fragmentTitleList.add(title)
     }
 }

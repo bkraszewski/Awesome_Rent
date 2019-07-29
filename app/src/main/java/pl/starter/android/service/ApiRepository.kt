@@ -6,12 +6,16 @@ import pl.starter.android.utils.SessionRepository
 interface ApiRepository {
     fun login(email:String, password: String): Single<AuthReponse>
     fun register(email: String, password: String): Single<AuthReponse>
+
+    fun getApartments():Single<List<Apartment>>
 }
 
 class ApiRepositoryImpl(
     private val apiService: ApiService,
     private val userRepository: UserRepository,
     private val sessionRepository: SessionRepository) : ApiRepository{
+
+
 
     override fun register(email: String, password: String): Single<AuthReponse> {
         return apiService.register(RegisterRequest(email, password)).doOnSuccess {
@@ -25,6 +29,10 @@ class ApiRepositoryImpl(
             userRepository.update(it.user)
             sessionRepository.saveToken(it.token)
         }
+    }
+
+    override fun getApartments(): Single<List<Apartment>> {
+        return apiService.getApartments()
     }
 
 }

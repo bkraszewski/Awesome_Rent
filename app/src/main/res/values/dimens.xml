@@ -30,4 +30,6 @@
     <dimen name="xxxlarge_text_size">22sp</dimen>
     <dimen name="auth_progress_size">32dp</dimen>
     <dimen name="clickable_area">48dp</dimen>
+    <dimen name="image_thumb_min">80dp</dimen>
+    <dimen name="image_thumb_max">130dp</dimen>
 </resources>

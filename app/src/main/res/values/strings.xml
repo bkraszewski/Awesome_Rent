@@ -32,4 +32,5 @@
     <string name="explore_list">List</string>
     <string name="explore_map">Map</string>
     <string name="explore_show_filters">Filters</string>
+    <string name="common_general_error">Oops, something went wrong!</string>
 </resources>
