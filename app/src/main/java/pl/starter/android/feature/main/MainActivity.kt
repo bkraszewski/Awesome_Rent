@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -26,9 +27,7 @@ class MainActivity : BaseActivity<MainView, MainViewModel, ActivityMainBinding>(
     }
 
     override fun setupTabView(realtorTabVisible: Boolean, adminTabVisible: Boolean) {
-        setupBottomMenu()
         setupFragments(realtorTabVisible, adminTabVisible)
-
     }
 
     private fun setupFragments(realtorTabVisible: Boolean, adminTabVisible: Boolean) {
@@ -74,9 +73,6 @@ class MainActivity : BaseActivity<MainView, MainViewModel, ActivityMainBinding>(
         bottomNavigation.labelVisibilityMode = BottomNavigationView.VISIBLE
     }
 
-    private fun setupBottomMenu() {
-
-    }
 
     companion object {
         fun start(context: Context) {

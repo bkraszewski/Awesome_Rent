@@ -1,5 +1,6 @@
 package pl.starter.android.service
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -28,13 +29,14 @@ class UserRepositoryImpl (
 //            Role.ADMIN)
     }
 
+    @SuppressLint("ApplySharedPref")
     override fun update(user: User) {
         sharedPreferences.edit().apply{
             putLong(USER_ID, user.id)
             putString(USER_EMAIL, user.email)
             putString(USER_ROLE, user.role.toString()
             )
-        }.apply()
+        }.commit()
         subject.onNext(user)
 
     }

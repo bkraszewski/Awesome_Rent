@@ -36,6 +36,8 @@
 
     <string name="explore_apartment_area">Area: %s m²</string>
     <string name="explore_apartment_rooms">Rooms: %s</string>
-    <string name="explore_apartment_price">$%s</string>
+    <string name="explore_apartment_price">$%s/mo</string>
+    <string name="explore_apartment_available">Available</string>
+    <string name="explore_apartment_rented">Rented</string>
 
 </resources>

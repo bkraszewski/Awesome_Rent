@@ -17,10 +17,13 @@
     <color name="text_black">#222222</color>
     <color name="text_grey">#777F85</color>
     <color name="text_white">#FFFFFF</color>
-    <color name="text_green">#4CAF50</color>
+    <color name="text_green">#1B5E20</color>
     <color name="text_burgundy">#810B3B</color>
     <color name="text_red">@color/red</color>
     <color name="text_red_2">#D32536</color>
     <color name="text_gold">@color/gold</color>
+
+    <color name="status_available">#FF1B5E20</color>
+    <color name="status_rented">#B71C1C</color>
 
 </resources>

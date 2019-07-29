@@ -7,7 +7,7 @@
     <data>
 
         <import type="pl.starter.android.feature.explore.list.ApartmentRowItem" />
-
+        <import type="android.view.View"/>
         <variable
             name="apartment"
             type="ApartmentRowItem" />
@@ -38,13 +38,35 @@
             <TextView
                 android:id="@+id/apartmentName"
                 style="@style/TextNormal.Black.Bold"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="start"
+                android:paddingEnd="@dimen/apartment_status_width"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/half_spacer"
                 android:text="@{apartment.apartment.name}"
                 app:layout_constraintStart_toEndOf="@+id/apartmentImage"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Awesome Apartment" />
+
+            <TextView
+                android:id="@+id/apartmentStatus"
+                style="@style/TextSmall.White"
+                android:layout_width="@dimen/apartment_status_width"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/single_spacer"
+                android:padding="@dimen/half_spacer"
+                app:visible="@{apartment.showStatus}"
+                android:backgroundTint="@{apartment.canRent ? @color/status_available : @color/status_rented}"
+                android:layout_marginEnd="@dimen/single_spacer"
+                tools:backgroundTint="@color/status_available"
+                android:maxWidth="@dimen/apartment_status_width"
+                android:background="@drawable/apartment_status_bg"
+                android:layout_height="wrap_content"
+                android:text="@{apartment.canRent ? @string/explore_apartment_available : @string/explore_apartment_rented}"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Available" />
 
             <TextView
                 android:id="@+id/apartmentDescription"

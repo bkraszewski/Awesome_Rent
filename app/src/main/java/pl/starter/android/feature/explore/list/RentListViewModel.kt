@@ -8,6 +8,8 @@ import pl.starter.android.R
 import pl.starter.android.base.BaseView
 import pl.starter.android.base.BaseViewModel
 import pl.starter.android.service.ApiRepository
+import pl.starter.android.service.Role
+import pl.starter.android.service.User
 import pl.starter.android.service.UserRepository
 import pl.starter.android.utils.BaseSchedulers
 import pl.starter.android.utils.StringProvider
@@ -31,6 +33,13 @@ class RentListViewModel @Inject constructor(
     override fun onAttach(view: RentListView) {
         super.onAttach(view)
 
+        val user = userRepository.getUser()
+
+        getApartments(user, view)
+
+    }
+
+    private fun getApartments(user: User, view: RentListView) {
         val priceFormat = stringProvider.getString(R.string.explore_apartment_price)
         val areaFormat = stringProvider.getString(R.string.explore_apartment_area)
         val roomsFormat = stringProvider.getString(R.string.explore_apartment_rooms)
@@ -42,7 +51,8 @@ class RentListViewModel @Inject constructor(
             .map {
                 ApartmentRowItem(it, priceLabel = String.format(priceFormat, it.pricePerMonth.toString()),
                     areaLabel = String.format(areaFormat, it.floorAreaSize.toString()),
-                    roomsLabel = String.format(roomsFormat, it.rooms.toString()))
+                    roomsLabel = String.format(roomsFormat, it.rooms.toString()),
+                    showStatus = user.role == Role.REALTOR || user.role == Role.ADMIN)
             }
             .toList()
             .subscribe { items, error ->
@@ -50,10 +60,9 @@ class RentListViewModel @Inject constructor(
                     view.showMessage(stringProvider.getString(R.string.common_general_error))
                     return@subscribe
                 }
-
+                apartments.clear()
                 apartments.addAll(items)
             }.disposeOnDetach()
-
     }
 
 
