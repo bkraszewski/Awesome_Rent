@@ -14,6 +14,7 @@ class SplashActivity : BaseActivity<SplashView, SplashViewModel, ActivitySplashB
     }
 
     override fun navigateToAuth() {
+        finish()
         AuthActivity.start(this)
     }
 

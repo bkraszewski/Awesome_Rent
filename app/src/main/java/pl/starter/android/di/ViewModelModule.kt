@@ -11,6 +11,7 @@ import pl.starter.android.feature.auth.login.LoginViewModel
 import pl.starter.android.feature.auth.register.RegisterViewModel
 
 import pl.starter.android.feature.main.MainViewModel
+import pl.starter.android.feature.profile.ProfileViewModel
 import pl.starter.android.feature.splash.SplashViewModel
 
 @Module
@@ -43,5 +44,9 @@ internal abstract class ViewModelModule {
     @ViewModelKey(RegisterViewModel::class)
     abstract fun bindRegisterViewModel(viewModel: RegisterViewModel): ViewModel
 
+    @Binds
+    @IntoMap
+    @ViewModelKey(ProfileViewModel::class)
+    abstract fun bindProfileViewModel(viewModel: ProfileViewModel): ViewModel
 
 }

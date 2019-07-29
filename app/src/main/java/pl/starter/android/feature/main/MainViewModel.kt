@@ -1,23 +1,33 @@
 package pl.starter.android.feature.main
 
-import androidx.databinding.ObservableField
-import pl.starter.android.R
+import androidx.databinding.ObservableInt
 import pl.starter.android.base.BaseView
 import pl.starter.android.base.BaseViewModel
-import pl.starter.android.utils.StringProvider
+import pl.starter.android.service.Role
+import pl.starter.android.service.UserRepository
 import javax.inject.Inject
 
-interface MainView : BaseView
+interface MainView : BaseView {
+    fun setupTabView(showClients: Boolean,
+                     showRealtors: Boolean)
+}
 
 class MainViewModel @Inject constructor(
-    private val stringProvider: StringProvider
+    private val userRepository: UserRepository
 ) : BaseViewModel<MainView>() {
 
-    val helloText = ObservableField<String>("")
+
+    val currentBottomMenuIndex = ObservableInt(0)
 
     override fun onAttach(view: MainView) {
         super.onAttach(view)
 
-        helloText.set(stringProvider.getString(R.string.hello_world))
+        val user = userRepository.getUser()
+        view.setupTabView(user.role == Role.ADMIN, user.role == Role.ADMIN)
+
+        userRepository.observeUserChanges().subscribe {
+            view.setupTabView(it.role == Role.ADMIN, it.role == Role.ADMIN)
+        }.disposeOnDetach()
+
     }
 }

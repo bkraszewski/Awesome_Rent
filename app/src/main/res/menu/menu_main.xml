@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_explore"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/main.navigation.explore" />
+    <item
+        android:id="@+id/navigation_clients"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="@string/main.navigation.clients" />
+    <item
+        android:id="@+id/navigation_realtors"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="@string/main.navigation.realtors" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="@string/main.navigation.profile" />
+
+</menu>

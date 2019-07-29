@@ -22,4 +22,11 @@
     <string name="register_password_not_valid">Password is not valid</string>
     <string name="register_passwords_are_not_same">Typed passwords are different!</string>
     <string name="register_error_server_side">Ops, something wrong happened!</string>
+    <string name="main.navigation.explore">Explore</string>
+    <string name="main.navigation.realtors">Realtors</string>
+    <string name="main.navigation.clients">Clients</string>
+    <string name="main.navigation.profile">Profile</string>
+    <string name="profile_save_action">Save</string>
+    <string name="profile_email">E-mail</string>
+    <string name="profile_changed">Profile Saved</string>
 </resources>

@@ -45,6 +45,7 @@ open class BaseFragment<VIEW : BaseView, VM : BaseViewModel<VIEW>, BINDING : Vie
         requireActivity().supportFragmentManager.registerFragmentLifecycleCallbacks(
             lifeCycleCallback as ViewModelAutoLifecycleF<VM, VIEW>, true
         )
+        //binding.lifecycleOwner = this
     }
 
     override fun onDestroyView() {

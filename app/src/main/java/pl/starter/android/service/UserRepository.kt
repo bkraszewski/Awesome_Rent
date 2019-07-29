@@ -24,14 +24,16 @@ class UserRepositoryImpl (
     override fun getUser(): User {
         return User(sharedPreferences.getLong(USER_ID, -1),
             sharedPreferences.getString(USER_EMAIL, ""),
-                sharedPreferences.getString(USER_ROLE, ROLE_USER))
+                Role.valueOf(sharedPreferences.getString(USER_ROLE, Role.USER.toString())))
+//            Role.ADMIN)
     }
 
     override fun update(user: User) {
         sharedPreferences.edit().apply{
             putLong(USER_ID, user.id)
             putString(USER_EMAIL, user.email)
-            putString(USER_ROLE, user.role)
+            putString(USER_ROLE, user.role.toString()
+            )
         }.apply()
         subject.onNext(user)
 

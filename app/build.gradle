@@ -43,7 +43,7 @@ ext {
     retrofit_version = '2.4.0'
     ok_http_version = '3.10.0'
     leak_cannary_version = '1.6.3'
-    tatarka_version = '3.0.0'
+    tatarka_version = '3.1.0'
     mockito_version = '2.1.0'
     secretSauceVersion= "0.9.0"
 
