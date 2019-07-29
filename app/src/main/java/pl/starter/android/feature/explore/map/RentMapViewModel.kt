@@ -1,21 +1,21 @@
 package pl.starter.android.feature.explore.map
 
-import androidx.databinding.ObservableArrayList
-import androidx.databinding.ObservableField
-import androidx.databinding.ObservableInt
-import me.tatarka.bindingcollectionadapter2.ItemBinding
-import pl.starter.android.BR
-import pl.starter.android.R
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
+import io.reactivex.subjects.PublishSubject
 import pl.starter.android.base.BaseView
 import pl.starter.android.base.BaseViewModel
-import pl.starter.android.feature.auth.isEmailInvalid
-import pl.starter.android.feature.auth.isStringBlank
+import pl.starter.android.feature.explore.list.ApartmentRowItem
 import pl.starter.android.service.ApiRepository
-import pl.starter.android.service.Role
-import pl.starter.android.service.User
 import pl.starter.android.service.UserRepository
 import pl.starter.android.utils.StringProvider
 import javax.inject.Inject
+import com.google.android.gms.maps.model.LatLngBounds
+
 
 interface RentMapView : BaseView {
 
@@ -27,9 +27,33 @@ class RentMapViewModel @Inject constructor(
     private val apiRepository: ApiRepository
 ) : BaseViewModel<RentMapView>() {
 
+    val mapElementsSubject = PublishSubject.create<List<ApartmentRowItem>>()
+    val mapSubject = PublishSubject.create<GoogleMap>()
+
 
     override fun onAttach(view: RentMapView) {
         super.onAttach(view)
+
+        Observable.combineLatest(mapElementsSubject, mapSubject, BiFunction<List<ApartmentRowItem>,GoogleMap,Pair<List<ApartmentRowItem>, GoogleMap>>{mapItems, map ->
+            Pair(mapItems, map)
+        }).subscribe {
+            showPointsOnMap(it)
+
+        }.disposeOnDetach()
+    }
+
+    private fun showPointsOnMap(it: Pair<List<ApartmentRowItem>, GoogleMap>) {
+        it.second.clear()
+        val builder = LatLngBounds.Builder()
+
+        for (item in it.first) {
+            val latLng = LatLng(item.apartment.latitude, item.apartment.longitude)
+            val marker = MarkerOptions().position(latLng).title(item.priceLabel)
+            it.second.addMarker(marker)
+            builder.include(latLng)
+        }
+
+        it.second.moveCamera(CameraUpdateFactory.newLatLngBounds(builder.build(), 0))
     }
 
 

@@ -46,7 +46,7 @@ ext {
     tatarka_version = '3.1.0'
     mockito_version = '2.1.0'
     secretSauceVersion= "0.9.0"
-
+    maps_version = "17.0.0"
 }
 
 dependencies {
@@ -102,6 +102,8 @@ dependencies {
     implementation "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:$tatarka_version"
     implementation "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:$tatarka_version"
 
+
+    implementation "com.google.android.gms:play-services-maps:$maps_version"
 
     testImplementation 'junit:junit:4.12'
     testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_version"
