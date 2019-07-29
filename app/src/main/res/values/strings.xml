@@ -46,5 +46,6 @@
     <string name="filter_show_rented">Show rented</string>
     <string name="filter_show_available">Show available</string>
     <string name="filter_apply">Apply filters</string>
+    <string name="explore_add">Add</string>
 
 </resources>

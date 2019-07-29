@@ -26,6 +26,7 @@
 
         <activity android:name="pl.starter.android.feature.main.MainActivity" />
         <activity android:name="pl.starter.android.feature.auth.AuthActivity"  />
+        <activity android:name="pl.starter.android.feature.edit_create_apartment.EditCreateApartmentActivity"/>
     </application>
 
 </manifest>

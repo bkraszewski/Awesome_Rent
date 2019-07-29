@@ -25,6 +25,7 @@ import javax.inject.Inject
 interface ExploreView : BaseView {
     fun showFilters()
     fun hideFilters()
+    fun navigateToCreateApartment()
 
 }
 
@@ -53,12 +54,14 @@ class ExploreViewModel @Inject constructor(
     val showStatusFilter = ObservableBoolean(true)
     val showAvailableFilter = ObservableBoolean(true)
     val showRentedFilter = ObservableBoolean(false)
+    val canAddNew = ObservableBoolean(false)
 
     override fun onAttach(view: ExploreView) {
         super.onAttach(view)
 
         val user = userRepository.getUser()
         showStatusFilter.set(user.role != Role.USER)
+        canAddNew.set(user.role != Role.USER)
 
         getApartments(user, view)
     }
@@ -117,5 +120,9 @@ class ExploreViewModel @Inject constructor(
     fun onApplyFilters(){
         view?.hideFilters()
         //todo update filter params
+    }
+
+    fun onCreateNewApartment(){
+        view?.navigateToCreateApartment()
     }
 }

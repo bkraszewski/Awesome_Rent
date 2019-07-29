@@ -1,5 +1,7 @@
 package pl.starter.android.service
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import java.math.BigDecimal
 
 //const val ROLE_USER = "USER"
@@ -21,7 +23,8 @@ enum class ApartmentState {
     AVAILABLE, RENTED
 }
 
+@Parcelize
 data class Apartment(val id: Long, val name: String, val description: String,
                      val floorAreaSize: BigDecimal, val pricePerMonth: BigDecimal, val rooms: Int,
                      val latitude: Double, val longitude: Double, val addedTimestamp: Long, val realtorId: Long,
-                     val realtorEmail: String, val state: ApartmentState)
+                     val realtorEmail: String, val state: ApartmentState) : Parcelable
