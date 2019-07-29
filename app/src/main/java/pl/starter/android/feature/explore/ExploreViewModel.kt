@@ -18,6 +18,8 @@ import pl.starter.android.utils.StringProvider
 import javax.inject.Inject
 
 interface ExploreView : BaseView {
+    fun showFilters()
+    fun hideFilters()
 
 }
 
@@ -32,5 +34,11 @@ class ExploreViewModel @Inject constructor(
         super.onAttach(view)
     }
 
+    fun onFiltersRequested(){
+        view?.showFilters()
+    }
 
+    fun onCloseFilters(){
+        view?.hideFilters()
+    }
 }

@@ -31,4 +31,5 @@
     <string name="profile_changed">Profile Saved</string>
     <string name="explore_list">List</string>
     <string name="explore_map">Map</string>
+    <string name="explore_show_filters">Filters</string>
 </resources>
