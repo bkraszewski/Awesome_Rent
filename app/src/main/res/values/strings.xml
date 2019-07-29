@@ -33,4 +33,9 @@
     <string name="explore_map">Map</string>
     <string name="explore_show_filters">Filters</string>
     <string name="common_general_error">Oops, something went wrong!</string>
+
+    <string name="explore_apartment_area">Area: %s m²</string>
+    <string name="explore_apartment_rooms">Rooms: %s</string>
+    <string name="explore_apartment_price">$%s</string>
+
 </resources>

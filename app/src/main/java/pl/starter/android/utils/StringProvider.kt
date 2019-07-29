@@ -9,7 +9,7 @@ interface StringProvider {
 
 class ContextStringProvider(private val context: Context) : StringProvider {
 
-    override fun getString(textId: Int, vararg objects: Any) = context.resources.getString(textId, *objects)
+    override fun getString(textId: Int, vararg objects: Any) = context.resources.getString(textId)
 
     override fun getQuantityString(textId: Int, count: Int, vararg objects: Any) =
         context.resources.getQuantityString(textId, count, *objects)

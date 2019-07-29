@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="pl.starter.android.service.Apartment" />
+        <import type="pl.starter.android.feature.explore.list.ApartmentRowItem" />
 
         <variable
             name="apartment"
-            type="Apartment" />
+            type="ApartmentRowItem" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:cardElevation="@dimen/half_spacer">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -39,9 +41,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/half_spacer"
-                android:text="Awesome Apartment"
+                android:text="@{apartment.apartment.name}"
                 app:layout_constraintStart_toEndOf="@+id/apartmentImage"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Awesome Apartment" />
 
             <TextView
                 android:id="@+id/apartmentDescription"
@@ -51,11 +54,53 @@
                 android:layout_marginStart="@dimen/half_spacer"
                 android:gravity="start"
                 android:maxLines="3"
-                android:text="Quite good apartment to start with"
+                android:text="@{apartment.apartment.description}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/apartmentImage"
-                app:layout_constraintTop_toBottomOf="@+id/apartmentName" />
+                app:layout_constraintTop_toBottomOf="@+id/apartmentName"
+                tools:text="Quite good apartment to start with" />
 
+            <TextView
+                android:id="@+id/apartmentPrice"
+                style="@style/TextSmall.Black.Bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/half_spacer"
+                android:layout_marginEnd="@dimen/single_spacer"
+                android:gravity="start"
+                android:text="@{apartment.priceLabel}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="$200" />
+
+            <TextView
+                android:id="@+id/apartmentRooms"
+                style="@style/TextSmall.Black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/half_spacer"
+                android:layout_marginEnd="@dimen/single_spacer"
+                android:gravity="start"
+                android:text="@{apartment.roomsLabel}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/apartmentPrice"
+                tools:text="Rooms: 3" />
+
+            <TextView
+                android:id="@+id/apartmentArea"
+                style="@style/TextSmall.Black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/half_spacer"
+                android:layout_marginEnd="@dimen/single_spacer"
+                android:gravity="start"
+                android:maxLines="3"
+                android:text="@{apartment.areaLabel}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/apartmentRooms"
+                tools:text="Area: 46m2" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
