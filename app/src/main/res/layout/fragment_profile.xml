@@ -16,11 +16,26 @@
         android:background="@color/white"
         android:padding="@dimen/single_spacer">
 
+        <ImageView
+            android:layout_width="@dimen/clickable_area"
+            android:layout_height="@dimen/clickable_area"
+            android:layout_gravity="end"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:visible="@{viewModel.canDelete}"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="@dimen/half_spacer"
+            android:clickable="@{!viewModel.inProgress}"
+            android:id="@+id/deleteUserIcon"
+            android:src="@drawable/ic_delete_black_24dp" />
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/profileEmailTIL"
             style="@style/TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sixfold_spacer"
             android:layout_marginBottom="@dimen/double_spacer"
             android:error="@{viewModel.emailError}"
             app:layout_constraintTop_toTopOf="parent">
@@ -43,6 +58,15 @@
             app:itemDropDownLayout="@{R.layout.item_layout}"
             app:items="@{viewModel.roles}"
             app:layout_constraintTop_toBottomOf="@+id/profileEmailTIL" />
+
+        <ProgressBar
+            android:layout_width="@dimen/auth_progress_size"
+            app:layout_constraintStart_toStartOf="@+id/saveButton"
+            android:elevation="@dimen/double_spacer"
+            app:layout_constraintTop_toTopOf="@+id/saveButton"
+            app:layout_constraintBottom_toBottomOf="@+id/saveButton"
+            app:visible="@{viewModel.inProgress}"
+            android:layout_height="@dimen/auth_progress_size" />
 
         <Button
             android:id="@+id/saveButton"

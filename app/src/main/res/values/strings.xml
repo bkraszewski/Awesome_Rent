@@ -61,6 +61,7 @@
     <string name="form_field_required">Field required</string>
     <string name="form_confirm_delete_title">Confirm action</string>
     <string name="form_confirm_delete_message">Do you want to remove this apartment?</string>
+    <string name="form_confirm_delete_user_message">Do you want to remove this user?</string>
     <string name="common_yes">Yes</string>
     <string name="common_no">No</string>
     <string name="filter_no_results">No apartments found!</string>

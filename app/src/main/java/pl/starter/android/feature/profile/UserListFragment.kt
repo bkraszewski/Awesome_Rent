@@ -12,6 +12,7 @@ import pl.starter.android.utils.GridSpaceItemDecoration
 
 class UserListFragment : BaseFragment<UserListView, UserListViewModel, FragmentUserListBinding>(R.layout.fragment_user_list), UserListView {
     override fun showUser(user: User) {
+        ProfileActivity.startForEdit(requireContext(), user)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

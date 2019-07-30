@@ -22,6 +22,12 @@ class ProfileActivity : AppCompatActivity() {
                 addToBackStack = false)
         }
 
+        val editedUser = intent.getParcelableExtra<User?>(USER)
+        editedUser?.let {
+            showFragment(ProfileFragment.newInstanceForEditUser(it), containerViewId = R.id.fragmentContainer,
+                addToBackStack = false)
+        }
+
         closeIcon.setOnClickListener {
             finish()
         }

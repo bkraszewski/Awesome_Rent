@@ -58,7 +58,7 @@ open class BaseFragment<VIEW : BaseView, VM : BaseViewModel<VIEW>, BINDING : Vie
 
     override fun showMessage(message: String?) {
         message?.let {
-            Toast.makeText(baseActivity, it, Toast.LENGTH_LONG).show()
+            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
         }
     }
 

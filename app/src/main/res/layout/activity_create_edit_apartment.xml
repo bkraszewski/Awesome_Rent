@@ -240,7 +240,6 @@
 
             <ProgressBar
                 android:layout_width="@dimen/auth_progress_size"
-                app:layout_constraintStart_toStartOf="@+id/loginButton"
                 android:elevation="@dimen/double_spacer"
                 android:layout_marginTop="@dimen/half_spacer"
                 app:visible="@{viewModel.inProgress}"
