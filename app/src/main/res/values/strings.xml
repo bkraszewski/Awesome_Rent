@@ -47,5 +47,17 @@
     <string name="filter_show_available">Show available</string>
     <string name="filter_apply">Apply filters</string>
     <string name="explore_add">Add</string>
+    <string name="form_apartment_name">Apartment name</string>
+    <string name="form_apartment_description">Description</string>
+    <string name="form_apartment_rooms">Rooms</string>
+    <string name="form_apartment_area">Area (m²)</string>
+    <string name="form_apartment_lat">GPS location latitude</string>
+    <string name="form_apartment_lng">GPS location longitude</string>
+    <string name="form_change_location">Change location</string>
+    <string name="form_apartment_price">Price ($/monthly)</string>
+    <string name="form_change_realtor">Select Realtor</string>
+    <string name="form_save">Save</string>
+    <string name="form_apartment_realtor">Realtor</string>
+    <string name="form_field_required">Field required</string>
 
 </resources>

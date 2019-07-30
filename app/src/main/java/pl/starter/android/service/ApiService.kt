@@ -9,11 +9,18 @@ interface ApiService {
     fun login(request: LoginRequest): Single<AuthReponse>
     fun register(request: RegisterRequest): Single<AuthReponse>
     fun getApartments(): Single<List<Apartment>>
+    fun createApartment(apartment: Apartment): Single<Apartment>
 
 }
 
 //TODO fake service
 class ApiServiceImpl(private val baseSchedulers: BaseSchedulers) : ApiService {
+    override fun createApartment(apartment: Apartment): Single<Apartment> {
+        fakeAparments.add(apartment)
+        return Single.just(apartment)
+            .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
+    }
+
     private val fakeAparments = mutableListOf(
         Apartment(1, "Top Apartment", "Really awesome aparment", BigDecimal.valueOf(100),
             BigDecimal.valueOf(2000), 4, 48.532976, 14.610996, System.currentTimeMillis(),

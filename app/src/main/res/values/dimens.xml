@@ -33,4 +33,5 @@
     <dimen name="image_thumb_min">80dp</dimen>
     <dimen name="image_thumb_max">130dp</dimen>
     <dimen name="apartment_status_width">80dp</dimen>
+    <dimen name="form_apartment_description">90dp</dimen>
 </resources>

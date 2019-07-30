@@ -8,13 +8,16 @@ interface ApiRepository {
     fun register(email: String, password: String): Single<AuthReponse>
 
     fun getApartments():Single<List<Apartment>>
+    fun createApartment(apartment: Apartment): Single<Apartment>
 }
 
 class ApiRepositoryImpl(
     private val apiService: ApiService,
     private val userRepository: UserRepository,
     private val sessionRepository: SessionRepository) : ApiRepository{
-
+    override fun createApartment(apartment: Apartment): Single<Apartment> {
+        return apiService.createApartment(apartment)
+    }
 
 
     override fun register(email: String, password: String): Single<AuthReponse> {

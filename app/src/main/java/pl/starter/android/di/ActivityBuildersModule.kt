@@ -19,6 +19,7 @@ abstract class ActivityBuildersModule {
     @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
     abstract fun contributeAuthActivity(): AuthActivity
 
+    @ContributesAndroidInjector(modules = [FragmentBuildersModule::class])
     abstract fun contributeEditCreateApartmentActivity(): EditCreateApartmentActivity
 
 }

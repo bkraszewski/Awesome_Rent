@@ -20,6 +20,7 @@ import pl.starter.android.service.User
 import pl.starter.android.service.UserRepository
 import pl.starter.android.utils.BaseSchedulers
 import pl.starter.android.utils.StringProvider
+import timber.log.Timber
 import javax.inject.Inject
 
 interface ExploreView : BaseView {
@@ -85,6 +86,8 @@ class ExploreViewModel @Inject constructor(
             .subscribe { items, error ->
                 if (error != null) {
                     view.showMessage(stringProvider.getString(R.string.common_general_error))
+                    error.printStackTrace()
+                    Timber.e(error)
                     return@subscribe
                 }
                 apartments.clear()

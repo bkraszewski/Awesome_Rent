@@ -1,24 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="pl.starter.android.R" />
         <variable
             name="viewModel"
             type="pl.starter.android.feature.edit_create_apartment.EditCreateApartmentViewModel" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:id="@+id/fragmentContainer"
-        android:background="@color/white"
-        >
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
+        <LinearLayout
+            android:id="@+id/fragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="@dimen/single_spacer">
 
+            <ImageView
+                android:layout_width="@dimen/clickable_area"
+                android:layout_height="@dimen/clickable_area"
+                android:layout_gravity="end"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="@{()-> viewModel.onClose()}"
+                android:padding="@dimen/half_spacer"
+                android:src="@drawable/ic_close_black_24dp" />
 
-    </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/apartmentNameTIL"
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_spacer"
+                android:layout_marginBottom="@dimen/double_spacer"
+                android:error="@{viewModel.apartmentNameError}">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/form_apartment_name"
+                    android:text="@={viewModel.apartmentName}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/apartmentDescriptionTIL"
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_spacer"
+                android:layout_marginBottom="@dimen/double_spacer"
+                android:error="@{viewModel.apartmentDescriptionError}">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/form_apartment_description"
+                    android:hint="@string/form_apartment_description"
+                    android:maxLines="4"
+                    android:singleLine="false"
+                    android:text="@={viewModel.apartmentDescription}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/apartmentRoomsTIL"
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_spacer"
+                android:layout_marginBottom="@dimen/double_spacer"
+                android:error="@{viewModel.apartmentRoomsCountError}">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/form_apartment_rooms"
+                    android:inputType="number"
+                    android:text="@={viewModel.apartmentRoomsCount}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/apartmentAreaTIL"
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_spacer"
+                android:layout_marginBottom="@dimen/double_spacer"
+                android:error="@{viewModel.apartmentAreaSizeError}">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/form_apartment_area"
+                    android:inputType="numberDecimal"
+                    android:text="@={viewModel.apartmentAreaSize}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/apartmentLatTIL"
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_spacer"
+                android:layout_marginBottom="@dimen/double_spacer"
+                android:error="@{viewModel.apartmentLatError}">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/form_apartment_lat"
+                    android:inputType="numberDecimal"
+                    android:text="@={viewModel.apartmentLat}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/apartmentLngTIL"
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_spacer"
+                android:layout_marginBottom="@dimen/double_spacer"
+                android:error="@{viewModel.apartmentLngError}">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/form_apartment_lng"
+                    android:inputType="numberDecimal"
+                    android:text="@={viewModel.apartmentLng}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                style="@style/Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="@{!viewModel.inProgress}"
+                app:visible="@{viewModel.canChangeLocation}"
+                android:onClick="@{()-> viewModel.onLocationChange()}"
+                android:text="@string/form_change_location" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/apartmentPriceTIL"
+                style="@style/TextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_spacer"
+                android:layout_marginBottom="@dimen/double_spacer"
+                app:error="@{viewModel.apartmentMonthlyPriceError}">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    style="@style/TextInputEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/form_apartment_price"
+                    android:inputType="numberDecimal"
+                    android:text="@={viewModel.apartmentMonthlyPrice}" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/realtorPanel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/apartmentRealtorTIL"
+                    style="@style/TextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/double_spacer"
+                    android:layout_marginBottom="@dimen/double_spacer"
+                    app:error="@{viewModel.apartmentRealtorEmailError}">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        style="@style/TextInputEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:hint="@string/form_apartment_realtor"
+                        android:text="@={viewModel.apartmentRealtorEmail}" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    style="@style/Button"
+                    app:visible="@{viewModel.canChangeRealtor}"
+                    android:layout_width="match_parent"
+                    android:enabled="@{!viewModel.inProgress}"
+                    android:layout_height="wrap_content"
+                    android:text="@string/form_change_realtor" />
+
+            </LinearLayout>
+
+            <Spinner
+                android:id="@+id/statusSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:visible="@{viewModel.canChangeStatus}"
+                android:selectedItemPosition="@={viewModel.apartmentStatusIndex}"
+                app:itemBinding="@{viewModel.itemBinding}"
+                app:itemDropDownLayout="@{R.layout.item_layout}"
+                app:items="@{viewModel.apartmentStatuses}"
+                />
+
+            <ProgressBar
+                android:layout_width="@dimen/auth_progress_size"
+                app:layout_constraintStart_toStartOf="@+id/loginButton"
+                android:elevation="@dimen/double_spacer"
+                android:layout_marginTop="@dimen/half_spacer"
+                app:visible="@{viewModel.inProgress}"
+                android:layout_height="@dimen/auth_progress_size" />
+
+            <Button
+                style="@style/Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:visible="@{viewModel.canSaveChanges}"
+                android:enabled="@{!viewModel.inProgress}"
+                android:onClick="@{() -> viewModel.onSave()}"
+                android:text="@string/form_save" />
+        </LinearLayout>
+    </ScrollView>
 </layout>
