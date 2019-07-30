@@ -49,7 +49,7 @@ class ExploreViewModel @Inject constructor(
     val roomsFilterLabel = ObservableField("")
 
     val showStatusFilter = ObservableBoolean(true)
-    val selectedStateIndex = ObservableInt()
+    val selectedStateIndex = ObservableInt(2)
     val apartmentStates = ObservableArrayList<String>().apply {
         addAll(ApartmentStateFilter.values().map { it.toString() })
     }
@@ -133,9 +133,6 @@ class ExploreViewModel @Inject constructor(
         roomsFilterLabel.set(String.format(stringProvider.getString(R.string.filter_rooms), minRooms.get().toString(), maxRooms.get().toString()))
     }
 
-    fun onToggleValue(value: ObservableBoolean){
-        value.set(!value.get())
-    }
 
     fun onApplyFilters(){
         view?.hideFilters()
