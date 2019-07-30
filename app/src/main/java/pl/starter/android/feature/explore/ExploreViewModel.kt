@@ -5,22 +5,18 @@ import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
 import androidx.databinding.ObservableInt
 import io.reactivex.Observable
+import io.reactivex.Single
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 import pl.starter.android.BR
 import pl.starter.android.R
 import pl.starter.android.base.BaseView
 import pl.starter.android.base.BaseViewModel
-import pl.starter.android.feature.auth.isEmailInvalid
-import pl.starter.android.feature.auth.isStringBlank
 import pl.starter.android.feature.explore.list.ApartmentRowItem
-import pl.starter.android.feature.explore.list.RentListView
-import pl.starter.android.service.ApiRepository
-import pl.starter.android.service.Role
-import pl.starter.android.service.User
-import pl.starter.android.service.UserRepository
+import pl.starter.android.service.*
 import pl.starter.android.utils.BaseSchedulers
 import pl.starter.android.utils.StringProvider
 import timber.log.Timber
+import java.math.BigDecimal
 import javax.inject.Inject
 
 interface ExploreView : BaseView {
@@ -38,6 +34,7 @@ class ExploreViewModel @Inject constructor(
 ) : BaseViewModel<ExploreView>() {
 
 
+    private lateinit var user: User
     val apartments = ObservableArrayList<ApartmentRowItem>()
 
     val minSize = ObservableInt(0)
@@ -53,27 +50,41 @@ class ExploreViewModel @Inject constructor(
     val roomsFilterLabel = ObservableField("")
 
     val showStatusFilter = ObservableBoolean(true)
-    val showAvailableFilter = ObservableBoolean(true)
-    val showRentedFilter = ObservableBoolean(false)
+    val selectedStateIndex = ObservableInt()
+    val apartmentStates = ObservableArrayList<String>().apply {
+        addAll(ApartmentStateFilter.values().map { it.toString() })
+    }
+    val itemBinding = ItemBinding.of<String>(BR.role, R.layout.item_dropdown)
+
     val canAddNew = ObservableBoolean(false)
+    val showNoResults = ObservableBoolean(false)
 
     override fun onAttach(view: ExploreView) {
         super.onAttach(view)
 
-        val user = userRepository.getUser()
+        user = userRepository.getUser()
         showStatusFilter.set(user.role != Role.USER)
         canAddNew.set(user.role != Role.USER)
 
-        getApartments(user, view)
+        loadApartments(user, view, buildFilters())
     }
 
-    private fun getApartments(user: User, view: ExploreView) {
+    private fun getApartmentsSubscription(filters:Filters?): Single<List<Apartment>> {
+        return if(filters == null){
+            apiRepository.getApartments()
+        }else{
+            apiRepository.getApartments(filters)
+        }
+
+    }
+
+    private fun loadApartments(user: User, view: ExploreView, filters: Filters?) {
         val priceFormat = stringProvider.getString(R.string.explore_apartment_price)
         val areaFormat = stringProvider.getString(R.string.explore_apartment_area)
         val roomsFormat = stringProvider.getString(R.string.explore_apartment_rooms)
 
         inProgress.set(true)
-        apiRepository.getApartments()
+        getApartmentsSubscription(filters)
             .subscribeOn(baseSchedulers.io())
             .observeOn(baseSchedulers.main())
             .flatMapObservable { Observable.fromIterable(it) }
@@ -86,6 +97,8 @@ class ExploreViewModel @Inject constructor(
             .toList()
             .subscribe { items, error ->
                 inProgress.set(false)
+                showNoResults.set(items.isEmpty())
+
                 if (error != null) {
                     view.showMessage(stringProvider.getString(R.string.common_general_error))
                     error.printStackTrace()
@@ -94,6 +107,7 @@ class ExploreViewModel @Inject constructor(
                 }
                 apartments.clear()
                 apartments.addAll(items)
+
             }.disposeOnDetach()
     }
 
@@ -124,7 +138,43 @@ class ExploreViewModel @Inject constructor(
 
     fun onApplyFilters(){
         view?.hideFilters()
-        //todo update filter params
+
+        val filters = buildFilters()
+
+
+        loadApartments(user, view!!, filters)
+
+    }
+
+    private fun buildFilters(): Filters {
+        return if (user.role == Role.USER) {
+            buildUserFilters()
+        } else {
+            buildAdminFilters()
+        }
+    }
+
+    private fun buildAdminFilters(): Filters {
+        return Filters(priceMin = BigDecimal.valueOf(minPrice.get().toLong()),
+            priceMax = BigDecimal.valueOf(maxPrice.get().toLong()),
+            areaMax = maxSize.get(),
+            areaMin = minSize.get(),
+            roomsMax = maxRooms.get(),
+            roomsMin = minRooms.get(),
+            stateFilter = ApartmentStateFilter.valueOf(apartmentStates[selectedStateIndex.get()])
+
+        )
+    }
+
+    private fun buildUserFilters(): Filters {
+        return Filters(priceMin = BigDecimal.valueOf(minPrice.get().toLong()),
+            priceMax = BigDecimal.valueOf(maxPrice.get().toLong()),
+            areaMax = maxSize.get(),
+            areaMin = minSize.get(),
+            roomsMax = maxRooms.get(),
+            roomsMin = minRooms.get(),
+            stateFilter = ApartmentStateFilter.AVAILABLE
+        )
     }
 
     fun onCreateNewApartment(){

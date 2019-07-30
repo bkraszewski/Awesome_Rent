@@ -23,6 +23,19 @@ enum class ApartmentState {
     AVAILABLE, RENTED
 }
 
+enum class ApartmentStateFilter{
+    AVAILABLE, RENTED, ALL
+}
+
+data class Filters(val priceMin: BigDecimal,
+                   val priceMax: BigDecimal,
+                   val areaMin: Int,
+                   val areaMax:Int,
+                   val roomsMin: Int,
+                   val roomsMax : Int,
+                   val stateFilter: ApartmentStateFilter
+)
+
 @Parcelize
 data class Apartment(val id: Long, val name: String, val description: String,
                      val floorAreaSize: BigDecimal, val pricePerMonth: BigDecimal, val rooms: Int,

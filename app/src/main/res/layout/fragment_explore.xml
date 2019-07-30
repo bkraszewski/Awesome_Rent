@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -67,10 +68,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:visible="@{viewModel.canAddNew}" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:elevation="@dimen/double_spacer"
+            android:gravity="center"
+            app:visible="@{viewModel.showNoResults}"
+            android:background="@color/white"
+            android:text="@string/filter_no_results"
+            android:layout_height="match_parent" />
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
+            tools:visibility="gone"
             android:elevation="@dimen/double_spacer"
             app:visible="@{viewModel.inProgress}">
 
@@ -80,6 +91,8 @@
                 android:layout_gravity="center"
                 />
         </FrameLayout>
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

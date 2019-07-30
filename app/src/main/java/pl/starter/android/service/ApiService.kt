@@ -13,12 +13,12 @@ interface ApiService {
     fun createApartment(apartment: Apartment): Single<Apartment>
     fun deleteApartment(id: Long): Completable
     fun editApartment(id: Long, apartment: Apartment): Single<Apartment>
+    fun getApartments(filters: Filters): Single<List<Apartment>>
 
 }
 
 //TODO fake service
 class ApiServiceImpl(private val baseSchedulers: BaseSchedulers) : ApiService {
-
 
     private var highestId = 8L
 
@@ -88,6 +88,33 @@ class ApiServiceImpl(private val baseSchedulers: BaseSchedulers) : ApiService {
                 fakeAparments.removeAll { it.id == apartment.id }
                 fakeAparments.add(apartment)
             } .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
+    }
+
+    override fun getApartments(filters: Filters): Single<List<Apartment>> {
+        val filtered =  fakeAparments.filter {
+            it.pricePerMonth >= filters.priceMin &&
+                it.pricePerMonth <= filters.priceMax
+        }.filter {
+            it.floorAreaSize.toInt() >= filters.areaMin &&
+                it.floorAreaSize.toInt() <= filters.areaMax
+        }.filter {
+            if(filters.stateFilter == ApartmentStateFilter.AVAILABLE){
+                return@filter it.state == ApartmentState.AVAILABLE
+            }else{
+                true
+            }
+        }.filter {
+            if(filters.stateFilter == ApartmentStateFilter.RENTED){
+                return@filter it.state == ApartmentState.RENTED
+            }else{
+                true
+            }
+        }.filter {
+            it.rooms >= filters.roomsMin && it.rooms <= filters.roomsMax
+        }
+
+        return Single.just(filtered)
+            .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
     }
 
 }

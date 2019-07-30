@@ -1,7 +1,8 @@
 package pl.starter.android.feature.explore
 
-import com.nhaarman.mockitokotlin2.isA
+import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import org.hamcrest.core.Is
@@ -42,12 +43,90 @@ class ExploreViewModelTest {
             BigDecimal.valueOf(2000), 4, 48.532976, 14.610996, System.currentTimeMillis(),
             1, "bkraszewski@gmail.com", ApartmentState.AVAILABLE))
 
-        whenever(apiRepository.getApartments()).thenReturn(Single.just(apartment))
+        whenever(apiRepository.getApartments(any())).thenReturn(Single.just(apartment))
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com"))
         whenever(stringProvider.getString(anyInt())).thenReturn("%s")
 
         cut.onAttach(view)
 
         assertThat(cut.apartments.size, Is(equalTo(1)))
+        assertThat(cut.showNoResults.get(), Is(equalTo(false)))
+    }
+
+    @Test
+    fun shouldShowNoResultsWhenNoData() {
+        val apartment = listOf<Apartment>()
+
+        whenever(apiRepository.getApartments(any())).thenReturn(Single.just(apartment))
+        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com"))
+        whenever(stringProvider.getString(anyInt())).thenReturn("%s")
+
+        cut.onAttach(view)
+
+        assertThat(cut.apartments.size, Is(equalTo(0)))
+        assertThat(cut.showNoResults.get(), Is(equalTo(true)))
+    }
+
+    @Test
+    fun shouldApplyFiltersForUser() {
+        val apartment = listOf(Apartment(1, "Top Apartment", "Really awesome aparment", BigDecimal.valueOf(100),
+            BigDecimal.valueOf(2000), 4, 48.532976, 14.610996, System.currentTimeMillis(),
+            1, "bkraszewski@gmail.com", ApartmentState.AVAILABLE))
+
+        whenever(apiRepository.getApartments()).thenReturn(Single.just(apartment))
+        whenever(apiRepository.getApartments(any())).thenReturn(Single.just(apartment))
+        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com"))
+        whenever(stringProvider.getString(anyInt())).thenReturn("%s")
+
+        cut.onAttach(view)
+
+        cut.minSize.set(100)
+        cut.maxSize.set(200)
+        cut.minRooms.set(1)
+        cut.maxRooms.set(2)
+        cut.minPrice.set(999)
+        cut.maxPrice.set(1001)
+        cut.onApplyFilters()
+
+        verify(apiRepository).getApartments(Filters(priceMin = BigDecimal.valueOf(999),
+            priceMax = BigDecimal.valueOf(1001),
+            areaMax = 200,
+            areaMin = 100,
+            roomsMax = 2,
+            roomsMin = 1,
+            stateFilter = ApartmentStateFilter.AVAILABLE
+        ))
+    }
+
+    @Test
+    fun shouldApplyFiltersForRealtor() {
+        val apartment = listOf(Apartment(1, "Top Apartment", "Really awesome aparment", BigDecimal.valueOf(100),
+            BigDecimal.valueOf(2000), 4, 48.532976, 14.610996, System.currentTimeMillis(),
+            1, "bkraszewski@gmail.com", ApartmentState.AVAILABLE))
+
+        whenever(apiRepository.getApartments()).thenReturn(Single.just(apartment))
+        whenever(apiRepository.getApartments(any())).thenReturn(Single.just(apartment))
+        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(stringProvider.getString(anyInt())).thenReturn("%s")
+
+        cut.onAttach(view)
+
+        cut.minSize.set(100)
+        cut.maxSize.set(200)
+        cut.minRooms.set(1)
+        cut.maxRooms.set(2)
+        cut.minPrice.set(1)
+        cut.maxPrice.set(1001)
+        cut.selectedStateIndex.set(1)
+        cut.onApplyFilters()
+
+        verify(apiRepository).getApartments(Filters(priceMin = BigDecimal.valueOf(1),
+            priceMax = BigDecimal.valueOf(1001),
+            areaMax = 200,
+            areaMin = 100,
+            roomsMax = 2,
+            roomsMin = 1,
+            stateFilter = ApartmentStateFilter.RENTED
+        ))
     }
 }

@@ -30,6 +30,4 @@ class RentListFragment : BaseFragment<RentListView, RentListViewModel,
     override fun showApartment(apartment: Apartment) {
         EditCreateApartmentActivity.startForView(requireContext(), apartment)
     }
-
-
 }

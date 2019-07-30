@@ -110,21 +110,14 @@
             android:layout_marginTop="@dimen/double_spacer"
             android:layout_height="wrap_content">
 
-            <Switch
-                android:layout_width="match_parent"
-                android:id="@+id/switchShowAvailable"
-                android:checked="@{viewModel.showAvailableFilter}"
-                android:onClick="@{() -> viewModel.onToggleValue(viewModel.showAvailableFilter)}"
-                android:text="@string/filter_show_available"
-                android:layout_height="wrap_content" />
-
-            <Switch
-                android:layout_width="match_parent"
-                android:id="@+id/switchShowRented"
-                android:checked="@{viewModel.showRentedFilter}"
-                android:onClick="@{() -> viewModel.onToggleValue(viewModel.showRentedFilter)}"
-                android:text="@string/filter_show_rented"
-                android:layout_height="wrap_content" />
+          <Spinner
+              android:layout_width="match_parent"
+              android:selectedItemPosition="@={viewModel.selectedStateIndex}"
+              app:itemBinding="@{viewModel.itemBinding}"
+              app:itemDropDownLayout="@{R.layout.item_layout}"
+              app:items="@{viewModel.apartmentStates}"
+              android:id="@+id/apartmentStates"
+              android:layout_height="wrap_content"/>
 
         </LinearLayout>
 

@@ -63,5 +63,6 @@
     <string name="form_confirm_delete_message">Do you want to remove this apartment?</string>
     <string name="common_yes">Yes</string>
     <string name="common_no">No</string>
+    <string name="filter_no_results">No apartments found!</string>
 
 </resources>

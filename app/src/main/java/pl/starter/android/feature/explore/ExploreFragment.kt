@@ -84,6 +84,10 @@ class ExploreFragment : BaseFragment<ExploreView, ExploreViewModel,
 
         })
         filtersPanel?.startAnimation(animate)
+
+        android.os.Handler().post {
+            apartmentStates.setSelection(viewModel.selectedStateIndex.get())
+        }
     }
 
     override fun hideFilters() {
