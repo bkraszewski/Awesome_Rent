@@ -6,17 +6,15 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 import pl.starter.android.R
 import pl.starter.android.base.BaseActivity
 import pl.starter.android.databinding.ActivityMainBinding
-import pl.starter.android.feature.auth.login.LoginFragment
-import pl.starter.android.feature.auth.register.RegisterFragment
 import pl.starter.android.feature.explore.ExploreFragment
 import pl.starter.android.feature.profile.ProfileFragment
+import pl.starter.android.feature.profile.UserListFragment
 
 class MainActivity : BaseActivity<MainView, MainViewModel, ActivityMainBinding>(), MainView {
 
@@ -26,8 +24,8 @@ class MainActivity : BaseActivity<MainView, MainViewModel, ActivityMainBinding>(
         setup(R.layout.activity_main, this, MainViewModel::class.java)
     }
 
-    override fun setupTabView(userTabVisible: Boolean) {
-        setupFragments(userTabVisible)
+    override fun setupTabView(showUsers: Boolean) {
+        setupFragments(showUsers)
     }
 
     private fun setupFragments(userTabVisible: Boolean) {
@@ -42,12 +40,11 @@ class MainActivity : BaseActivity<MainView, MainViewModel, ActivityMainBinding>(
         menuItems.add(R.id.navigation_explore)
 
         if (userTabVisible) {
-            fragmentList.add(LoginFragment())
+            fragmentList.add(UserListFragment.newInstance())
             menuItems.add(R.id.navigation_users)
         } else {
             bottomNavigation.menu.findItem(R.id.navigation_users).isVisible = false
         }
-
 
         fragmentList.add(ProfileFragment())
         menuItems.add(R.id.navigation_profile)
@@ -55,6 +52,7 @@ class MainActivity : BaseActivity<MainView, MainViewModel, ActivityMainBinding>(
 
         mainViewPager.adapter =
             MainViewPager(fragmentList, supportFragmentManager)
+        mainViewPager.offscreenPageLimit = 3
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener {
             override fun onNavigationItemSelected(item: MenuItem): Boolean {

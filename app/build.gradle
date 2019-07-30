@@ -5,7 +5,6 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 
-
 android {
     compileSdkVersion 28
     defaultConfig {
@@ -34,6 +33,10 @@ android {
         }
     }
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+
+    }
 }
 
 ext {
@@ -49,7 +52,7 @@ ext {
     leak_cannary_version = '1.6.3'
     tatarka_version = '3.1.0'
     mockito_version = '2.1.0'
-    secretSauceVersion= "0.9.0"
+    secretSauceVersion = "0.9.0"
     maps_version = "17.0.0"
     slider_version = "1.3"
 }

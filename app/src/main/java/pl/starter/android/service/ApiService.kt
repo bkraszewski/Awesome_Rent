@@ -9,11 +9,18 @@ import java.util.concurrent.TimeUnit
 interface ApiService {
     fun login(request: LoginRequest): Single<AuthReponse>
     fun register(request: RegisterRequest): Single<AuthReponse>
-    fun getApartments(): Single<List<Apartment>>
+
     fun createApartment(apartment: Apartment): Single<Apartment>
     fun deleteApartment(id: Long): Completable
     fun editApartment(id: Long, apartment: Apartment): Single<Apartment>
+
+    fun getApartments(): Single<List<Apartment>>
     fun getApartments(filters: Filters): Single<List<Apartment>>
+
+    fun getUsers(): Single<List<User>>
+    fun editUser(userId: Long, user: User): Single<User>
+    fun deleteUser(userId: Long): Completable
+    fun createUser(user: User): Single<User>
 
 }
 
@@ -21,7 +28,6 @@ interface ApiService {
 class ApiServiceImpl(private val baseSchedulers: BaseSchedulers) : ApiService {
 
     private var highestId = 8L
-
 
     private val fakeAparments = mutableListOf(
         Apartment(1, "Top Apartment", "Really awesome aparment", BigDecimal.valueOf(100),
@@ -48,10 +54,14 @@ class ApiServiceImpl(private val baseSchedulers: BaseSchedulers) : ApiService {
 
             BigDecimal.valueOf(200), 1, 51.267285, 21.232619, System.currentTimeMillis(),
             1, "bkraszewski@gmail.com", ApartmentState.AVAILABLE)
-
-
     )
 
+    private val fakeUsers = mutableListOf(
+        User(1, "user@gmail.com", Role.USER),
+        User(2, "tester@gmail.com", Role.USER),
+        User(3, "joedoe@gmail.com", Role.USER),
+        User(4, "realtor@tophomes.com", Role.REALTOR),
+        User(5, "uberadmin@tophomes.com", Role.ADMIN))
 
     override fun getApartments(): Single<List<Apartment>> {
         return Single.just(fakeAparments.toList())
@@ -87,26 +97,26 @@ class ApiServiceImpl(private val baseSchedulers: BaseSchedulers) : ApiService {
             .doOnSuccess {
                 fakeAparments.removeAll { it.id == apartment.id }
                 fakeAparments.add(apartment)
-            } .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
+            }.delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
     }
 
     override fun getApartments(filters: Filters): Single<List<Apartment>> {
-        val filtered =  fakeAparments.filter {
+        val filtered = fakeAparments.filter {
             it.pricePerMonth >= filters.priceMin &&
                 it.pricePerMonth <= filters.priceMax
         }.filter {
             it.floorAreaSize.toInt() >= filters.areaMin &&
                 it.floorAreaSize.toInt() <= filters.areaMax
         }.filter {
-            if(filters.stateFilter == ApartmentStateFilter.AVAILABLE){
+            if (filters.stateFilter == ApartmentStateFilter.AVAILABLE) {
                 return@filter it.state == ApartmentState.AVAILABLE
-            }else{
+            } else {
                 true
             }
         }.filter {
-            if(filters.stateFilter == ApartmentStateFilter.RENTED){
+            if (filters.stateFilter == ApartmentStateFilter.RENTED) {
                 return@filter it.state == ApartmentState.RENTED
-            }else{
+            } else {
                 true
             }
         }.filter {
@@ -114,6 +124,31 @@ class ApiServiceImpl(private val baseSchedulers: BaseSchedulers) : ApiService {
         }
 
         return Single.just(filtered)
+            .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
+    }
+
+    override fun getUsers(): Single<List<User>> {
+        return Single.just(fakeUsers.toList())
+            .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
+    }
+
+    override fun editUser(userId: Long, user: User): Single<User> {
+        fakeUsers.removeAll { it.id == userId }
+        fakeUsers.add(user)
+        return Single.just(user)
+            .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
+    }
+
+    override fun deleteUser(userId: Long): Completable {
+        return Completable.fromAction{
+            fakeUsers.removeAll { it.id == userId }
+        }
+    }
+
+    override fun createUser(user: User): Single<User> {
+        val newUser = user.copy(id = ++highestId)
+        fakeUsers.add(newUser)
+        return Single.just(newUser)
             .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
     }
 

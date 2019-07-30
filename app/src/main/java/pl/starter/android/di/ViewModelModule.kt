@@ -16,6 +16,7 @@ import pl.starter.android.feature.explore.map.RentMapViewModel
 
 import pl.starter.android.feature.main.MainViewModel
 import pl.starter.android.feature.profile.ProfileViewModel
+import pl.starter.android.feature.profile.UserListViewModel
 import pl.starter.android.feature.splash.SplashViewModel
 
 @Module
@@ -72,5 +73,10 @@ internal abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(EditCreateApartmentViewModel::class)
     abstract fun bindEditCreateApartmentViewModel(viewModel: EditCreateApartmentViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(UserListViewModel::class)
+    abstract fun bindEditUserListViewModel(viewModel: UserListViewModel): ViewModel
 
 }

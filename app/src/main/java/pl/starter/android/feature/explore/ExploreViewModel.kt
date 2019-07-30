@@ -35,7 +35,6 @@ class ExploreViewModel @Inject constructor(
 
 
     private lateinit var user: User
-    val apartments = ObservableArrayList<ApartmentRowItem>()
 
     val minSize = ObservableInt(0)
     val maxSize = ObservableInt(400)
@@ -54,6 +53,8 @@ class ExploreViewModel @Inject constructor(
     val apartmentStates = ObservableArrayList<String>().apply {
         addAll(ApartmentStateFilter.values().map { it.toString() })
     }
+
+    val apartments = ObservableArrayList<ApartmentRowItem>()
     val itemBinding = ItemBinding.of<String>(BR.role, R.layout.item_dropdown)
 
     val canAddNew = ObservableBoolean(false)

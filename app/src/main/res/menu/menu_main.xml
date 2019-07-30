@@ -6,7 +6,7 @@
         android:title="@string/main.navigation.explore" />
     <item
         android:id="@+id/navigation_users"
-        android:icon="@drawable/ic_person_black_24dp"
+        android:icon="@drawable/ic_people_black_24dp"
         android:title="@string/main.navigation.users" />
     <item
         android:id="@+id/navigation_profile"
