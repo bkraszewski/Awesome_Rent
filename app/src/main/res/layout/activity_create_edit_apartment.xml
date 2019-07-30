@@ -32,6 +32,16 @@
                 android:padding="@dimen/half_spacer"
                 android:src="@drawable/ic_close_black_24dp" />
 
+            <ImageView
+                android:layout_width="@dimen/clickable_area"
+                android:layout_height="@dimen/clickable_area"
+                android:layout_gravity="end"
+                app:visible="@{viewModel.canDeleteApartment}"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="@{()-> viewModel.onDelete()}"
+                android:padding="@dimen/half_spacer"
+                android:src="@drawable/ic_delete_black_24dp" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/apartmentNameTIL"
                 style="@style/TextInputLayout"
@@ -45,6 +55,7 @@
                     style="@style/TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="@{viewModel.canEditFormFields}"
                     android:hint="@string/form_apartment_name"
                     android:text="@={viewModel.apartmentName}" />
 
@@ -64,6 +75,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/form_apartment_description"
                     android:hint="@string/form_apartment_description"
+                    android:enabled="@{viewModel.canEditFormFields}"
                     android:maxLines="4"
                     android:singleLine="false"
                     android:text="@={viewModel.apartmentDescription}" />
@@ -83,6 +95,7 @@
                     style="@style/TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="@{viewModel.canEditFormFields}"
                     android:hint="@string/form_apartment_rooms"
                     android:inputType="number"
                     android:text="@={viewModel.apartmentRoomsCount}" />
@@ -102,6 +115,7 @@
                     style="@style/TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="@{viewModel.canEditFormFields}"
                     android:hint="@string/form_apartment_area"
                     android:inputType="numberDecimal"
                     android:text="@={viewModel.apartmentAreaSize}" />
@@ -121,6 +135,7 @@
                     style="@style/TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="@{viewModel.canEditFormFields}"
                     android:hint="@string/form_apartment_lat"
                     android:inputType="numberDecimal"
                     android:text="@={viewModel.apartmentLat}" />
@@ -132,6 +147,7 @@
                 style="@style/TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:layout_marginTop="@dimen/double_spacer"
                 android:layout_marginBottom="@dimen/double_spacer"
                 android:error="@{viewModel.apartmentLngError}">
@@ -140,6 +156,7 @@
                     style="@style/TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="@{viewModel.canEditFormFields}"
                     android:hint="@string/form_apartment_lng"
                     android:inputType="numberDecimal"
                     android:text="@={viewModel.apartmentLng}" />
@@ -168,6 +185,7 @@
                     style="@style/TextInputEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:enabled="@{viewModel.canEditFormFields}"
                     android:hint="@string/form_apartment_price"
                     android:inputType="numberDecimal"
                     android:text="@={viewModel.apartmentMonthlyPrice}" />

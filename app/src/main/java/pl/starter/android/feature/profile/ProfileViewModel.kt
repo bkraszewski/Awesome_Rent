@@ -35,12 +35,16 @@ class ProfileViewModel @Inject constructor(
 
     override fun onAttach(view: ProfileView) {
         super.onAttach(view)
-        roles.clear()
-        roles.addAll(Role.values().map { it.toString() })
+        setupRoles()
 
         user = userRepository.getUser()
         email.set(user.email)
         selectedItem.set(roles.indexOf(user.role.toString()))
+    }
+
+    private fun setupRoles() {
+        roles.clear()
+        roles.addAll(Role.values().map { it.toString() })
     }
 
     fun onSave() {

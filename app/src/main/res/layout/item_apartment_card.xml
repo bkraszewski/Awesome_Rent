@@ -8,15 +8,21 @@
 
         <import type="pl.starter.android.feature.explore.list.ApartmentRowItem" />
         <import type="android.view.View"/>
+        <import type="pl.starter.android.feature.explore.ApartmentRowListener" />
         <variable
             name="apartment"
             type="ApartmentRowItem" />
+
+        <variable
+            name="listener"
+            type="ApartmentRowListener" />
     </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:onClick="@{() -> listener.onItemRequested(apartment.apartment)}"
         app:cardElevation="@dimen/half_spacer">
 
         <androidx.constraintlayout.widget.ConstraintLayout

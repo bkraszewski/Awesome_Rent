@@ -4,6 +4,7 @@ import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Single
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.core.IsEqual
+import org.hamcrest.core.IsSame
 import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -68,7 +69,7 @@ class EditCreateApartmentViewModelTest {
     }
 
     @Test
-    fun shouldValidateFormFields1() {
+    fun shouldValidateFormFields1Name() {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
@@ -82,7 +83,7 @@ class EditCreateApartmentViewModelTest {
     }
 
     @Test
-    fun shouldValidateFormFields2() {
+    fun shouldValidateFormFields2Name() {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
@@ -96,7 +97,7 @@ class EditCreateApartmentViewModelTest {
     }
 
     @Test
-    fun shouldValidateFormFields3() {
+    fun shouldValidateFormFields3Desc() {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
@@ -111,7 +112,7 @@ class EditCreateApartmentViewModelTest {
     }
 
     @Test
-    fun shouldValidateFormFields4() {
+    fun shouldValidateFormFields4Desc() {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
@@ -126,7 +127,7 @@ class EditCreateApartmentViewModelTest {
     }
 
     @Test
-    fun shouldValidateFormFields5() {
+    fun shouldValidateFormFields5Rooms() {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
@@ -142,7 +143,7 @@ class EditCreateApartmentViewModelTest {
     }
 
     @Test
-    fun shouldValidateFormFields6() {
+    fun shouldValidateFormFields6Rooms() {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
@@ -158,7 +159,7 @@ class EditCreateApartmentViewModelTest {
     }
 
     @Test
-    fun shouldValidateFormFields7() {
+    fun shouldValidateFormFields7Area() {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
@@ -175,7 +176,7 @@ class EditCreateApartmentViewModelTest {
     }
 
     @Test
-    fun shouldValidateFormFields8() {
+    fun shouldValidateFormFields8Area() {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
@@ -328,15 +329,58 @@ class EditCreateApartmentViewModelTest {
         cut.addedTimestamp = 2000
         cut.onSave()
 
-//        verify(apiRepository).createApartment(argument.capture())
 
         val apartment = Apartment(id=-1, name="Hello", description = "World",
             floorAreaSize = BigDecimal.valueOf(42.5),realtorEmail = "bkraszewski@gmail.com", realtorId = 1,
             latitude =43.332453, longitude = 33.23453, pricePerMonth = BigDecimal.valueOf(200),
             rooms = 4, state = ApartmentState.AVAILABLE, addedTimestamp = 2000)
 
-//        assertThat(apartment, IsEqual(argument.value))
         verify(apiRepository).createApartment(apartment)
+    }
+
+    @Test
+    fun shouldJustPreviewApartmentForUser(){
+        val apartment = Apartment(id=-1, name="Hello", description = "World",
+            floorAreaSize = BigDecimal.valueOf(42.5),realtorEmail = "bkraszewski@gmail.com", realtorId = 1,
+            latitude =43.332453, longitude = 33.23453, pricePerMonth = BigDecimal.valueOf(200),
+            rooms = 4, state = ApartmentState.AVAILABLE, addedTimestamp = 2000)
+
+        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.USER))
+
+        cut.onAttach(view)
+        cut.onShowExistingApartment(apartment)
+
+        assertThat(cut.canChangeRealtor.get(), IsEqual(false))
+        assertThat(cut.canSaveChanges.get(), IsEqual(false))
+        assertThat(cut.canChangeLocation.get(), IsEqual(false))
+        assertThat(cut.canChangeStatus.get(), IsEqual(false))
+        assertThat(cut.canEditFormFields.get(), IsEqual(false))
+    }
+
+    @Test
+    fun shouldShowApartmentData(){
+        val apartment = Apartment(id=-1, name="Hello", description = "World",
+            floorAreaSize = BigDecimal.valueOf(42.5),realtorEmail = "bkraszewski@gmail.com", realtorId = 1,
+            latitude =43.332453, longitude = 33.23453, pricePerMonth = BigDecimal.valueOf(200),
+            rooms = 4, state = ApartmentState.RENTED, addedTimestamp = 2000L)
+
+        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.USER))
+
+        cut.onAttach(view)
+        cut.onShowExistingApartment(apartment)
+
+        assertThat(cut.apartmentName.get(), IsEqual("Hello"))
+        assertThat(cut.apartmentDescription.get(), IsEqual("World"))
+        assertThat(cut.apartmentRoomsCount.get(), IsEqual("4"))
+        assertThat(cut.apartmentAreaSize.get(), IsEqual("42.5"))
+        assertThat(cut.apartmentLat.get(), IsEqual("43.332453"))
+        assertThat(cut.apartmentLng.get(), IsEqual("33.23453"))
+        assertThat(cut.apartmentMonthlyPrice.get(), IsEqual("200"))
+        assertThat(cut.apartmentRealtorEmail.get(), IsEqual("bkraszewski@gmail.com"))
+        assertThat(cut.apartmentRealtorId.get(), IsEqual(1L))
+        assertThat(cut.apartmentStatusIndex.get(), IsEqual(1))
+        assertThat(cut.addedTimestamp, IsEqual(2000L))
+
     }
 
 }

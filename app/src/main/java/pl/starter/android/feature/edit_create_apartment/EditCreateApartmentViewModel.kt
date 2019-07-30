@@ -6,10 +6,7 @@ import pl.starter.android.BR
 import pl.starter.android.R
 import pl.starter.android.base.BaseView
 import pl.starter.android.base.BaseViewModel
-import pl.starter.android.service.Apartment
-import pl.starter.android.service.ApartmentState
-import pl.starter.android.service.ApiRepository
-import pl.starter.android.service.UserRepository
+import pl.starter.android.service.*
 import pl.starter.android.utils.BaseSchedulers
 import pl.starter.android.utils.StringProvider
 import timber.log.Timber
@@ -27,6 +24,9 @@ class EditCreateApartmentViewModel @Inject constructor(
     private val baseSchedulers: BaseSchedulers
 ) : BaseViewModel<EditCreateApartmentView>() {
 
+
+    private lateinit var user: User
+
     var addedTimestamp: Long = System.currentTimeMillis()
     val apartmentName = ObservableField("")
     val apartmentDescription = ObservableField("")
@@ -42,7 +42,7 @@ class EditCreateApartmentViewModel @Inject constructor(
     val apartmentRealtorEmailError = ObservableField("")
     val apartmentRealtorId = ObservableLong(0)
 
-    val apartmentStatusIndex = ObservableInt(0)
+    val apartmentStatusIndex = ObservableInt()
     val apartmentStatuses = ObservableArrayList<String>()
 
     val itemBinding = ItemBinding.of<String>(BR.role, R.layout.item_dropdown)
@@ -51,6 +51,8 @@ class EditCreateApartmentViewModel @Inject constructor(
     val canChangeStatus = ObservableBoolean(true)
     val canSaveChanges = ObservableBoolean(true)
     val canChangeLocation = ObservableBoolean(false)
+    val canDeleteApartment = ObservableBoolean(false)
+    val canEditFormFields = ObservableBoolean(false)
 
     val apartmentNameError = ObservableField("")
     val apartmentDescriptionError = ObservableField("")
@@ -75,17 +77,18 @@ class EditCreateApartmentViewModel @Inject constructor(
 
     override fun onAttach(view: EditCreateApartmentView) {
         super.onAttach(view)
+        user = userRepository.getUser()
         apartmentStatuses.clear()
         apartmentStatuses.addAll(ApartmentState.values().map { it.toString() })
     }
 
     fun onNewApartment() {
-        val user = userRepository.getUser()
-
+        canDeleteApartment.set(false)
         canChangeLocation.set(true)
         canChangeRealtor.set(true)
         canSaveChanges.set(true)
         canChangeStatus.set(true)
+        canEditFormFields.set(true)
 
         apartmentRealtorEmail.set(user.email)
         apartmentRealtorId.set(user.id)
@@ -148,6 +151,39 @@ class EditCreateApartmentViewModel @Inject constructor(
     }
 
     fun onLocationChange() {
+
+    }
+
+    fun onShowExistingApartment(apartment: Apartment) {
+        setupFieldsEditability()
+        filApartmentFields(apartment)
+    }
+
+    private fun filApartmentFields(apartment: Apartment) {
+        apartmentName.set(apartment.name)
+        apartmentDescription.set(apartment.description)
+        apartmentRoomsCount.set(apartment.rooms.toString())
+        apartmentAreaSize.set(apartment.floorAreaSize.toString())
+        apartmentLat.set(apartment.latitude.toString())
+        apartmentLng.set(apartment.longitude.toString())
+        apartmentMonthlyPrice.set(apartment.pricePerMonth.toString())
+        apartmentRealtorEmail.set(apartment.realtorEmail)
+        apartmentRealtorId.set(apartment.realtorId)
+        apartmentStatusIndex.set(apartmentStatuses.indexOf(apartment.state.toString()))
+        addedTimestamp = apartment.addedTimestamp
+    }
+
+    private fun setupFieldsEditability() {
+        val userCanEdit = user.role == Role.REALTOR || user.role == Role.ADMIN
+        canChangeRealtor.set(userCanEdit)
+        canSaveChanges.set(userCanEdit)
+        canChangeLocation.set(userCanEdit)
+        canChangeStatus.set(userCanEdit)
+        canDeleteApartment.set(userCanEdit)
+        canEditFormFields.set(userCanEdit)
+    }
+
+    fun onDelete() {
 
     }
 }
