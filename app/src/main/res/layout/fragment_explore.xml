@@ -52,20 +52,34 @@
 
         </pl.starter.android.widget.NonSwipableViewPager>
 
-        <include layout="@layout/layout_filters"
-            app:viewModel="@{viewModel}"/>
+        <include
+            layout="@layout/layout_filters"
+            app:viewModel="@{viewModel}" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
-            android:text="@string/explore_add"
-            android:orientation="vertical"
-            app:visible="@{viewModel.canAddNew}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"
             android:onClick="@{() -> viewModel.onCreateNewApartment()}"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="vertical"
             android:src="@drawable/ic_add_black_24dp"
-            android:layout_height="wrap_content" />
+            android:text="@string/explore_add"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:visible="@{viewModel.canAddNew}" />
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:elevation="@dimen/double_spacer"
+            app:visible="@{viewModel.inProgress}">
+
+            <ProgressBar
+                android:layout_width="@dimen/clickable_area"
+                android:layout_height="@dimen/clickable_area"
+                android:layout_gravity="center"
+                />
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

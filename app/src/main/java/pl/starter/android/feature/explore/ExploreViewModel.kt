@@ -72,6 +72,7 @@ class ExploreViewModel @Inject constructor(
         val areaFormat = stringProvider.getString(R.string.explore_apartment_area)
         val roomsFormat = stringProvider.getString(R.string.explore_apartment_rooms)
 
+        inProgress.set(true)
         apiRepository.getApartments()
             .subscribeOn(baseSchedulers.io())
             .observeOn(baseSchedulers.main())
@@ -84,6 +85,7 @@ class ExploreViewModel @Inject constructor(
             }
             .toList()
             .subscribe { items, error ->
+                inProgress.set(false)
                 if (error != null) {
                     view.showMessage(stringProvider.getString(R.string.common_general_error))
                     error.printStackTrace()

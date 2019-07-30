@@ -1,20 +1,26 @@
 package pl.starter.android.service
 
+import io.reactivex.Completable
 import io.reactivex.Single
 import pl.starter.android.utils.SessionRepository
 
 interface ApiRepository {
-    fun login(email:String, password: String): Single<AuthReponse>
+    fun login(email: String, password: String): Single<AuthReponse>
     fun register(email: String, password: String): Single<AuthReponse>
 
-    fun getApartments():Single<List<Apartment>>
+    fun getApartments(): Single<List<Apartment>>
     fun createApartment(apartment: Apartment): Single<Apartment>
+    fun deleteApartment(apartment: Apartment): Completable
 }
 
 class ApiRepositoryImpl(
     private val apiService: ApiService,
     private val userRepository: UserRepository,
-    private val sessionRepository: SessionRepository) : ApiRepository{
+    private val sessionRepository: SessionRepository) : ApiRepository {
+    override fun deleteApartment(apartment: Apartment): Completable {
+        return apiService.deleteApartment(apartment.id)
+    }
+
     override fun createApartment(apartment: Apartment): Single<Apartment> {
         return apiService.createApartment(apartment)
     }

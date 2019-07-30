@@ -26,6 +26,7 @@ class EditCreateApartmentViewModel @Inject constructor(
 
 
     private lateinit var user: User
+    private lateinit var editedApartment: Apartment
 
     var addedTimestamp: Long = System.currentTimeMillis()
     val apartmentName = ObservableField("")
@@ -155,6 +156,7 @@ class EditCreateApartmentViewModel @Inject constructor(
     }
 
     fun onShowExistingApartment(apartment: Apartment) {
+        this.editedApartment = apartment
         setupFieldsEditability()
         filApartmentFields(apartment)
     }
@@ -184,6 +186,10 @@ class EditCreateApartmentViewModel @Inject constructor(
     }
 
     fun onDelete() {
-
+        apiRepository.deleteApartment(editedApartment)
+            .subscribeOn(baseSchedulers.io())
+            .observeOn(baseSchedulers.main())
+            .subscribe()
+        view?.finish()
     }
 }

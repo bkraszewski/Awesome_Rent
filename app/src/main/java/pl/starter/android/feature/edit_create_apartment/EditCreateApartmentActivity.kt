@@ -1,5 +1,6 @@
 package pl.starter.android.feature.edit_create_apartment
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -15,6 +16,23 @@ class EditCreateApartmentActivity : BaseActivity<EditCreateApartmentView, EditCr
         super.onCreate(savedInstanceState)
 
         setup(R.layout.activity_create_edit_apartment, this, EditCreateApartmentViewModel::class.java)
+        intiUi()
+    }
+
+    private fun intiUi() {
+        deleteApartmentIcon.setOnClickListener {
+            showConfirmationDialog()
+        }
+    }
+
+    private fun showConfirmationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.form_confirm_delete_title)
+            .setMessage(R.string.form_confirm_delete_message)
+            .setPositiveButton(R.string.common_yes) { dialog, which ->
+                viewModel.onDelete()
+            }.setNegativeButton(R.string.common_no) { dialog, which -> dialog.dismiss() }
+            .show()
     }
 
     override fun onStart() {

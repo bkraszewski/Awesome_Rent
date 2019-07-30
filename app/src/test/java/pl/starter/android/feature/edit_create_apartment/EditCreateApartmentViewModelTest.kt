@@ -1,6 +1,7 @@
 package pl.starter.android.feature.edit_create_apartment
 
 import com.nhaarman.mockitokotlin2.*
+import io.reactivex.Completable
 import io.reactivex.Single
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.core.IsEqual
@@ -381,6 +382,23 @@ class EditCreateApartmentViewModelTest {
         assertThat(cut.apartmentStatusIndex.get(), IsEqual(1))
         assertThat(cut.addedTimestamp, IsEqual(2000L))
 
+    }
+
+    @Test
+    fun shouldDeleteApartment(){
+        val apartment = Apartment(id=-1, name="Hello", description = "World",
+            floorAreaSize = BigDecimal.valueOf(42.5),realtorEmail = "bkraszewski@gmail.com", realtorId = 1,
+            latitude =43.332453, longitude = 33.23453, pricePerMonth = BigDecimal.valueOf(200),
+            rooms = 4, state = ApartmentState.RENTED, addedTimestamp = 2000L)
+
+        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.USER))
+        whenever(apiRepository.deleteApartment(any())).thenReturn(Completable.complete())
+
+        cut.onAttach(view)
+        cut.onShowExistingApartment(apartment)
+        cut.onDelete()
+
+        verify(apiRepository).deleteApartment(apartment)
     }
 
 }

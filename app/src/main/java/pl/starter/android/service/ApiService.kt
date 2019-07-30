@@ -1,5 +1,6 @@
 package pl.starter.android.service
 
+import io.reactivex.Completable
 import io.reactivex.Single
 import pl.starter.android.utils.BaseSchedulers
 import java.math.BigDecimal
@@ -10,16 +11,17 @@ interface ApiService {
     fun register(request: RegisterRequest): Single<AuthReponse>
     fun getApartments(): Single<List<Apartment>>
     fun createApartment(apartment: Apartment): Single<Apartment>
+    fun deleteApartment(id: Long): Completable
+    fun editApartment(id: Long, apartment: Apartment)
 
 }
 
 //TODO fake service
 class ApiServiceImpl(private val baseSchedulers: BaseSchedulers) : ApiService {
-    override fun createApartment(apartment: Apartment): Single<Apartment> {
-        fakeAparments.add(apartment)
-        return Single.just(apartment)
-            .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
-    }
+
+
+    private var highestId = 8L
+
 
     private val fakeAparments = mutableListOf(
         Apartment(1, "Top Apartment", "Really awesome aparment", BigDecimal.valueOf(100),
@@ -64,6 +66,24 @@ class ApiServiceImpl(private val baseSchedulers: BaseSchedulers) : ApiService {
     override fun register(request: RegisterRequest): Single<AuthReponse> {
         return Single.just(AuthReponse("token", User(1, "bkraszewski@gmail.com")))
             .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
+    }
+
+    override fun createApartment(apartment: Apartment): Single<Apartment> {
+        val backendItem = apartment.copy(id = ++highestId)
+        fakeAparments.add(backendItem)
+        return Single.just(backendItem)
+            .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
+    }
+
+    override fun deleteApartment(id: Long): Completable {
+
+        return Completable.fromAction {
+            fakeAparments.removeAll(fakeAparments.filter { it.id == id })
+        }
+    }
+
+    override fun editApartment(id: Long, apartment: Apartment) {
+
     }
 
 }
