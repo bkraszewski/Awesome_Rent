@@ -19,6 +19,10 @@ class UserListFragment : BaseFragment<UserListView, UserListViewModel, FragmentU
         setup(this, UserListViewModel::class.java)
         rvUserList.addItemDecoration(GridSpaceItemDecoration(16, 8))
         viewModel.requestUsers()
+
+        addUserFab.setOnClickListener {
+            ProfileActivity.startForNewUser(requireContext())
+        }
     }
 
     companion object{

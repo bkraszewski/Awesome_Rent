@@ -65,5 +65,6 @@
     <string name="common_no">No</string>
     <string name="filter_no_results">No apartments found!</string>
     <string name="main.navigation.users">Users</string>
+    <string name="add_user">Add user</string>
 
 </resources>

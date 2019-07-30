@@ -12,7 +12,8 @@ enum class Role {
     USER, REALTOR, ADMIN
 }
 
-data class User(val id: Long, val email: String, val role: Role = Role.USER)
+@Parcelize
+data class User(val id: Long, val email: String, val role: Role = Role.USER) :Parcelable
 
 data class LoginRequest(val email: String, val password: String)
 data class RegisterRequest(val email: String, val password: String)
