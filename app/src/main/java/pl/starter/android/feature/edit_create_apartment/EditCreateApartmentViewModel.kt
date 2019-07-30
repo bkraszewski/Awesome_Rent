@@ -99,8 +99,31 @@ class EditCreateApartmentViewModel @Inject constructor(
     fun onSave() {
         if (isFormInvalid()) return
 
-        createApartment()
+        if (::editedApartment.isInitialized) {
+            editApartment()
+        } else {
+            createApartment()
+        }
+    }
 
+    private fun editApartment() {
+        val apartment = buildApartment().copy(id = editedApartment.id)
+
+        inProgress.set(true)
+
+        apiRepository.editApartment(apartment)
+            .subscribeOn(baseSchedulers.io())
+            .observeOn(baseSchedulers.main())
+            .subscribe { response, error ->
+                inProgress.set(false)
+                if (error != null) {
+                    handleError(error)
+                    return@subscribe
+                }
+
+                view?.finish()
+
+            }.disposeOnDetach()
     }
 
     private fun isFormInvalid(): Boolean {
@@ -124,15 +147,19 @@ class EditCreateApartmentViewModel @Inject constructor(
             .subscribe { response, error ->
                 inProgress.set(false)
                 if (error != null) {
-                    Timber.e(error)
-                    error.printStackTrace()
-                    view?.showMessage(R.string.common_general_error)
+                    handleError(error)
                     return@subscribe
                 }
 
                 view?.finish()
 
             }.disposeOnDetach()
+    }
+
+    private fun handleError(error: Throwable) {
+        Timber.e(error)
+        error.printStackTrace()
+        view?.showMessage(R.string.common_general_error)
     }
 
     private fun buildApartment(): Apartment {
@@ -156,7 +183,7 @@ class EditCreateApartmentViewModel @Inject constructor(
     }
 
     fun onShowExistingApartment(apartment: Apartment) {
-        this.editedApartment = apartment
+        editedApartment = apartment
         setupFieldsEditability()
         filApartmentFields(apartment)
     }
@@ -186,10 +213,14 @@ class EditCreateApartmentViewModel @Inject constructor(
     }
 
     fun onDelete() {
+        inProgress.set(true)
         apiRepository.deleteApartment(editedApartment)
             .subscribeOn(baseSchedulers.io())
             .observeOn(baseSchedulers.main())
-            .subscribe()
-        view?.finish()
+            .subscribe {
+                inProgress.set(false)
+                view?.finish()
+            }.disposeOnDetach()
+
     }
 }

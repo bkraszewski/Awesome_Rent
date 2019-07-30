@@ -11,12 +11,18 @@ interface ApiRepository {
     fun getApartments(): Single<List<Apartment>>
     fun createApartment(apartment: Apartment): Single<Apartment>
     fun deleteApartment(apartment: Apartment): Completable
+    fun editApartment(apartment: Apartment): Single<Apartment>
 }
 
 class ApiRepositoryImpl(
     private val apiService: ApiService,
     private val userRepository: UserRepository,
     private val sessionRepository: SessionRepository) : ApiRepository {
+
+    override fun editApartment(apartment: Apartment): Single<Apartment> {
+        return apiService.editApartment(apartment.id, apartment)
+    }
+
     override fun deleteApartment(apartment: Apartment): Completable {
         return apiService.deleteApartment(apartment.id)
     }

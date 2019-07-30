@@ -39,6 +39,7 @@
                 app:visible="@{viewModel.canDeleteApartment}"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="@dimen/half_spacer"
+                android:clickable="@{!viewModel.inProgress}"
                 android:id="@+id/deleteApartmentIcon"
                 android:src="@drawable/ic_delete_black_24dp" />
 

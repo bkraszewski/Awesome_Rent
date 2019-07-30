@@ -12,7 +12,7 @@ interface ApiService {
     fun getApartments(): Single<List<Apartment>>
     fun createApartment(apartment: Apartment): Single<Apartment>
     fun deleteApartment(id: Long): Completable
-    fun editApartment(id: Long, apartment: Apartment)
+    fun editApartment(id: Long, apartment: Apartment): Single<Apartment>
 
 }
 
@@ -78,12 +78,16 @@ class ApiServiceImpl(private val baseSchedulers: BaseSchedulers) : ApiService {
     override fun deleteApartment(id: Long): Completable {
 
         return Completable.fromAction {
-            fakeAparments.removeAll(fakeAparments.filter { it.id == id })
+            fakeAparments.removeAll { it.id == id }
         }
     }
 
-    override fun editApartment(id: Long, apartment: Apartment) {
-
+    override fun editApartment(id: Long, apartment: Apartment): Single<Apartment> {
+        return Single.just(apartment)
+            .doOnSuccess {
+                fakeAparments.removeAll { it.id == apartment.id }
+                fakeAparments.add(apartment)
+            } .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
     }
 
 }

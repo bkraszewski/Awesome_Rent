@@ -401,4 +401,24 @@ class EditCreateApartmentViewModelTest {
         verify(apiRepository).deleteApartment(apartment)
     }
 
+    @Test
+    fun shouldEditApartment(){
+        val apartment = Apartment(id=20, name="Hello", description = "World",
+            floorAreaSize = BigDecimal.valueOf(42.5),realtorEmail = "bkraszewski@gmail.com", realtorId = 1,
+            latitude =43.332453, longitude = 33.23453, pricePerMonth = BigDecimal.valueOf(200),
+            rooms = 4, state = ApartmentState.RENTED, addedTimestamp = 2000L)
+
+        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.USER))
+        whenever(apiRepository.editApartment(any())).thenReturn(Single.just(apartment))
+
+        cut.onAttach(view)
+        cut.onShowExistingApartment(apartment)
+        val changedName = "Hello toptal!"
+        cut.apartmentName.set(changedName)
+
+        cut.onSave()
+
+        verify(apiRepository).editApartment(apartment.copy(name = changedName))
+    }
+
 }
