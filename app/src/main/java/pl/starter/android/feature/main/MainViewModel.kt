@@ -8,14 +8,12 @@ import pl.starter.android.service.UserRepository
 import javax.inject.Inject
 
 interface MainView : BaseView {
-    fun setupTabView(showClients: Boolean,
-                     showRealtors: Boolean)
+    fun setupTabView(showUsers: Boolean)
 }
 
 class MainViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : BaseViewModel<MainView>() {
-
 
     val currentBottomMenuIndex = ObservableInt(0)
 
@@ -23,10 +21,10 @@ class MainViewModel @Inject constructor(
         super.onAttach(view)
 
         val user = userRepository.getUser()
-        view.setupTabView(user.role == Role.ADMIN, user.role == Role.ADMIN)
+        view.setupTabView(user.role == Role.ADMIN)
 
         userRepository.observeUserChanges().subscribe {
-            view.setupTabView(it.role == Role.ADMIN, it.role == Role.ADMIN)
+            view.setupTabView(it.role == Role.ADMIN)
         }.disposeOnDetach()
 
     }

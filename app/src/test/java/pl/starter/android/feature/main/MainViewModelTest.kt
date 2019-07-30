@@ -3,6 +3,7 @@ package pl.starter.android.feature.main
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import io.reactivex.Observable
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -20,6 +21,8 @@ class MainViewModelTest{
         view = mock()
         userRepository = mock()
         cut = MainViewModel(userRepository)
+
+        whenever(userRepository.observeUserChanges()).thenReturn(Observable.never())
     }
 
     @Test
@@ -27,7 +30,15 @@ class MainViewModelTest{
         whenever(userRepository.getUser()).thenReturn(User(1, "", Role.USER))
         cut.onAttach(view)
 
-        verify(view).setupTabView(false, false)
+        verify(view).setupTabView(false)
+    }
+
+    @Test
+    fun shouldNotShowRealtoAndAdminTabForRealtor(){
+        whenever(userRepository.getUser()).thenReturn(User(1, "", Role.REALTOR))
+        cut.onAttach(view)
+
+        verify(view).setupTabView(false)
     }
 
     @Test
@@ -35,6 +46,6 @@ class MainViewModelTest{
         whenever(userRepository.getUser()).thenReturn(User(1, "", Role.ADMIN))
         cut.onAttach(view)
 
-        verify(view).setupTabView(true, true)
+        verify(view).setupTabView(true)
     }
 }

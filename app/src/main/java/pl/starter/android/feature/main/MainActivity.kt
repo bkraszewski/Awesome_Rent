@@ -26,11 +26,11 @@ class MainActivity : BaseActivity<MainView, MainViewModel, ActivityMainBinding>(
         setup(R.layout.activity_main, this, MainViewModel::class.java)
     }
 
-    override fun setupTabView(realtorTabVisible: Boolean, adminTabVisible: Boolean) {
-        setupFragments(realtorTabVisible, adminTabVisible)
+    override fun setupTabView(userTabVisible: Boolean) {
+        setupFragments(userTabVisible)
     }
 
-    private fun setupFragments(realtorTabVisible: Boolean, adminTabVisible: Boolean) {
+    private fun setupFragments(userTabVisible: Boolean) {
         bottomNavigation.menu.clear()
         bottomNavigation.inflateMenu(
             R.menu.menu_main
@@ -41,19 +41,13 @@ class MainActivity : BaseActivity<MainView, MainViewModel, ActivityMainBinding>(
         fragmentList.add(ExploreFragment())
         menuItems.add(R.id.navigation_explore)
 
-        if (realtorTabVisible) {
+        if (userTabVisible) {
             fragmentList.add(LoginFragment())
-            menuItems.add(R.id.navigation_realtors)
+            menuItems.add(R.id.navigation_users)
         } else {
-            bottomNavigation.menu.findItem(R.id.navigation_realtors).isVisible = false
+            bottomNavigation.menu.findItem(R.id.navigation_users).isVisible = false
         }
 
-        if (adminTabVisible) {
-            fragmentList.add(LoginFragment())
-            menuItems.add(R.id.navigation_clients)
-        } else {
-            bottomNavigation.menu.findItem(R.id.navigation_clients).isVisible = false
-        }
 
         fragmentList.add(ProfileFragment())
         menuItems.add(R.id.navigation_profile)
