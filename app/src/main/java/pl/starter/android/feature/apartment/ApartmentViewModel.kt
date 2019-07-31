@@ -15,6 +15,7 @@ import javax.inject.Inject
 
 interface ApartmentView : BaseView {
     fun finish()
+    fun showLocationPicker(lat: Double, lng: Double)
 }
 
 class ApartmentViewModel @Inject constructor(
@@ -23,7 +24,6 @@ class ApartmentViewModel @Inject constructor(
     private val apiRepository: ApiRepository,
     private val baseSchedulers: BaseSchedulers
 ) : BaseViewModel<ApartmentView>() {
-
 
     private lateinit var user: User
     private lateinit var editedApartment: Apartment
@@ -34,7 +34,6 @@ class ApartmentViewModel @Inject constructor(
     val apartmentRoomsCount = ObservableField("")
     val apartmentAreaSize = ObservableField("")
     val apartmentMonthlyPrice = ObservableField("")
-
 
     val apartmentLat = ObservableField("")
     val apartmentLng = ObservableField("")
@@ -76,8 +75,7 @@ class ApartmentViewModel @Inject constructor(
 
     )
 
-    override fun onAttach(view: ApartmentView) {
-        super.onAttach(view)
+    fun initialize() {
         user = userRepository.getUser()
         apartmentStatuses.clear()
         apartmentStatuses.addAll(ApartmentState.values().map { it.toString() })
@@ -195,7 +193,9 @@ class ApartmentViewModel @Inject constructor(
     }
 
     fun onLocationChange() {
-
+        val lat = apartmentLat.get()?.toDoubleOrNull() ?: 0.0
+        val lng = apartmentLng.get()?.toDoubleOrNull() ?:0.0
+        view?.showLocationPicker(lat, lng)
     }
 
     fun onShowExistingApartment(apartment: Apartment) {

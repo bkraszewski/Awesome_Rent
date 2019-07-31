@@ -55,6 +55,8 @@ ext {
     secretSauceVersion = "0.9.0"
     maps_version = "17.0.0"
     slider_version = "1.3"
+    place_picker_version = "0.1.6"
+    material_version = "1.1.0-alpha01"
 }
 
 dependencies {
@@ -110,6 +112,10 @@ dependencies {
     implementation "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:$tatarka_version"
     implementation "me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:$tatarka_version"
 
+
+    implementation "com.sucho:placepicker:$place_picker_version"
+
+    implementation "com.google.android.material:material:$material_version"
 
     implementation "com.google.android.gms:play-services-maps:$maps_version"
 

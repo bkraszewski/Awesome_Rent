@@ -40,7 +40,7 @@ class ApartmentViewModelTest {
     fun formShouldBeBlankForNewApartment() {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         assertThat(cut.apartmentName.get(), IsEqual(""))
@@ -58,7 +58,7 @@ class ApartmentViewModelTest {
     fun formShouldBeEditableForRealtorWhenAddingNew() {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         assertThat(cut.canChangeRealtor.get(), IsEqual(true))
@@ -72,7 +72,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
 
@@ -86,7 +86,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         cut.apartmentName.set("Hello")
@@ -100,7 +100,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         cut.apartmentName.set("Hello")
@@ -115,7 +115,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         cut.apartmentName.set("Hello")
@@ -130,7 +130,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         cut.apartmentName.set("Hello")
@@ -146,7 +146,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         cut.apartmentName.set("Hello")
@@ -162,7 +162,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         cut.apartmentName.set("Hello")
@@ -179,7 +179,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         cut.apartmentName.set("Hello")
@@ -196,7 +196,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         cut.apartmentName.set("Hello")
@@ -214,7 +214,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         cut.apartmentName.set("Hello")
@@ -232,7 +232,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         cut.apartmentName.set("Hello")
@@ -253,7 +253,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         cut.apartmentName.set("Hello")
@@ -272,7 +272,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         cut.apartmentName.set("Hello")
@@ -291,7 +291,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         cut.apartmentName.set("Hello")
@@ -312,7 +312,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         cut.apartmentName.set("Hello")
@@ -333,7 +333,7 @@ class ApartmentViewModelTest {
         whenever(stringProvider.getString(any())).thenReturn("hello world")
         whenever(apiRepository.createApartment(any())).thenReturn(Single.error(Exception("Does not matter now")))
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         cut.apartmentName.set("Hello")
@@ -357,7 +357,7 @@ class ApartmentViewModelTest {
 
 
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onNewApartment()
 
         cut.apartmentName.set("Hello")
@@ -388,7 +388,7 @@ class ApartmentViewModelTest {
 
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.USER))
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onShowExistingApartment(apartment)
 
         assertThat(cut.canChangeRealtor.get(), IsEqual(false))
@@ -407,7 +407,7 @@ class ApartmentViewModelTest {
 
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.USER))
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onShowExistingApartment(apartment)
 
         assertThat(cut.apartmentName.get(), IsEqual("Hello"))
@@ -434,7 +434,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.USER))
         whenever(apiRepository.deleteApartment(any())).thenReturn(Completable.complete())
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onShowExistingApartment(apartment)
         cut.onDelete()
 
@@ -451,7 +451,7 @@ class ApartmentViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.USER))
         whenever(apiRepository.editApartment(any())).thenReturn(Single.just(apartment))
 
-        cut.onAttach(view)
+        cut.initialize()
         cut.onShowExistingApartment(apartment)
         val changedName = "Hello toptal!"
         cut.apartmentName.set(changedName)
