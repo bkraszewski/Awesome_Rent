@@ -6,7 +6,7 @@ import kotlinx.android.synthetic.main.fragment_rent_list.*
 import pl.starter.android.R
 import pl.starter.android.base.BaseFragment
 import pl.starter.android.databinding.FragmentProfileBinding
-import pl.starter.android.feature.edit_create_apartment.EditCreateApartmentActivity
+import pl.starter.android.feature.apartment.ApartmentActivity
 import pl.starter.android.feature.explore.HasApartmentData
 import pl.starter.android.service.Apartment
 import pl.starter.android.utils.GridSpaceItemDecoration
@@ -28,6 +28,6 @@ class RentListFragment : BaseFragment<RentListView, RentListViewModel,
     }
 
     override fun showApartment(apartment: Apartment) {
-        EditCreateApartmentActivity.startForView(requireContext(), apartment)
+        ApartmentActivity.startForView(requireContext(), apartment)
     }
 }

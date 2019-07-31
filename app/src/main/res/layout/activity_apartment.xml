@@ -7,7 +7,7 @@
         <import type="pl.starter.android.R" />
         <variable
             name="viewModel"
-            type="pl.starter.android.feature.edit_create_apartment.EditCreateApartmentViewModel" />
+            type="pl.starter.android.feature.apartment.ApartmentViewModel" />
     </data>
 
     <ScrollView

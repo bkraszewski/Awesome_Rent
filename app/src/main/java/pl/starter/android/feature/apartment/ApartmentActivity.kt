@@ -1,21 +1,21 @@
-package pl.starter.android.feature.edit_create_apartment
+package pl.starter.android.feature.apartment
 
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_create_edit_apartment.*
+import kotlinx.android.synthetic.main.activity_apartment.*
 import pl.starter.android.R
 import pl.starter.android.base.BaseActivity
-import pl.starter.android.databinding.ActivityMainBinding
+import pl.starter.android.databinding.ActivityApartmentBinding
 import pl.starter.android.service.Apartment
 
-class EditCreateApartmentActivity : BaseActivity<EditCreateApartmentView, EditCreateApartmentViewModel, ActivityMainBinding>(), EditCreateApartmentView {
+class ApartmentActivity : BaseActivity<ApartmentView, ApartmentViewModel, ActivityApartmentBinding>(), ApartmentView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setup(R.layout.activity_create_edit_apartment, this, EditCreateApartmentViewModel::class.java)
+        setup(R.layout.activity_apartment, this, ApartmentViewModel::class.java)
         intiUi()
     }
 
@@ -59,11 +59,11 @@ class EditCreateApartmentActivity : BaseActivity<EditCreateApartmentView, EditCr
         const val APARTMENT = "apartment"
 
         fun startForNew(context: Context) {
-            context.startActivity(Intent(context, EditCreateApartmentActivity::class.java))
+            context.startActivity(Intent(context, ApartmentActivity::class.java))
         }
 
         fun startForView(context: Context, apartment: Apartment) {
-            context.startActivity(Intent(context, EditCreateApartmentActivity::class.java).apply {
+            context.startActivity(Intent(context, ApartmentActivity::class.java).apply {
                 putExtra(APARTMENT, apartment)
             })
         }

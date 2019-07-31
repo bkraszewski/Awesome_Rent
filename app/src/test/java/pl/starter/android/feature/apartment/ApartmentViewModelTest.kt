@@ -1,11 +1,10 @@
-package pl.starter.android.feature.edit_create_apartment
+package pl.starter.android.feature.apartment
 
 import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Completable
 import io.reactivex.Single
 import org.hamcrest.CoreMatchers.not
 import org.hamcrest.core.IsEqual
-import org.hamcrest.core.IsSame
 import org.junit.Assert.assertThat
 import org.junit.Before
 import org.junit.Test
@@ -14,18 +13,17 @@ import pl.starter.android.utils.BaseSchedulers
 import pl.starter.android.utils.StringProvider
 import pl.starter.android.utils.TestSchedulerImpl
 import java.math.BigDecimal
-import org.mockito.ArgumentCaptor
 import java.lang.Exception
 
 
-class EditCreateApartmentViewModelTest {
+class ApartmentViewModelTest {
 
-    lateinit var cut: EditCreateApartmentViewModel
+    lateinit var cut: ApartmentViewModel
     lateinit var userRepository: UserRepository
     lateinit var apiRepository: ApiRepository
     lateinit var baseSchedulers: BaseSchedulers
     lateinit var stringProvider: StringProvider
-    lateinit var view: EditCreateApartmentView
+    lateinit var view: ApartmentView
 
     @Before
     fun setUp() {
@@ -35,7 +33,7 @@ class EditCreateApartmentViewModelTest {
         stringProvider = mock()
         view = mock()
 
-        cut = EditCreateApartmentViewModel(userRepository, stringProvider, apiRepository, baseSchedulers)
+        cut = ApartmentViewModel(userRepository, stringProvider, apiRepository, baseSchedulers)
     }
 
     @Test

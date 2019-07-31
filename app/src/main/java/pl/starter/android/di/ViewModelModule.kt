@@ -9,7 +9,7 @@ import dagger.multibindings.IntoMap
 import pl.starter.android.feature.auth.AuthViewModel
 import pl.starter.android.feature.auth.login.LoginViewModel
 import pl.starter.android.feature.auth.register.RegisterViewModel
-import pl.starter.android.feature.edit_create_apartment.EditCreateApartmentViewModel
+import pl.starter.android.feature.apartment.ApartmentViewModel
 import pl.starter.android.feature.explore.ExploreViewModel
 import pl.starter.android.feature.explore.list.RentListViewModel
 import pl.starter.android.feature.explore.map.RentMapViewModel
@@ -71,8 +71,8 @@ internal abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(EditCreateApartmentViewModel::class)
-    abstract fun bindEditCreateApartmentViewModel(viewModel: EditCreateApartmentViewModel): ViewModel
+    @ViewModelKey(ApartmentViewModel::class)
+    abstract fun bindEditCreateApartmentViewModel(viewModel: ApartmentViewModel): ViewModel
 
     @Binds
     @IntoMap

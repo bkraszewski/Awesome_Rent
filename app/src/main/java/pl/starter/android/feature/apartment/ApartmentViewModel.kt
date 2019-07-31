@@ -1,4 +1,4 @@
-package pl.starter.android.feature.edit_create_apartment
+package pl.starter.android.feature.apartment
 
 import androidx.databinding.*
 import me.tatarka.bindingcollectionadapter2.ItemBinding
@@ -13,16 +13,16 @@ import timber.log.Timber
 import java.math.BigDecimal
 import javax.inject.Inject
 
-interface EditCreateApartmentView : BaseView {
+interface ApartmentView : BaseView {
     fun finish()
 }
 
-class EditCreateApartmentViewModel @Inject constructor(
+class ApartmentViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val stringProvider: StringProvider,
     private val apiRepository: ApiRepository,
     private val baseSchedulers: BaseSchedulers
-) : BaseViewModel<EditCreateApartmentView>() {
+) : BaseViewModel<ApartmentView>() {
 
 
     private lateinit var user: User
@@ -76,7 +76,7 @@ class EditCreateApartmentViewModel @Inject constructor(
 
     )
 
-    override fun onAttach(view: EditCreateApartmentView) {
+    override fun onAttach(view: ApartmentView) {
         super.onAttach(view)
         user = userRepository.getUser()
         apartmentStatuses.clear()

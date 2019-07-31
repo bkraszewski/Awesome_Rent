@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.layout_filters.*
 import pl.starter.android.R
 import pl.starter.android.base.BaseFragment
 import pl.starter.android.databinding.FragmentProfileBinding
-import pl.starter.android.feature.edit_create_apartment.EditCreateApartmentActivity
+import pl.starter.android.feature.apartment.ApartmentActivity
 import pl.starter.android.feature.explore.list.ApartmentRowItem
 import pl.starter.android.feature.explore.list.RentListFragment
 import pl.starter.android.feature.explore.map.RentMapFragment
@@ -158,7 +158,7 @@ class ExploreFragment : BaseFragment<ExploreView, ExploreViewModel,
     }
 
     override fun navigateToCreateApartment() {
-        EditCreateApartmentActivity.startForNew(requireContext())
+        ApartmentActivity.startForNew(requireContext())
     }
 
     override fun onDestroyView() {
