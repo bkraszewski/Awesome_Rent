@@ -69,5 +69,6 @@
     <string name="add_user">Add user</string>
     <string name="filter_no_users_found">No users found</string>
     <string name="profile_logout">Logout</string>
+    <string name="form_field_not_valid">Field value not valid</string>
 
 </resources>

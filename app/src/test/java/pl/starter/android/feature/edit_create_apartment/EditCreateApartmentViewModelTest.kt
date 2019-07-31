@@ -230,7 +230,28 @@ class EditCreateApartmentViewModelTest {
     }
 
     @Test
-    fun shouldValidateFormFields11Lng() {
+    fun shouldValidateFormFields11LatOutsideBounds() {
+        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(stringProvider.getString(any())).thenReturn("hello world")
+
+        cut.onAttach(view)
+        cut.onNewApartment()
+
+        cut.apartmentName.set("Hello")
+        cut.apartmentDescription.set("World")
+        cut.apartmentRoomsCount.set("4")
+        cut.apartmentAreaSize.set("42.5")
+        cut.apartmentLat.set("100.332453")
+        cut.apartmentLng.set("33.23453")
+        cut.apartmentMonthlyPrice.set("200")
+        cut.addedTimestamp = 2000
+        cut.onSave()
+
+        assertThat(cut.apartmentLatError.get(), not(IsEqual("")))
+    }
+
+    @Test
+    fun shouldValidateFormFields12Lng() {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
@@ -249,7 +270,7 @@ class EditCreateApartmentViewModelTest {
     }
 
     @Test
-    fun shouldValidateFormFields12Lng() {
+    fun shouldValidateFormFields13Lng() {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
@@ -268,7 +289,28 @@ class EditCreateApartmentViewModelTest {
     }
 
     @Test
-    fun shouldValidateFormFields13Price() {
+    fun shouldValidateFormFields14LngNotValid() {
+        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(stringProvider.getString(any())).thenReturn("hello world")
+
+        cut.onAttach(view)
+        cut.onNewApartment()
+
+        cut.apartmentName.set("Hello")
+        cut.apartmentDescription.set("World")
+        cut.apartmentRoomsCount.set("4")
+        cut.apartmentAreaSize.set("42.5")
+        cut.apartmentLat.set("10.332453")
+        cut.apartmentLng.set("-190")
+        cut.apartmentMonthlyPrice.set("200")
+        cut.addedTimestamp = 2000
+        cut.onSave()
+
+        assertThat(cut.apartmentLngError.get(), not(IsEqual("")))
+    }
+
+    @Test
+    fun shouldValidateFormFields15Price() {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
@@ -288,7 +330,7 @@ class EditCreateApartmentViewModelTest {
     }
 
     @Test
-    fun shouldValidateFormFields14Price() {
+    fun shouldValidateFormFields16Price() {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
         whenever(apiRepository.createApartment(any())).thenReturn(Single.error(Exception("Does not matter now")))

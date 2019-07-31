@@ -127,6 +127,7 @@ class EditCreateApartmentViewModel @Inject constructor(
     }
 
     private fun isFormInvalid(): Boolean {
+        //validate required fields
         for (entry in fieldWithErrorMapping.entries) {
             entry.value.set("")
             if (entry.key.get().isNullOrEmpty()) {
@@ -134,6 +135,21 @@ class EditCreateApartmentViewModel @Inject constructor(
                 return true
             }
         }
+
+        //validate latitude
+        val lat = apartmentLat.get()?.toDouble()!!
+        if(lat < -90.0 || lat > 90.0){
+            apartmentLatError.set(stringProvider.getString(R.string.form_field_not_valid))
+            return true
+        }
+
+        //validate longitude
+        val lng = apartmentLng.get()?.toDouble()!!
+        if(lng < -180.0 || lng > 180.0){
+            apartmentLngError.set(stringProvider.getString(R.string.form_field_not_valid))
+            return true
+        }
+
         return false
     }
 
