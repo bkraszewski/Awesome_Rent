@@ -48,7 +48,7 @@
                 android:gravity="start"
                 android:paddingEnd="@dimen/apartment_status_width"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/half_spacer"
+                android:layout_marginStart="@dimen/single_spacer"
                 android:text="@{apartment.apartment.name}"
                 app:layout_constraintStart_toEndOf="@+id/apartmentImage"
                 app:layout_constraintTop_toTopOf="parent"
@@ -60,11 +60,10 @@
                 android:layout_width="@dimen/apartment_status_width"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:gravity="center"
-                android:layout_marginTop="@dimen/single_spacer"
-                android:padding="@dimen/half_spacer"
+                android:padding="@dimen/quarter_spacer"
                 app:visible="@{apartment.showStatus}"
                 android:backgroundTint="@{apartment.canRent ? @color/status_available : @color/status_rented}"
-                android:layout_marginEnd="@dimen/single_spacer"
+                android:layout_marginEnd="@dimen/half_spacer"
                 tools:backgroundTint="@color/status_available"
                 android:maxWidth="@dimen/apartment_status_width"
                 android:background="@drawable/apartment_status_bg"
@@ -78,40 +77,31 @@
                 style="@style/TextSmall.Black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/half_spacer"
+                android:layout_marginStart="@dimen/single_spacer"
                 android:gravity="start"
-                android:maxLines="3"
+                android:maxLines="2"
+                android:layout_marginTop="@dimen/half_spacer"
                 android:text="@{apartment.apartment.description}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/apartmentImage"
                 app:layout_constraintTop_toBottomOf="@+id/apartmentName"
-                tools:text="Quite good apartment to start with" />
+                tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
 
-            <TextView
-                android:id="@+id/apartmentPrice"
-                style="@style/TextSmall.Black.Bold"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/half_spacer"
-                android:layout_marginEnd="@dimen/single_spacer"
-                android:gravity="start"
-                android:text="@{apartment.priceLabel}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="$200" />
 
             <TextView
                 android:id="@+id/apartmentRooms"
                 style="@style/TextSmall.Black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/half_spacer"
-                android:layout_marginEnd="@dimen/single_spacer"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="@dimen/half_spacer"
+                android:layout_marginBottom="@dimen/half_spacer"
                 android:gravity="start"
                 android:text="@{apartment.roomsLabel}"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/apartmentPrice"
+
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/apartmentPrice"
+                app:layout_constraintTop_toBottomOf="@+id/apartmentDescription"
                 tools:text="Rooms: 3" />
 
             <TextView
@@ -119,15 +109,30 @@
                 style="@style/TextSmall.Black"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/half_spacer"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="@dimen/single_spacer"
+                android:layout_marginBottom="@dimen/half_spacer"
                 android:gravity="start"
                 android:maxLines="3"
                 android:text="@{apartment.areaLabel}"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/apartmentPrice"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/apartmentRooms"
+                app:layout_constraintTop_toBottomOf="@+id/apartmentDescription"
                 tools:text="Area: 46m2" />
+
+            <TextView
+                android:id="@+id/apartmentPrice"
+                style="@style/TextNormal.Black.Bold"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/half_spacer"
+                android:layout_marginEnd="@dimen/half_spacer"
+                android:gravity="start"
+                android:text="@{apartment.priceLabel}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="$200" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -27,6 +27,7 @@ class ApartmentActivity : BaseActivity<ApartmentView, ApartmentViewModel, Activi
 
     private fun initData() {
         val apartment = intent.getParcelableExtra<Apartment?>(APARTMENT)
+        viewModel.initialize()
 
         if (apartment == null) {
             viewModel.onNewApartment()

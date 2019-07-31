@@ -29,7 +29,7 @@
                 android:layout_gravity="end"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="@{()-> viewModel.onClose()}"
-                android:padding="@dimen/half_spacer"
+                android:padding="@dimen/single_spacer"
                 android:src="@drawable/ic_close_black_24dp" />
 
             <ImageView
@@ -38,7 +38,7 @@
                 android:layout_gravity="end"
                 app:visible="@{viewModel.canDeleteApartment}"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="@dimen/half_spacer"
+                android:padding="@dimen/single_spacer"
                 android:clickable="@{!viewModel.inProgress}"
                 android:id="@+id/deleteApartmentIcon"
                 android:src="@drawable/ic_delete_black_24dp" />
@@ -219,11 +219,12 @@
 
                 <Button
                     style="@style/Button"
-                    app:visible="@{viewModel.canChangeRealtor}"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:enabled="@{!viewModel.inProgress}"
                     android:layout_height="wrap_content"
                     android:text="@string/form_change_realtor" />
+                <!--@{viewModel.canChangeRealtor}-->
 
             </LinearLayout>
 
@@ -247,6 +248,7 @@
 
             <Button
                 style="@style/Button"
+                android:layout_marginTop="@dimen/single_spacer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:visible="@{viewModel.canSaveChanges}"

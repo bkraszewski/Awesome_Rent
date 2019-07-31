@@ -19,7 +19,7 @@
         android:layout_height="@dimen/clickable_area"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:onClick="@{()-> viewModel.onCloseFilters()}"
-        android:padding="@dimen/half_spacer"
+        android:padding="@dimen/single_spacer"
         android:src="@drawable/ic_close_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

@@ -15,8 +15,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#f0f">
+        android:layout_height="match_parent">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -27,6 +26,7 @@
 
         <Button
             android:id="@+id/showFilters"
+            style="@style/Button.Accent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="@{()-> viewModel.onFiltersRequested()}"
@@ -40,7 +40,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:background="@color/colorPrimary"
-            app:layout_constraintTop_toBottomOf="@id/showFilters">
+            app:layout_constraintTop_toBottomOf="@id/showFilters"
+            app:tabTextColor="@color/white">
 
         </com.google.android.material.tabs.TabLayout>
 
@@ -60,40 +61,40 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/single_spacer"
+            android:layout_marginBottom="@dimen/single_half_spacer"
+            android:background="@color/colorPrimary"
             android:onClick="@{() -> viewModel.onCreateNewApartment()}"
             android:orientation="vertical"
             android:src="@drawable/ic_add_black_24dp"
             android:text="@string/explore_add"
-            android:layout_marginBottom="@dimen/single_spacer"
-            android:layout_marginEnd="@dimen/single_spacer"
+            android:tint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:visible="@{viewModel.canAddNew}" />
 
         <TextView
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
             android:elevation="@dimen/double_spacer"
             android:gravity="center"
-            app:visible="@{viewModel.showNoResults}"
-            android:background="@color/white"
             android:text="@string/filter_no_results"
-            android:layout_height="match_parent" />
+            app:visible="@{viewModel.showNoResults}" />
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
-            tools:visibility="gone"
             android:elevation="@dimen/double_spacer"
-            app:visible="@{viewModel.inProgress}">
+            app:visible="@{viewModel.inProgress}"
+            tools:visibility="gone">
 
             <ProgressBar
                 android:layout_width="@dimen/clickable_area"
                 android:layout_height="@dimen/clickable_area"
-                android:layout_gravity="center"
-                />
+                android:layout_gravity="center" />
         </FrameLayout>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

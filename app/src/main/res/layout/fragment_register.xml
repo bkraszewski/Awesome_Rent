@@ -12,35 +12,46 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:padding="@dimen/single_spacer"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="@color/white"
+        android:padding="@dimen/single_spacer">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/register_image"
+            app:layout_constraintBottom_toBottomOf="@id/registerEmailTL"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
+            style="@style/TextSmall.Black.Bold"
             android:layout_width="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_spacer"
             android:layout_marginEnd="@dimen/double_spacer"
             android:onClick="@{() -> viewModel.onLoginRequested()}"
-            app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/login_go_to_login"
-            android:layout_height="wrap_content" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/registerEmailTL"
             style="@style/TextInputLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:error="@{viewModel.emailError}"
             android:layout_marginBottom="@dimen/double_spacer"
+            android:error="@{viewModel.emailError}"
             app:layout_constraintBottom_toTopOf="@+id/registerPasswordTL">
 
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/TextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@={viewModel.email}"
-                android:hint="@string/register_email" />
+                android:hint="@string/register_email"
+                android:text="@={viewModel.email}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,18 +59,18 @@
             android:id="@+id/registerPasswordTL"
             style="@style/TextInputLayout"
             android:layout_width="match_parent"
-            android:error="@{viewModel.passwordError}"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/double_spacer"
+            android:error="@{viewModel.passwordError}"
             app:layout_constraintBottom_toTopOf="@+id/registerRepeatPasswordTL">
 
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/TextInputEditText"
                 android:layout_width="match_parent"
-                android:text="@={viewModel.password}"
                 android:layout_height="wrap_content"
+                android:hint="@string/register_password"
                 android:inputType="textPassword"
-                android:hint="@string/register_password" />
+                android:text="@={viewModel.password}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,10 +85,10 @@
             <com.google.android.material.textfield.TextInputEditText
                 style="@style/TextInputEditText"
                 android:layout_width="match_parent"
-                android:text="@={viewModel.repeatPassword}"
-                android:inputType="textPassword"
                 android:layout_height="wrap_content"
-                android:hint="@string/register_password_repeat" />
+                android:hint="@string/register_password_repeat"
+                android:inputType="textPassword"
+                android:text="@={viewModel.repeatPassword}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -85,24 +96,24 @@
         <Button
             android:id="@+id/registerButton"
             style="@style/Button"
-            android:enabled="@{!viewModel.inProgress}"
-            android:onClick="@{()-> viewModel.onRegister()}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:enabled="@{!viewModel.inProgress}"
+            android:onClick="@{()-> viewModel.onRegister()}"
             android:text="@string/register_register_action"
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <ProgressBar
             android:layout_width="@dimen/auth_progress_size"
-            app:layout_constraintStart_toStartOf="@+id/registerButton"
-            android:elevation="@dimen/double_spacer"
-            android:layout_marginTop="@dimen/half_spacer"
-            app:visible="@{viewModel.inProgress}"
+            android:layout_height="@dimen/auth_progress_size"
             android:layout_marginStart="@dimen/half_spacer"
+            android:layout_marginTop="@dimen/half_spacer"
             android:layout_marginBottom="@dimen/half_spacer"
-            app:layout_constraintTop_toTopOf="@+id/registerButton"
+            android:elevation="@dimen/double_spacer"
             app:layout_constraintBottom_toBottomOf="@+id/registerButton"
-            android:layout_height="@dimen/auth_progress_size" />
+            app:layout_constraintStart_toStartOf="@+id/registerButton"
+            app:layout_constraintTop_toTopOf="@+id/registerButton"
+            app:visible="@{viewModel.inProgress}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
