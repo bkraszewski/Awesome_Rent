@@ -47,7 +47,7 @@ class ExploreViewModel @Inject constructor(
     val roomsFilterLabel = ObservableField("")
 
     val showStatusFilter = ObservableBoolean(true)
-    val selectedStateIndex = ObservableInt(2)
+    val selectedStateIndex = ObservableInt(0)
     val apartmentStates = ObservableArrayList<String>().apply {
         addAll(ApartmentStateFilter.values().map { it.toString() })
     }
@@ -64,15 +64,16 @@ class ExploreViewModel @Inject constructor(
         canAddNew.set(user.role != Role.USER)
 
         loadApartments(user, buildFilters())
+        observeLocalChanges()
     }
 
-    override fun onAttach(view: ExploreView) {
-        super.onAttach(view)
+    private fun observeLocalChanges() {
         apiRepository.observeApartmentChanges()
             .subscribe {
                 loadApartments(user, buildFilters())
             }.disposeOnClear()
     }
+
 
     private fun getApartmentsSubscription(filters:Filters?): Single<List<Apartment>> {
         return if(filters == null){

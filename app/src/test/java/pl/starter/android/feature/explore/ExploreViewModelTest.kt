@@ -1,9 +1,6 @@
 package pl.starter.android.feature.explore
 
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Observable
 import io.reactivex.Single
 import org.hamcrest.core.Is
@@ -48,6 +45,7 @@ class ExploreViewModelTest {
         whenever(apiRepository.getApartments(any())).thenReturn(Single.just(apartment))
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com"))
         whenever(stringProvider.getString(anyInt())).thenReturn("%s")
+        whenever(apiRepository.observeApartmentChanges()).thenReturn(Observable.never())
 
         cut.setup(view)
 
@@ -62,6 +60,7 @@ class ExploreViewModelTest {
         whenever(apiRepository.getApartments(any())).thenReturn(Single.just(apartment))
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com"))
         whenever(stringProvider.getString(anyInt())).thenReturn("%s")
+        whenever(apiRepository.observeApartmentChanges()).thenReturn(Observable.never())
 
         cut.setup(view)
 
@@ -114,8 +113,6 @@ class ExploreViewModelTest {
         whenever(stringProvider.getString(anyInt())).thenReturn("%s")
         whenever(apiRepository.observeApartmentChanges()).thenReturn(Observable.never())
 
-        cut.setup(view)
-        cut.onAttach(view)
 
         cut.minSize.set(100)
         cut.maxSize.set(200)
@@ -123,10 +120,13 @@ class ExploreViewModelTest {
         cut.maxRooms.set(2)
         cut.minPrice.set(1)
         cut.maxPrice.set(1001)
-        cut.selectedStateIndex.set(1)
+        cut.selectedStateIndex.set(2)
+
+        cut.setup(view)
         cut.onApplyFilters()
 
-        verify(apiRepository).getApartments(Filters(priceMin = BigDecimal.valueOf(1),
+        verify(apiRepository, atLeastOnce()).getApartments(Filters(
+            priceMin = BigDecimal.valueOf(1),
             priceMax = BigDecimal.valueOf(1001),
             areaMax = 200,
             areaMin = 100,

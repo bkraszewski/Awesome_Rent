@@ -25,7 +25,7 @@ enum class ApartmentState {
 }
 
 enum class ApartmentStateFilter{
-    AVAILABLE, RENTED, ALL
+    ALL, AVAILABLE, RENTED
 }
 
 data class Filters(val priceMin: BigDecimal,
