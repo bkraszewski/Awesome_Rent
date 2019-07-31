@@ -22,13 +22,14 @@ class MainActivity : BaseActivity<MainView, MainViewModel, ActivityMainBinding>(
         super.onCreate(savedInstanceState)
 
         setup(R.layout.activity_main, this, MainViewModel::class.java)
+        viewModel.setup(this)
     }
 
     override fun setupTabView(showUsers: Boolean) {
-        setupFragments(showUsers)
+        setupTabbedViewWithViewPager(showUsers)
     }
 
-    private fun setupFragments(userTabVisible: Boolean) {
+    private fun setupTabbedViewWithViewPager(userTabVisible: Boolean) {
         bottomNavigation.menu.clear()
         bottomNavigation.inflateMenu(
             R.menu.menu_main
@@ -54,13 +55,10 @@ class MainActivity : BaseActivity<MainView, MainViewModel, ActivityMainBinding>(
             MainViewPager(fragmentList, supportFragmentManager)
         mainViewPager.offscreenPageLimit = 3
 
-        binding.bottomNavigation.setOnNavigationItemSelectedListener(object : BottomNavigationView.OnNavigationItemSelectedListener {
-            override fun onNavigationItemSelected(item: MenuItem): Boolean {
-                mainViewPager.currentItem = menuItems.indexOf(item.itemId)
-                return true
-            }
-
-        })
+        binding.bottomNavigation.setOnNavigationItemSelectedListener { item ->
+            mainViewPager.currentItem = menuItems.indexOf(item.itemId)
+            true
+        }
 
         bottomNavigation.labelVisibilityMode = BottomNavigationView.VISIBLE
     }

@@ -24,13 +24,11 @@ import pl.starter.android.feature.explore.map.RentMapFragment
 
 class ExploreFragment : BaseFragment<ExploreView, ExploreViewModel,
     FragmentProfileBinding>(R.layout.fragment_explore), ExploreView {
-    override fun navigateToCreateApartment() {
-        EditCreateApartmentActivity.startForNew(requireContext())
-    }
 
     private lateinit var viewPagerAdapter: ViewPagerAdapter
+    private val slideAnimDuration = 250L
 
-    private val apartmentsChangedCallback =  object: OnListChangedCallback<ObservableList<ApartmentRowItem>>(){
+    private val apartmentsChangedCallback = object : OnListChangedCallback<ObservableList<ApartmentRowItem>>() {
         override fun onChanged(sender: ObservableList<ApartmentRowItem>?) {
             updateFragments(sender)
         }
@@ -54,35 +52,14 @@ class ExploreFragment : BaseFragment<ExploreView, ExploreViewModel,
     }
 
     private fun updateFragments(sender: ObservableList<ApartmentRowItem>?) {
-        sender?.let{
+        sender?.let {
             viewPagerAdapter.notifyFragmentsApartmentsChanged(it)
         }
 
     }
 
     override fun showFilters() {
-
-        val animate = TranslateAnimation(
-            0f,
-            0f,
-            filtersPanel.height.toFloat(),
-            0f)
-        animate.duration = 250
-        animate.fillAfter = true
-        animate.fillBefore = true
-        animate.isFillEnabled = true
-        animate.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(animation: Animation?) {
-            }
-
-            override fun onAnimationEnd(animation: Animation?) {
-            }
-
-            override fun onAnimationStart(animation: Animation?) {
-                filtersPanel.visibility = View.VISIBLE
-            }
-
-        })
+        val animate = buildSlideInAnimation()
         filtersPanel?.startAnimation(animate)
 
         android.os.Handler().post {
@@ -90,26 +67,40 @@ class ExploreFragment : BaseFragment<ExploreView, ExploreViewModel,
         }
     }
 
-    override fun hideFilters() {
-        val animate = TranslateAnimation(
-            0f,
-            0f,
-            0f,
-            filtersPanel.height.toFloat())
-        animate.duration = 250
-        animate.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationRepeat(animation: Animation?) {
-            }
+    private fun buildSlideInAnimation(): TranslateAnimation {
+        val animate = TranslateAnimation(0f, 0f,
+            filtersPanel.height.toFloat(), 0f)
+
+        animate.duration = slideAnimDuration
+        animate.fillAfter = true
+        animate.fillBefore = true
+        animate.isFillEnabled = true
+        animate.setAnimationListener(object : EmptyAnimationListener() {
 
             override fun onAnimationStart(animation: Animation?) {
+                filtersPanel.visibility = View.VISIBLE
             }
+
+        })
+        return animate
+    }
+
+    override fun hideFilters() {
+        val animate = buildSlideOutAnimation()
+        filtersPanel?.startAnimation(animate)
+    }
+
+    private fun buildSlideOutAnimation(): TranslateAnimation {
+        val animate = TranslateAnimation(0f, 0f, 0f,
+            filtersPanel.height.toFloat())
+        animate.duration = slideAnimDuration
+        animate.setAnimationListener(object : EmptyAnimationListener() {
 
             override fun onAnimationEnd(animation: Animation?) {
                 filtersPanel.visibility = View.GONE
             }
-
         })
-        filtersPanel?.startAnimation(animate)
+        return animate
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -120,15 +111,16 @@ class ExploreFragment : BaseFragment<ExploreView, ExploreViewModel,
         viewModel.apartments.addOnListChangedCallback(apartmentsChangedCallback)
         setupFilterListeners()
         viewModel.onSizeFiltersChanged()
+        viewModel.setup(this)
     }
 
     private fun setupFilterListeners() {
-        setupRangeSlider(priceRangeSlider, viewModel.minPrice, viewModel.maxPrice) {viewModel.onPriceFiltersChanged()}
-        setupRangeSlider(sizeRangeSlider, viewModel.minSize, viewModel.maxSize) {viewModel.onSizeFiltersChanged()}
-        setupRangeSlider(roomsRangeSlider, viewModel.minRooms, viewModel.maxRooms) {viewModel.onRoomsFilterChanged()}
+        setupRangeSlider(priceRangeSlider, viewModel.minPrice, viewModel.maxPrice) { viewModel.onPriceFiltersChanged() }
+        setupRangeSlider(sizeRangeSlider, viewModel.minSize, viewModel.maxSize) { viewModel.onSizeFiltersChanged() }
+        setupRangeSlider(roomsRangeSlider, viewModel.minRooms, viewModel.maxRooms) { viewModel.onRoomsFilterChanged() }
     }
 
-    private fun setupRangeSlider(slider: MultiSlider, minValue: ObservableInt, maxValue: ObservableInt, onChangeAction: (()-> Unit)){
+    private fun setupRangeSlider(slider: MultiSlider, minValue: ObservableInt, maxValue: ObservableInt, onChangeAction: (() -> Unit)) {
 
         slider.min = minValue.get()
         slider.max = maxValue.get()
@@ -137,18 +129,14 @@ class ExploreFragment : BaseFragment<ExploreView, ExploreViewModel,
         onChangeAction()
 
         slider.setOnThumbValueChangeListener { multiSlider, thumb, thumbIndex, value ->
-            if(thumbIndex == 0){
+            if (thumbIndex == 0) {
                 minValue.set(value)
-            }else{
+            } else {
                 maxValue.set(value)
             }
+
             onChangeAction()
         }
-    }
-
-    override fun onDestroyView() {
-        viewModel.apartments.removeOnListChangedCallback(apartmentsChangedCallback)
-        super.onDestroyView()
     }
 
     private fun setupTabbedUi() {
@@ -156,7 +144,6 @@ class ExploreFragment : BaseFragment<ExploreView, ExploreViewModel,
         viewPagerAdapter.addFragment(RentListFragment(), getString(R.string.explore_list))
         viewPagerAdapter.addFragment(RentMapFragment(), getString(R.string.explore_map))
         explorePager.adapter = viewPagerAdapter
-
 
         val listTab = tabLayout.newTab()
         val mapTab = tabLayout.newTab()
@@ -170,6 +157,14 @@ class ExploreFragment : BaseFragment<ExploreView, ExploreViewModel,
         tabLayout.setupWithViewPager(explorePager)
     }
 
+    override fun navigateToCreateApartment() {
+        EditCreateApartmentActivity.startForNew(requireContext())
+    }
+
+    override fun onDestroyView() {
+        viewModel.apartments.removeOnListChangedCallback(apartmentsChangedCallback)
+        super.onDestroyView()
+    }
 }
 
 class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
@@ -194,9 +189,21 @@ class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
         fragmentTitleList.add(title)
     }
 
-    fun notifyFragmentsApartmentsChanged(items: List<ApartmentRowItem>){
+    fun notifyFragmentsApartmentsChanged(items: List<ApartmentRowItem>) {
         fragmentList.filter { it is HasApartmentData }
             .map { it as HasApartmentData }
             .forEach { it.setApartmentData(items) }
     }
+}
+
+open class EmptyAnimationListener : Animation.AnimationListener {
+    override fun onAnimationRepeat(animation: Animation?) {
+    }
+
+    override fun onAnimationEnd(animation: Animation?) {
+    }
+
+    override fun onAnimationStart(animation: Animation?) {
+    }
+
 }

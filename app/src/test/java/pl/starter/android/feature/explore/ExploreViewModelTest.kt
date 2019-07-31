@@ -4,6 +4,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import io.reactivex.Observable
 import io.reactivex.Single
 import org.hamcrest.core.Is
 import org.hamcrest.core.IsEqual.equalTo
@@ -34,6 +35,7 @@ class ExploreViewModelTest {
         stringProvider = mock()
         view = mock()
 
+
         cut = ExploreViewModel(userRepository, stringProvider, apiRepository, baseSchedulers)
     }
 
@@ -47,7 +49,7 @@ class ExploreViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com"))
         whenever(stringProvider.getString(anyInt())).thenReturn("%s")
 
-        cut.onAttach(view)
+        cut.setup(view)
 
         assertThat(cut.apartments.size, Is(equalTo(1)))
         assertThat(cut.showNoResults.get(), Is(equalTo(false)))
@@ -61,7 +63,7 @@ class ExploreViewModelTest {
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com"))
         whenever(stringProvider.getString(anyInt())).thenReturn("%s")
 
-        cut.onAttach(view)
+        cut.setup(view)
 
         assertThat(cut.apartments.size, Is(equalTo(0)))
         assertThat(cut.showNoResults.get(), Is(equalTo(true)))
@@ -77,7 +79,9 @@ class ExploreViewModelTest {
         whenever(apiRepository.getApartments(any())).thenReturn(Single.just(apartment))
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com"))
         whenever(stringProvider.getString(anyInt())).thenReturn("%s")
+        whenever(apiRepository.observeApartmentChanges()).thenReturn(Observable.never())
 
+        cut.setup(view)
         cut.onAttach(view)
 
         cut.minSize.set(100)
@@ -108,7 +112,9 @@ class ExploreViewModelTest {
         whenever(apiRepository.getApartments(any())).thenReturn(Single.just(apartment))
         whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(anyInt())).thenReturn("%s")
+        whenever(apiRepository.observeApartmentChanges()).thenReturn(Observable.never())
 
+        cut.setup(view)
         cut.onAttach(view)
 
         cut.minSize.set(100)

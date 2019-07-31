@@ -9,6 +9,7 @@ interface UserRepository{
     fun getUser(): User
     fun update(user: User)
     fun observeUserChanges(): Observable<User>
+    fun logout()
 }
 
 
@@ -19,6 +20,7 @@ const val USER_ROLE = "user_role"
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class UserRepositoryImpl (
     private val sharedPreferences: SharedPreferences) : UserRepository{
+
 
     private val subject = PublishSubject.create<User>()
 
@@ -38,7 +40,14 @@ class UserRepositoryImpl (
             )
         }.commit()
         subject.onNext(user)
+    }
 
+    override fun logout() {
+        sharedPreferences.edit().apply{
+            remove(USER_ID)
+            remove(USER_EMAIL)
+            remove(USER_ROLE)
+        }.apply()
     }
 
     override fun observeUserChanges(): Observable<User>  = subject

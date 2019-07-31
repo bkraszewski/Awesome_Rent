@@ -23,7 +23,6 @@ interface ExploreView : BaseView {
     fun showFilters()
     fun hideFilters()
     fun navigateToCreateApartment()
-
 }
 
 class ExploreViewModel @Inject constructor(
@@ -32,7 +31,6 @@ class ExploreViewModel @Inject constructor(
     private val apiRepository: ApiRepository,
     private val baseSchedulers: BaseSchedulers
 ) : BaseViewModel<ExploreView>() {
-
 
     private lateinit var user: User
 
@@ -60,14 +58,20 @@ class ExploreViewModel @Inject constructor(
     val canAddNew = ObservableBoolean(false)
     val showNoResults = ObservableBoolean(false)
 
-    override fun onAttach(view: ExploreView) {
-        super.onAttach(view)
-
+    fun setup(view: ExploreView){
         user = userRepository.getUser()
         showStatusFilter.set(user.role != Role.USER)
         canAddNew.set(user.role != Role.USER)
 
-        loadApartments(user, view, buildFilters())
+        loadApartments(user, buildFilters())
+    }
+
+    override fun onAttach(view: ExploreView) {
+        super.onAttach(view)
+        apiRepository.observeApartmentChanges()
+            .subscribe {
+                loadApartments(user, buildFilters())
+            }.disposeOnClear()
     }
 
     private fun getApartmentsSubscription(filters:Filters?): Single<List<Apartment>> {
@@ -76,10 +80,9 @@ class ExploreViewModel @Inject constructor(
         }else{
             apiRepository.getApartments(filters)
         }
-
     }
 
-    private fun loadApartments(user: User, view: ExploreView, filters: Filters?) {
+    private fun loadApartments(user: User, filters: Filters?) {
         val priceFormat = stringProvider.getString(R.string.explore_apartment_price)
         val areaFormat = stringProvider.getString(R.string.explore_apartment_area)
         val roomsFormat = stringProvider.getString(R.string.explore_apartment_rooms)
@@ -101,7 +104,7 @@ class ExploreViewModel @Inject constructor(
                 showNoResults.set(items.isEmpty())
 
                 if (error != null) {
-                    view.showMessage(stringProvider.getString(R.string.common_general_error))
+                    view?.showMessage(stringProvider.getString(R.string.common_general_error))
                     error.printStackTrace()
                     Timber.e(error)
                     return@subscribe
@@ -139,9 +142,7 @@ class ExploreViewModel @Inject constructor(
 
         val filters = buildFilters()
 
-
-        loadApartments(user, view!!, filters)
-
+        loadApartments(user, filters)
     }
 
     private fun buildFilters(): Filters {

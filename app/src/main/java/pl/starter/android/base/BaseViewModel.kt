@@ -3,6 +3,7 @@ package pl.starter.android.base
 import androidx.databinding.ObservableBoolean
 import com.byoutline.secretsauce.lifecycle.AttachableViewModelRx
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import io.reactivex.functions.Consumer
 import pl.starter.android.utils.ErrorHandler
 import javax.inject.Inject
@@ -26,5 +27,9 @@ open class BaseViewModel<T : BaseView> : AttachableViewModelRx<T>() {
     override fun onCleared() {
         super.onCleared()
         disposable.clear()
+    }
+
+    fun Disposable.disposeOnClear(){
+        disposable.add(this)
     }
 }

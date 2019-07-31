@@ -55,4 +55,11 @@ class UserListViewModel @Inject constructor(
                 users.addAll(it)
             }.disposeOnDetach()
     }
+
+    override fun onAttach(view: UserListView) {
+        super.onAttach(view)
+        apiRepository.observeUsersChanges().subscribe {
+            requestUsers()
+        }.disposeOnClear()
+    }
 }

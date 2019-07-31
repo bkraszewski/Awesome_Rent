@@ -17,11 +17,14 @@ class MainViewModel @Inject constructor(
 
     val currentBottomMenuIndex = ObservableInt(0)
 
+    fun setup(view: MainView){
+        val user = userRepository.getUser()
+        view.setupTabView(user.role == Role.ADMIN)
+    }
+
     override fun onAttach(view: MainView) {
         super.onAttach(view)
 
-        val user = userRepository.getUser()
-        view.setupTabView(user.role == Role.ADMIN)
 
         userRepository.observeUserChanges().subscribe {
             view.setupTabView(it.role == Role.ADMIN)
