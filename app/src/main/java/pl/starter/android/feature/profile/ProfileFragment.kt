@@ -6,13 +6,12 @@ import android.view.View
 import pl.starter.android.R
 import pl.starter.android.base.BaseFragment
 import pl.starter.android.databinding.FragmentProfileBinding
+import pl.starter.android.feature.splash.SplashActivity
 import pl.starter.android.service.User
 
 class ProfileFragment : BaseFragment<ProfileView, ProfileViewModel,
     FragmentProfileBinding>(R.layout.fragment_profile), ProfileView {
-    override fun finish() {
-        activity?.finish()
-    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,7 +51,14 @@ class ProfileFragment : BaseFragment<ProfileView, ProfileViewModel,
         android.os.Handler().post {
             binding.profileRoleSpinner.setSelection(viewModel.selectedItem.get())
         }
+    }
 
+    override fun navigateToStartPage() {
+        SplashActivity.start(requireActivity())
+    }
+
+    override fun finish() {
+        activity?.finish()
     }
 
     companion object {

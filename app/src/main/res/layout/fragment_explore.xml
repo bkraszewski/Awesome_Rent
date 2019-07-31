@@ -64,6 +64,8 @@
             android:orientation="vertical"
             android:src="@drawable/ic_add_black_24dp"
             android:text="@string/explore_add"
+            android:layout_marginBottom="@dimen/single_spacer"
+            android:layout_marginEnd="@dimen/single_spacer"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:visible="@{viewModel.canAddNew}" />

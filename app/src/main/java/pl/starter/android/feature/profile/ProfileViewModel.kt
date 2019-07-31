@@ -22,6 +22,7 @@ import javax.inject.Inject
 
 interface ProfileView : BaseView {
     fun finish()
+    fun navigateToStartPage()
 }
 
 class ProfileViewModel @Inject constructor(
@@ -38,35 +39,39 @@ class ProfileViewModel @Inject constructor(
     val roles = ObservableArrayList<String>()
     val itemBinding = ItemBinding.of<String>(BR.role, R.layout.item_dropdown)
     val canDelete = ObservableBoolean(false)
-    lateinit var saveAction: SaveAction
-    lateinit var user: User
+    val showLogout = ObservableBoolean(false)
 
+    private lateinit var saveAction: SaveAction
+    private lateinit var user: User
 
     init {
         setupRoles()
     }
 
-    private fun getValidUser() {
-        user = saveAction.getUser()
-        filUserData()
-    }
-
     fun onCurrentUserEditRequested() {
         canDelete.set(false)
+        showLogout.set(true)
         saveAction = CurrentUserSaveAction(userRepository)
         getValidUser()
     }
 
     fun onNewUserRequested() {
         canDelete.set(false)
+        showLogout.set(false)
         saveAction = NewUserAction(this)
         getValidUser()
     }
 
     fun onEditUserRequested(user: User) {
         canDelete.set(true)
+        showLogout.set(false)
         saveAction = EditUserAction(this, user)
         getValidUser()
+    }
+
+    private fun getValidUser() {
+        user = saveAction.getUser()
+        filUserData()
     }
 
     private fun filUserData() {
@@ -96,40 +101,10 @@ class ProfileViewModel @Inject constructor(
         view?.showMessage(R.string.profile_changed)
     }
 
-    interface SaveAction {
-        fun onSave(user: User)
-        fun getUser(): User
-    }
-
-    class CurrentUserSaveAction(private val userRepository: UserRepository) : SaveAction {
-        override fun onSave(user: User) {
-            userRepository.update(user)
-        }
-
-        override fun getUser(): User {
-            return userRepository.getUser()
-        }
-    }
-
-    class NewUserAction(private val viewModel: ProfileViewModel) : SaveAction {
-        override fun onSave(user: User) {
-            viewModel.createNewUser(user)
-        }
-
-        override fun getUser(): User {
-            return User(-1, "", Role.USER)
-        }
-    }
-
-    class EditUserAction(private val viewModel: ProfileViewModel,
-                         private val user: User) : SaveAction {
-        override fun onSave(user: User) {
-            viewModel.editUserOtherThanCurrent(user)
-        }
-
-        override fun getUser(): User {
-            return user
-        }
+    fun onLogout() {
+        apiRepository.logout()
+        view?.finish()
+        view?.navigateToStartPage()
 
     }
 
@@ -173,5 +148,42 @@ class ProfileViewModel @Inject constructor(
             .subscribe {
                 view?.finish()
             }.disposeOnDetach()
+    }
+
+    interface SaveAction {
+        fun onSave(user: User)
+        fun getUser(): User
+    }
+
+    class CurrentUserSaveAction(private val userRepository: UserRepository) : SaveAction {
+        override fun onSave(user: User) {
+            userRepository.update(user)
+        }
+
+        override fun getUser(): User {
+            return userRepository.getUser()
+        }
+    }
+
+    class NewUserAction(private val viewModel: ProfileViewModel) : SaveAction {
+        override fun onSave(user: User) {
+            viewModel.createNewUser(user)
+        }
+
+        override fun getUser(): User {
+            return User(-1, "", Role.USER)
+        }
+    }
+
+    class EditUserAction(private val viewModel: ProfileViewModel,
+                         private val user: User) : SaveAction {
+        override fun onSave(user: User) {
+            viewModel.editUserOtherThanCurrent(user)
+        }
+
+        override fun getUser(): User {
+            return user
+        }
+
     }
 }

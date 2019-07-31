@@ -1,5 +1,6 @@
 package pl.starter.android.utils
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 
 interface SessionRepository {
@@ -13,8 +14,9 @@ const val API_TOKEN = "api_token"
 class SessionRepositoryImpl constructor(private val sharedPreferences: SharedPreferences) :
     SessionRepository {
 
+    @SuppressLint("ApplySharedPref")
     override fun removeToken() {
-        sharedPreferences.edit().remove(API_TOKEN).apply()
+        sharedPreferences.edit().remove(API_TOKEN).commit()
     }
 
     override fun saveToken(token: String) {

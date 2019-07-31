@@ -46,6 +46,7 @@ class ProfileViewModelTest {
         assertThat(cut.email.get()!!, IsEqual("Hello@world.com"))
         assertThat(cut.selectedItem.get(), IsEqual(1))
         assertThat(cut.canDelete.get(), IsEqual(false))
+        assertThat(cut.showLogout.get(), IsEqual(true))
     }
 
     @Test
@@ -59,6 +60,7 @@ class ProfileViewModelTest {
         assertThat(cut.email.get()!!, IsEqual(""))
         assertThat(cut.selectedItem.get(), IsEqual(0))
         assertThat(cut.canDelete.get(), IsEqual(false))
+        assertThat(cut.showLogout.get(), IsEqual(false))
     }
 
     @Test
@@ -72,6 +74,7 @@ class ProfileViewModelTest {
         assertThat(cut.email.get()!!, IsEqual("john@doe.com"))
         assertThat(cut.selectedItem.get(), IsEqual(2))
         assertThat(cut.canDelete.get(), IsEqual(true))
+        assertThat(cut.showLogout.get(), IsEqual(false))
     }
 
     @Test

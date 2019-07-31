@@ -42,12 +42,13 @@ class UserRepositoryImpl (
         subject.onNext(user)
     }
 
+    @SuppressLint("ApplySharedPref")
     override fun logout() {
         sharedPreferences.edit().apply{
             remove(USER_ID)
             remove(USER_EMAIL)
             remove(USER_ROLE)
-        }.apply()
+        }.commit()
     }
 
     override fun observeUserChanges(): Observable<User>  = subject

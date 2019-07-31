@@ -101,19 +101,26 @@ class ExploreViewModel @Inject constructor(
             }
             .toList()
             .subscribe { items, error ->
-                inProgress.set(false)
-                showNoResults.set(items.isEmpty())
-
-                if (error != null) {
-                    view?.showMessage(stringProvider.getString(R.string.common_general_error))
-                    error.printStackTrace()
-                    Timber.e(error)
-                    return@subscribe
-                }
-                apartments.clear()
-                apartments.addAll(items)
+                handleResult(items, error)
 
             }.disposeOnDetach()
+    }
+
+    private fun handleResult(apartments: List<ApartmentRowItem>?, error: Throwable?) {
+        inProgress.set(false)
+        showNoResults.set(apartments?.isEmpty() ?: true)
+
+        if (error != null) {
+            view?.showMessage(stringProvider.getString(R.string.common_general_error))
+            error.printStackTrace()
+            Timber.e(error)
+            return
+        }
+
+        if(apartments != null) {
+            this.apartments.clear()
+            this.apartments.addAll(apartments)
+        }
     }
 
 
@@ -136,7 +143,6 @@ class ExploreViewModel @Inject constructor(
     fun onRoomsFilterChanged() {
         roomsFilterLabel.set(String.format(stringProvider.getString(R.string.filter_rooms), minRooms.get().toString(), maxRooms.get().toString()))
     }
-
 
     fun onApplyFilters(){
         view?.hideFilters()

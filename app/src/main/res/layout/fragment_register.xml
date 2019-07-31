@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:padding="@dimen/single_spacer"
         android:layout_height="match_parent"
-        android:background="#00f">
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -58,6 +58,7 @@
                 android:layout_width="match_parent"
                 android:text="@={viewModel.password}"
                 android:layout_height="wrap_content"
+                android:inputType="textPassword"
                 android:hint="@string/register_password" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -74,6 +75,7 @@
                 style="@style/TextInputEditText"
                 android:layout_width="match_parent"
                 android:text="@={viewModel.repeatPassword}"
+                android:inputType="textPassword"
                 android:layout_height="wrap_content"
                 android:hint="@string/register_password_repeat" />
 

@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:padding="@dimen/single_spacer"
         android:layout_height="match_parent"
-        android:background="#0f0">
+        android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
                 style="@style/TextInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:inputType="textPassword"
                 android:text="@={viewModel.password}"
                 android:hint="@string/login_password" />
 

@@ -69,6 +69,18 @@
             android:layout_height="@dimen/auth_progress_size" />
 
         <Button
+            android:id="@+id/logoutButton"
+            style="@style/Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:visible="@{viewModel.showLogout}"
+            android:enabled="@{!viewModel.inProgress}"
+            android:onClick="@{()-> viewModel.onLogout()}"
+            android:text="@string/profile_logout"
+            android:layout_marginBottom="@dimen/sixfold_spacer"
+            app:layout_constraintBottom_toTopOf="@+id/saveButton" />
+
+        <Button
             android:id="@+id/saveButton"
             style="@style/Button"
             android:layout_width="match_parent"

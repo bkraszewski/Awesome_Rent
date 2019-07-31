@@ -33,10 +33,6 @@ class ApiRepositoryImpl(
     private val usersChangesSubject = PublishSubject.create<Any>()
     private val apartmentsChangesSubject = PublishSubject.create<Any>()
 
-    override fun logout() {
-        sessionRepository.removeToken()
-        userRepository.logout()
-    }
 
     override fun getUsers(): Single<List<User>> {
         return apiService.getUsers()
@@ -93,6 +89,11 @@ class ApiRepositoryImpl(
             userRepository.update(it.user)
             sessionRepository.saveToken(it.token)
         }
+    }
+
+    override fun logout() {
+        sessionRepository.removeToken()
+        userRepository.logout()
     }
 
     override fun getApartments(): Single<List<Apartment>> {
