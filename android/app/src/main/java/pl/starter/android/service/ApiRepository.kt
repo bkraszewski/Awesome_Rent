@@ -49,11 +49,16 @@ class ApiRepositoryImpl(
     }
 
     override fun editUser(userId: String, user: User): Single<User> {
-        return Single.never()
+        return adminService.editUser(userId, UserRequest(user.email, user.role.toString())).doOnSuccess {
+            adminChangesSubject.onNext(1)
+        }.flatMap { Single.just(user) }
     }
 
     override fun deleteUser(userId: String): Completable {
-        return Completable.never()
+        return adminService.deleteUser(userId).doOnComplete {
+            adminChangesSubject.onNext(1)
+        }
+
     }
 
     override fun createUser(user: User): Single<User> {
