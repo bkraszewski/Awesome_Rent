@@ -117,5 +117,39 @@ app.delete('/api/users/:id', jsonParser, (req, res) => {
     }
 });
 
+app.put('/api/users/:id', jsonParser, (req, res) => {
+
+    try {
+        const id = req.params.id;
+        const user = {};
+        user.email = req.body.email;
+        user.role = req.body.role;
+        user.id = id;
+
+        admin.auth().updateUser(user.id, {
+            email: user.email,
+            displayName: user.role,
+        })
+            .then(function(userRecord) {
+                // See the UserRecord reference doc for the contents of userRecord.
+                console.log('Successfully updated user', userRecord.toJSON());
+                res.statusCode = 200;
+                res.end()
+            })
+            .catch(function(error) {
+                console.log(error);
+                res.statusCode = 500;
+                res.json({error: error})
+            });
+
+
+    } catch (error) {
+        console.log(error);
+        res.statusCode = 500;
+        res.json({error: error})
+    }
+});
+
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
