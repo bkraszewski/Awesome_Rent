@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const app = express();
-const port = 3000;
+const port = process.env.PORT  || 3000;
 "use strict";
 
 const jsonParser = bodyParser.json();
@@ -32,8 +32,6 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-let db = admin.firestore();
-
 app.get('/', (req, res) => {
     res.json({message: 'api is running!'})
 
@@ -45,11 +43,11 @@ app.get('/api/users', jsonParser, (req, res) => {
 
         admin.auth().listUsers().then((listUsersResult) => {
             const users = listUsersResult.users.map(record => {
-                console.log(record)
-                const user = {}
+                console.log(record);
+                const user = {};
                 user.email = record.email;
                 user.role = record.displayName;
-                user.id = record.uid
+                user.id = record.uid;
                 return user;
             });
             res.json({users: users})
