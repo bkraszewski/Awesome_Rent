@@ -64,70 +64,6 @@ app.get('/api/users', jsonParser, (req, res) => {
         res.statusCode = 500;
         res.json({error: error})
     }
-
-    // admin.auth().createUser({
-    //     email: user.email,
-    //     emailVerified: false,
-    //     password: user.password,
-    //     displayName: roles.user,
-    //     disabled: false
-    // }).then(function (userRecord) {
-    // See the UserRecord reference doc for the contents of userRecord.
-    // console.log('Successfully created new user:', userRecord.uid);
-    //
-    // firebase.auth().signInWithEmailAndPassword(user.email, user.password)
-    //     .then((authUser) => {
-    //         console.log('authenticated!')
-    //         authUser.user.getIdToken(true).then((token ) => {
-    //             console.log('got token: ', token)
-    //             res.json({token: token})
-    //         }).catch((error => {
-    //             console.log('Error authenticating', error);
-    //             res.statusCode = 500;
-    //             res.json({error: error})
-    //         }))
-    //
-    //
-    //     }).catch((error => {
-    //     console.log('Error authenticating', error);
-    //     res.statusCode = 500;
-    //     res.json({error: error})
-    // }))
-
-    // userRecord.getIdToken(true)
-    //     .then((token) => {
-    //         user.token = token
-    //         res.json(user)
-    // }).catch((error) => {
-    //     console.log('Error creating new user:', error);
-    //     res.statusCode = 500;
-    //     res.json({error: error})
-    // })
-
-    // admin.auth().createCustomToken(userRecord.uid)
-    //     .then(function (customToken) {
-    //         // Send token back to client
-    //         user.token = customToken
-    //         res.json(user)
-    //     })
-    //     .catch(function (error) {
-    //         console.log('Error creating custom token:', error);
-    //         res.statusCode = 500;
-    //         res.json({error: error})
-    //     });
-    //
-    //     })
-    //         .catch(function (error) {
-    //             console.log('Error creating new user:', error);
-    //             res.statusCode = 500;
-    //             res.json({error: error})
-    //         });
-    //
-    // } catch (error) {
-    //     console.log(error);
-    //     res.statusCode = 500;
-    //     res.json({error: error})
-    // }
 });
 
 app.post('/api/users', jsonParser, (req, res) => {
@@ -148,6 +84,30 @@ app.post('/api/users', jsonParser, (req, res) => {
             res.statusCode = 500;
             res.json({error: error})
         })
+
+
+    } catch (error) {
+        console.log(error);
+        res.statusCode = 500;
+        res.json({error: error})
+    }
+});
+
+app.delete('/api/users/:id', jsonParser, (req, res) => {
+
+    try {
+        const id = req.params.id;
+
+        admin.auth().deleteUser(id)
+            .then(function() {
+                res.statusCode = 200
+                res.end()
+            })
+            .catch(function(error) {
+                console.log(error);
+                res.statusCode = 500;
+                res.json({error: error})
+            });
 
 
     } catch (error) {
