@@ -39,92 +39,117 @@ app.get('/', (req, res) => {
 
 });
 
-app.post('/api/register', jsonParser, (req, res) => {
+app.get('/api/users', jsonParser, (req, res) => {
 
     try {
-        console.log(req.body);
-        const user = {email: req.body.email, password: req.body.password};
 
-        admin.auth().createUser({
-            email: user.email,
-            emailVerified: false,
-            password: user.password,
-            displayName: roles.user,
-            disabled: false
-        }).then(function (userRecord) {
-            // See the UserRecord reference doc for the contents of userRecord.
-            // console.log('Successfully created new user:', userRecord.uid);
-            //
-            // firebase.auth().signInWithEmailAndPassword(user.email, user.password)
-            //     .then((authUser) => {
-            //         console.log('authenticated!')
-            //         authUser.user.getIdToken(true).then((token ) => {
-            //             console.log('got token: ', token)
-            //             res.json({token: token})
-            //         }).catch((error => {
-            //             console.log('Error authenticating', error);
-            //             res.statusCode = 500;
-            //             res.json({error: error})
-            //         }))
-            //
-            //
-            //     }).catch((error => {
-            //     console.log('Error authenticating', error);
-            //     res.statusCode = 500;
-            //     res.json({error: error})
-            // }))
-
-            // userRecord.getIdToken(true)
-            //     .then((token) => {
-            //         user.token = token
-            //         res.json(user)
-            // }).catch((error) => {
-            //     console.log('Error creating new user:', error);
-            //     res.statusCode = 500;
-            //     res.json({error: error})
-            // })
-
-            admin.auth().createCustomToken(userRecord.uid)
-                .then(function (customToken) {
-                    // Send token back to client
-                    user.token = customToken
-                    res.json(user)
-                })
-                .catch(function (error) {
-                    console.log('Error creating custom token:', error);
-                    res.statusCode = 500;
-                    res.json({error: error})
-                });
-
+        admin.auth().listUsers().then((listUsersResult) => {
+            const users = listUsersResult.users.map(record => {
+                console.log(record)
+                const user = {}
+                user.email = record.email;
+                user.role = record.displayName;
+                user.id = record.uid
+                return user;
+            });
+            res.json({users: users})
         })
-            .catch(function (error) {
-                console.log('Error creating new user:', error);
+            .catch((error) => {
+                console.log(error);
                 res.statusCode = 500;
                 res.json({error: error})
-            });
-
+            })
     } catch (error) {
         console.log(error);
         res.statusCode = 500;
         res.json({error: error})
     }
+
+    // admin.auth().createUser({
+    //     email: user.email,
+    //     emailVerified: false,
+    //     password: user.password,
+    //     displayName: roles.user,
+    //     disabled: false
+    // }).then(function (userRecord) {
+    // See the UserRecord reference doc for the contents of userRecord.
+    // console.log('Successfully created new user:', userRecord.uid);
+    //
+    // firebase.auth().signInWithEmailAndPassword(user.email, user.password)
+    //     .then((authUser) => {
+    //         console.log('authenticated!')
+    //         authUser.user.getIdToken(true).then((token ) => {
+    //             console.log('got token: ', token)
+    //             res.json({token: token})
+    //         }).catch((error => {
+    //             console.log('Error authenticating', error);
+    //             res.statusCode = 500;
+    //             res.json({error: error})
+    //         }))
+    //
+    //
+    //     }).catch((error => {
+    //     console.log('Error authenticating', error);
+    //     res.statusCode = 500;
+    //     res.json({error: error})
+    // }))
+
+    // userRecord.getIdToken(true)
+    //     .then((token) => {
+    //         user.token = token
+    //         res.json(user)
+    // }).catch((error) => {
+    //     console.log('Error creating new user:', error);
+    //     res.statusCode = 500;
+    //     res.json({error: error})
+    // })
+
+    // admin.auth().createCustomToken(userRecord.uid)
+    //     .then(function (customToken) {
+    //         // Send token back to client
+    //         user.token = customToken
+    //         res.json(user)
+    //     })
+    //     .catch(function (error) {
+    //         console.log('Error creating custom token:', error);
+    //         res.statusCode = 500;
+    //         res.json({error: error})
+    //     });
+    //
+    //     })
+    //         .catch(function (error) {
+    //             console.log('Error creating new user:', error);
+    //             res.statusCode = 500;
+    //             res.json({error: error})
+    //         });
+    //
+    // } catch (error) {
+    //     console.log(error);
+    //     res.statusCode = 500;
+    //     res.json({error: error})
+    // }
 });
 
-app.post('/api/login', jsonParser, (req, res) => {
+app.post('/api/users', jsonParser, (req, res) => {
 
     try {
-        let docRef = db.collection('users').doc('alovelace');
 
-        let setAda = docRef.set({
-            first: 'Ada',
-            last: 'Lovelace',
-            born: 1815
-        });
+        const user = {};
+        user.email = req.body.email;
+        user.role = req.body.role;
+
+        admin.auth().createUser({
+            email:user.email,
+            displayName : user.role
+        }).then((record) => {
+            user.id = record.uid
+            res.json({user: user})
+        }).catch((error) => {
+            res.statusCode = 500;
+            res.json({error: error})
+        })
 
 
-        console.log(req.body);
-        const user = {login: req.body.email, id: 1, role: 'ADMIN', token: "dsdgdgf"};
-        res.json(user)
     } catch (error) {
         console.log(error);
         res.statusCode = 500;
@@ -132,20 +157,5 @@ app.post('/api/login', jsonParser, (req, res) => {
     }
 });
 
-app.get('/api/users', jsonParser, (req, res) => {
-    const token = req.body.token;
-    admin.auth().verifyIdToken(token)
-        .then(function (decodedToken) {
-            let uid = decodedToken.uid;
-            res.json({message: "authenticated!"})
-            // ...
-        }).catch(function (error) {
-
-        res.statusCode = 401;
-        res.json({error: error});
-
-    });
-
-});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
