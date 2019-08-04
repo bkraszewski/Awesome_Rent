@@ -58,10 +58,22 @@
             layout="@layout/layout_filters"
             app:viewModel="@{viewModel}" />
 
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:elevation="@dimen/single_spacer"
+            android:gravity="center"
+            android:text="@string/filter_no_results"
+            app:visible="@{viewModel.showNoResults}" />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/single_spacer"
+            app:elevation="@dimen/double_spacer"
             android:layout_marginBottom="@dimen/single_half_spacer"
             android:background="@color/colorPrimary"
             android:onClick="@{() -> viewModel.onCreateNewApartment()}"
@@ -72,15 +84,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:visible="@{viewModel.canAddNew}" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:elevation="@dimen/double_spacer"
-            android:gravity="center"
-            android:text="@string/filter_no_results"
-            app:visible="@{viewModel.showNoResults}" />
 
         <FrameLayout
             android:layout_width="match_parent"

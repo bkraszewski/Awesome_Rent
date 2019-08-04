@@ -17,7 +17,7 @@ enum class Role {
         fun fromUser(user:FirebaseUser) : Role{
             val roleString = user.displayName
             return if (TextUtils.isEmpty(roleString)) {
-                Role.USER
+                Role.REALTOR
             } else {
                 Role.valueOf(roleString!!)
             }

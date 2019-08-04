@@ -1,6 +1,7 @@
 package pl.starter.android.di
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import pl.starter.android.service.ApiService
@@ -15,15 +16,22 @@ open class ServiceProviderModule {
     @Provides
     @Singleton
     fun provideApiService(
-        firebaseAuth: FirebaseAuth): ApiService {
+        firebaseAuth: FirebaseAuth,
+        firestore: FirebaseFirestore): ApiService {
         //todo replace later with actual implementation
-        return FirebaseApiServiceImpl(firebaseAuth)
+        return FirebaseApiServiceImpl(firebaseAuth, firestore)
     }
 
     @Provides
     @Singleton
     fun provideFirebaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirestore(): FirebaseFirestore {
+        return FirebaseFirestore.getInstance()
     }
 
     @Provides

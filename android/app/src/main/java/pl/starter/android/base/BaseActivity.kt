@@ -2,6 +2,7 @@ package pl.starter.android.base
 
 
 import android.view.Menu
+import android.widget.Toast
 import androidx.annotation.MenuRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.ViewDataBinding
@@ -41,7 +42,7 @@ open class BaseActivity<VIEW : BaseView, VM : BaseViewModel<VIEW>, BINDING : Vie
 
     override fun showMessage(message: String?) {
         message?.let {
-            //toast(it)
+            Toast.makeText(this, it, Toast.LENGTH_LONG).show()
         }
     }
 
