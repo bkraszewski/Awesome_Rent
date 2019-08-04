@@ -158,6 +158,7 @@ class ProfileViewModel @Inject constructor(
     class CurrentUserSaveAction(private val userRepository: UserRepository) : SaveAction {
         override fun onSave(user: User) {
             userRepository.update(user)
+                .subscribe()
         }
 
         override fun getUser(): User {
