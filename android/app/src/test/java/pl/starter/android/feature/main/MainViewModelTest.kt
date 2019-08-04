@@ -27,7 +27,7 @@ class MainViewModelTest{
 
     @Test
     fun shouldNotShowRealtoAndAdminTabForRegularUser(){
-        whenever(userRepository.getUser()).thenReturn(User(1, "", Role.USER))
+        whenever(userRepository.getUser()).thenReturn(User("1", "", Role.USER))
         cut.setup(view)
 
         verify(view).setupTabView(false)
@@ -35,7 +35,7 @@ class MainViewModelTest{
 
     @Test
     fun shouldNotShowRealtoAndAdminTabForRealtor(){
-        whenever(userRepository.getUser()).thenReturn(User(1, "", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "", Role.REALTOR))
         cut.setup(view)
 
         verify(view).setupTabView(false)
@@ -43,7 +43,7 @@ class MainViewModelTest{
 
     @Test
     fun shouldShowAllTabsToAdmin(){
-        whenever(userRepository.getUser()).thenReturn(User(1, "", Role.ADMIN))
+        whenever(userRepository.getUser()).thenReturn(User("1", "", Role.ADMIN))
         cut.setup(view)
 
         verify(view).setupTabView(true)

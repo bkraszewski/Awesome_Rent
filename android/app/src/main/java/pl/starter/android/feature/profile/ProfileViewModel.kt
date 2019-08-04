@@ -171,7 +171,7 @@ class ProfileViewModel @Inject constructor(
         }
 
         override fun getUser(): User {
-            return User(-1, "", Role.USER)
+            return User("", "", Role.USER)
         }
     }
 

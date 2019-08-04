@@ -11,15 +11,15 @@ interface ApiService {
     fun register(request: RegisterRequest): Single<AuthReponse>
 
     fun createApartment(apartment: Apartment): Single<Apartment>
-    fun deleteApartment(id: Long): Completable
-    fun editApartment(id: Long, apartment: Apartment): Single<Apartment>
+    fun deleteApartment(id: String): Completable
+    fun editApartment(id: String, apartment: Apartment): Single<Apartment>
 
     fun getApartments(): Single<List<Apartment>>
     fun getApartments(filters: Filters): Single<List<Apartment>>
 
     fun getUsers(): Single<List<User>>
-    fun editUser(userId: Long, user: User): Single<User>
-    fun deleteUser(userId: Long): Completable
+    fun editUser(userId: String, user: User): Single<User>
+    fun deleteUser(userId: String): Completable
     fun createUser(user: User): Single<User>
 
 }
@@ -30,38 +30,38 @@ class ApiServiceImpl(private val baseSchedulers: BaseSchedulers) : ApiService {
     private var highestId = 8L
 
     private val fakeAparments = mutableListOf(
-        Apartment(1, "Top Apartment", "Really awesome aparment", BigDecimal.valueOf(100),
+        Apartment("1", "Top Apartment", "Really awesome aparment", BigDecimal.valueOf(100),
             BigDecimal.valueOf(2000), 4, 48.532976, 14.610996, System.currentTimeMillis(),
-            1, "bkraszewski@gmail.com", ApartmentState.AVAILABLE),
-        Apartment(2, "Small apartment", "Tiny but fun", BigDecimal.valueOf(20),
+            "1", "bkraszewski@gmail.com", ApartmentState.AVAILABLE),
+        Apartment("2", "Small apartment", "Tiny but fun", BigDecimal.valueOf(20),
             BigDecimal.valueOf(700), 1, 49.226566, 8.637046, System.currentTimeMillis(),
-            1, "bkraszewski@gmail.com", ApartmentState.AVAILABLE),
-        Apartment(3, "Huge Apartment", "That's what I call big", BigDecimal.valueOf(250),
+            "1", "bkraszewski@gmail.com", ApartmentState.AVAILABLE),
+        Apartment("3", "Huge Apartment", "That's what I call big", BigDecimal.valueOf(250),
             BigDecimal.valueOf(5000), 7, 51.469408, 14.610996, System.currentTimeMillis(),
-            1, "bkraszewski@gmail.com", ApartmentState.AVAILABLE),
+            "1", "bkraszewski@gmail.com", ApartmentState.AVAILABLE),
 
-        Apartment(4, "Medium Flat", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", BigDecimal.valueOf(60),
+        Apartment("4", "Medium Flat", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", BigDecimal.valueOf(60),
             BigDecimal.valueOf(900), 2, 51.905307, 21.990580, System.currentTimeMillis(),
-            1, "bkraszewski@gmail.com", ApartmentState.RENTED),
-        Apartment(5, "Upper Apartment", "Quite comfy", BigDecimal.valueOf(75),
+            "1", "bkraszewski@gmail.com", ApartmentState.RENTED),
+        Apartment("5", "Upper Apartment", "Quite comfy", BigDecimal.valueOf(75),
             BigDecimal.valueOf(700), 3, 52.357361, 19.930998, System.currentTimeMillis(),
-            1, "bkraszewski@gmail.com", ApartmentState.AVAILABLE),
+            "1", "bkraszewski@gmail.com", ApartmentState.AVAILABLE),
 
-        Apartment(6, "Hello Apartment", "Really average apartment", BigDecimal.valueOf(45),
+        Apartment("6", "Hello Apartment", "Really average apartment", BigDecimal.valueOf(45),
             BigDecimal.valueOf(750), 2, 48.532976, 14.610996, System.currentTimeMillis(),
-            1, "bkraszewski@gmail.com", ApartmentState.AVAILABLE),
-        Apartment(7, "Cheap apartment", "Do you really want to rent it?", BigDecimal.valueOf(24),
+            "1", "bkraszewski@gmail.com", ApartmentState.AVAILABLE),
+        Apartment("7", "Cheap apartment", "Do you really want to rent it?", BigDecimal.valueOf(24),
 
             BigDecimal.valueOf(200), 1, 51.267285, 21.232619, System.currentTimeMillis(),
-            1, "bkraszewski@gmail.com", ApartmentState.AVAILABLE)
+            "1", "bkraszewski@gmail.com", ApartmentState.AVAILABLE)
     )
 
     private val fakeUsers = mutableListOf(
-        User(1, "user@gmail.com", Role.USER),
-        User(2, "tester@gmail.com", Role.USER),
-        User(3, "joedoe@gmail.com", Role.USER),
-        User(4, "realtor@tophomes.com", Role.REALTOR),
-        User(5, "uberadmin@tophomes.com", Role.ADMIN))
+        User("1", "user@gmail.com", Role.USER),
+        User("2", "tester@gmail.com", Role.USER),
+        User("3", "joedoe@gmail.com", Role.USER),
+        User("4", "realtor@tophomes.com", Role.REALTOR),
+        User("5", "uberadmin@tophomes.com", Role.ADMIN))
 
     override fun getApartments(): Single<List<Apartment>> {
         return Single.just(fakeAparments.toList())
@@ -69,30 +69,30 @@ class ApiServiceImpl(private val baseSchedulers: BaseSchedulers) : ApiService {
     }
 
     override fun login(request: LoginRequest): Single<AuthReponse> {
-        return Single.just(AuthReponse("token", User(1, "bkraszewski@gmail.com")))
+        return Single.just(AuthReponse("token", User("1", "bkraszewski@gmail.com")))
             .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
     }
 
     override fun register(request: RegisterRequest): Single<AuthReponse> {
-        return Single.just(AuthReponse("token", User(1, "bkraszewski@gmail.com")))
+        return Single.just(AuthReponse("token", User("1", "bkraszewski@gmail.com")))
             .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
     }
 
     override fun createApartment(apartment: Apartment): Single<Apartment> {
-        val backendItem = apartment.copy(id = ++highestId)
+        val backendItem = apartment.copy(id = (++highestId).toString())
         fakeAparments.add(backendItem)
         return Single.just(backendItem)
             .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
     }
 
-    override fun deleteApartment(id: Long): Completable {
+    override fun deleteApartment(id: String): Completable {
 
         return Completable.fromAction {
             fakeAparments.removeAll { it.id == id }
         }
     }
 
-    override fun editApartment(id: Long, apartment: Apartment): Single<Apartment> {
+    override fun editApartment(id: String, apartment: Apartment): Single<Apartment> {
         return Single.just(apartment)
             .doOnSuccess {
                 fakeAparments.removeAll { it.id == apartment.id }
@@ -132,21 +132,21 @@ class ApiServiceImpl(private val baseSchedulers: BaseSchedulers) : ApiService {
             .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
     }
 
-    override fun editUser(userId: Long, user: User): Single<User> {
+    override fun editUser(userId: String, user: User): Single<User> {
         fakeUsers.removeAll { it.id == userId }
         fakeUsers.add(user)
         return Single.just(user)
             .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
     }
 
-    override fun deleteUser(userId: Long): Completable {
+    override fun deleteUser(userId: String): Completable {
         return Completable.fromAction{
             fakeUsers.removeAll { it.id == userId }
         }
     }
 
     override fun createUser(user: User): Single<User> {
-        val newUser = user.copy(id = ++highestId)
+        val newUser = user.copy(id = (++highestId).toString())
         fakeUsers.add(newUser)
         return Single.just(newUser)
             .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())

@@ -13,7 +13,7 @@ enum class Role {
 }
 
 @Parcelize
-data class User(val id: Long, val email: String, val role: Role = Role.USER) :Parcelable
+data class User(val id: String, val email: String, val role: Role = Role.USER) :Parcelable
 
 data class LoginRequest(val email: String, val password: String)
 data class RegisterRequest(val email: String, val password: String)
@@ -38,7 +38,7 @@ data class Filters(val priceMin: BigDecimal,
 )
 
 @Parcelize
-data class Apartment(val id: Long, val name: String, val description: String,
+data class Apartment(val id: String, val name: String, val description: String,
                      val floorAreaSize: BigDecimal, val pricePerMonth: BigDecimal, val rooms: Int,
-                     val latitude: Double, val longitude: Double, val addedTimestamp: Long, val realtorId: Long,
+                     val latitude: Double, val longitude: Double, val addedTimestamp: Long, val realtorId: String,
                      val realtorEmail: String, val state: ApartmentState) : Parcelable

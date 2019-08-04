@@ -11,6 +11,7 @@ import org.junit.Before
 import org.junit.Assert.*
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyLong
+import org.mockito.ArgumentMatchers.anyString
 import pl.starter.android.service.ApiRepository
 import pl.starter.android.service.Role
 import pl.starter.android.service.User
@@ -37,7 +38,7 @@ class ProfileViewModelTest {
 
     @Test
     fun shouldFilCurrentUserData(){
-        val oldUser = User(1, "Hello@world.com", Role.REALTOR)
+        val oldUser = User("1", "Hello@world.com", Role.REALTOR)
         whenever(userRepository.getUser()).thenReturn(oldUser)
 
         cut.onAttach(view)
@@ -51,7 +52,7 @@ class ProfileViewModelTest {
 
     @Test
     fun shouldFilNewUserData(){
-        val oldUser = User(1, "Hello@world.com", Role.REALTOR)
+        val oldUser = User("1", "Hello@world.com", Role.REALTOR)
         whenever(userRepository.getUser()).thenReturn(oldUser)
 
         cut.onAttach(view)
@@ -65,11 +66,11 @@ class ProfileViewModelTest {
 
     @Test
     fun shouldFilEditedUserData(){
-        val oldUser = User(1, "Hello@world.com", Role.REALTOR)
+        val oldUser = User("1", "Hello@world.com", Role.REALTOR)
         whenever(userRepository.getUser()).thenReturn(oldUser)
 
         cut.onAttach(view)
-        cut.onEditUserRequested(User(2, "john@doe.com", Role.ADMIN))
+        cut.onEditUserRequested(User("2", "john@doe.com", Role.ADMIN))
 
         assertThat(cut.email.get()!!, IsEqual("john@doe.com"))
         assertThat(cut.selectedItem.get(), IsEqual(2))
@@ -79,8 +80,8 @@ class ProfileViewModelTest {
 
     @Test
     fun shouldSaveCorrectUserOnSave(){
-        val oldUser = User(1, "Hello@world.com")
-        val newUser = User(1, "Hello@test.com", Role.ADMIN)
+        val oldUser = User("1", "Hello@world.com")
+        val newUser = User("1", "Hello@test.com", Role.ADMIN)
         whenever(userRepository.getUser()).thenReturn(oldUser)
         cut.onAttach(view)
         cut.onCurrentUserEditRequested()
@@ -94,10 +95,10 @@ class ProfileViewModelTest {
 
     @Test
     fun shouldSaveCorrectUserOnSaveWhenEditing(){
-        val oldUser = User(1, "Hello@world.com")
-        val newUser = User(2, "Hello@test.com", Role.ADMIN)
+        val oldUser = User("1", "Hello@world.com")
+        val newUser = User("2", "Hello@test.com", Role.ADMIN)
         whenever(userRepository.getUser()).thenReturn(oldUser)
-        whenever(apiRepository.editUser(anyLong(),any())).thenReturn(Single.just(newUser))
+        whenever(apiRepository.editUser(anyString(),any())).thenReturn(Single.just(newUser))
         cut.onAttach(view)
         cut.onEditUserRequested(newUser)
 
@@ -107,7 +108,7 @@ class ProfileViewModelTest {
 
     @Test
     fun shouldSaveCorrectUserOnSaveWhenNewUser(){
-        val oldUser = User(1, "Hello@world.com")
+        val oldUser = User("1", "Hello@world.com")
         whenever(userRepository.getUser()).thenReturn(oldUser)
 
         whenever(apiRepository.createUser(any())).thenReturn(Single.just(oldUser))
@@ -118,6 +119,6 @@ class ProfileViewModelTest {
         cut.selectedItem.set(1)
 
         cut.onSave()
-        verify(apiRepository).createUser(User(-1, "lol@lol.pl", Role.REALTOR))
+        verify(apiRepository).createUser(User("", "lol@lol.pl", Role.REALTOR))
     }
 }

@@ -38,12 +38,12 @@ class ExploreViewModelTest {
 
     @Test
     fun shouldLoadInitialData() {
-        val apartment = listOf(Apartment(1, "Top Apartment", "Really awesome aparment", BigDecimal.valueOf(100),
+        val apartment = listOf(Apartment("1", "Top Apartment", "Really awesome aparment", BigDecimal.valueOf(100),
             BigDecimal.valueOf(2000), 4, 48.532976, 14.610996, System.currentTimeMillis(),
-            1, "bkraszewski@gmail.com", ApartmentState.AVAILABLE))
+            "1", "bkraszewski@gmail.com", ApartmentState.AVAILABLE))
 
         whenever(apiRepository.getApartments(any())).thenReturn(Single.just(apartment))
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com"))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com"))
         whenever(stringProvider.getString(anyInt())).thenReturn("%s")
         whenever(apiRepository.observeApartmentChanges()).thenReturn(Observable.never())
 
@@ -58,7 +58,7 @@ class ExploreViewModelTest {
         val apartment = listOf<Apartment>()
 
         whenever(apiRepository.getApartments(any())).thenReturn(Single.just(apartment))
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com"))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com"))
         whenever(stringProvider.getString(anyInt())).thenReturn("%s")
         whenever(apiRepository.observeApartmentChanges()).thenReturn(Observable.never())
 
@@ -70,13 +70,13 @@ class ExploreViewModelTest {
 
     @Test
     fun shouldApplyFiltersForUser() {
-        val apartment = listOf(Apartment(1, "Top Apartment", "Really awesome aparment", BigDecimal.valueOf(100),
+        val apartment = listOf(Apartment("1", "Top Apartment", "Really awesome aparment", BigDecimal.valueOf(100),
             BigDecimal.valueOf(2000), 4, 48.532976, 14.610996, System.currentTimeMillis(),
-            1, "bkraszewski@gmail.com", ApartmentState.AVAILABLE))
+            "1", "bkraszewski@gmail.com", ApartmentState.AVAILABLE))
 
         whenever(apiRepository.getApartments()).thenReturn(Single.just(apartment))
         whenever(apiRepository.getApartments(any())).thenReturn(Single.just(apartment))
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com"))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com"))
         whenever(stringProvider.getString(anyInt())).thenReturn("%s")
         whenever(apiRepository.observeApartmentChanges()).thenReturn(Observable.never())
 
@@ -103,13 +103,13 @@ class ExploreViewModelTest {
 
     @Test
     fun shouldApplyFiltersForRealtor() {
-        val apartment = listOf(Apartment(1, "Top Apartment", "Really awesome aparment", BigDecimal.valueOf(100),
+        val apartment = listOf(Apartment("1", "Top Apartment", "Really awesome aparment", BigDecimal.valueOf(100),
             BigDecimal.valueOf(2000), 4, 48.532976, 14.610996, System.currentTimeMillis(),
-            1, "bkraszewski@gmail.com", ApartmentState.AVAILABLE))
+            "1", "bkraszewski@gmail.com", ApartmentState.AVAILABLE))
 
         whenever(apiRepository.getApartments()).thenReturn(Single.just(apartment))
         whenever(apiRepository.getApartments(any())).thenReturn(Single.just(apartment))
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(anyInt())).thenReturn("%s")
         whenever(apiRepository.observeApartmentChanges()).thenReturn(Observable.never())
 

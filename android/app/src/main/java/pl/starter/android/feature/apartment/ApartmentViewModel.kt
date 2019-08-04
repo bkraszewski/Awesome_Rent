@@ -22,7 +22,8 @@ class ApartmentViewModel @Inject constructor(
     private val userRepository: UserRepository,
     private val stringProvider: StringProvider,
     private val apiRepository: ApiRepository,
-    private val baseSchedulers: BaseSchedulers
+    private val baseSchedulers: BaseSchedulers,
+    private val uuidGenerator: UuidGenerator
 ) : BaseViewModel<ApartmentView>() {
 
     private lateinit var user: User
@@ -40,7 +41,7 @@ class ApartmentViewModel @Inject constructor(
 
     val apartmentRealtorEmail = ObservableField("")
     val apartmentRealtorEmailError = ObservableField("")
-    val apartmentRealtorId = ObservableLong(0)
+    val apartmentRealtorId = ObservableField("")
 
     val apartmentStatusIndex = ObservableInt()
     val apartmentStatuses = ObservableArrayList<String>()
@@ -177,9 +178,9 @@ class ApartmentViewModel @Inject constructor(
     }
 
     private fun buildApartment(): Apartment {
-        return Apartment(id = -1, name = apartmentName.get()!!, description = apartmentDescription.get()!!,
+        return Apartment(id = uuidGenerator.generate(), name = apartmentName.get()!!, description = apartmentDescription.get()!!,
             floorAreaSize = BigDecimal(apartmentAreaSize.get()!!),
-            realtorEmail = apartmentRealtorEmail.get()!!, realtorId = apartmentRealtorId.get(),
+            realtorEmail = apartmentRealtorEmail.get()!!, realtorId = apartmentRealtorId.get()!!,
             latitude = apartmentLat.get()!!.toDouble(),
             longitude = apartmentLng.get()!!.toDouble(),
             pricePerMonth = BigDecimal(apartmentMonthlyPrice.get()!!),

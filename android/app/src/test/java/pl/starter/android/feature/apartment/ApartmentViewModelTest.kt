@@ -23,6 +23,7 @@ class ApartmentViewModelTest {
     lateinit var apiRepository: ApiRepository
     lateinit var baseSchedulers: BaseSchedulers
     lateinit var stringProvider: StringProvider
+    lateinit var uuidGenerator: UuidGenerator
     lateinit var view: ApartmentView
 
     @Before
@@ -31,14 +32,16 @@ class ApartmentViewModelTest {
         apiRepository = mock()
         baseSchedulers = TestSchedulerImpl()
         stringProvider = mock()
+        uuidGenerator  = mock()
         view = mock()
+        whenever(uuidGenerator.generate()).thenReturn("123")
 
-        cut = ApartmentViewModel(userRepository, stringProvider, apiRepository, baseSchedulers)
+        cut = ApartmentViewModel(userRepository, stringProvider, apiRepository, baseSchedulers, uuidGenerator)
     }
 
     @Test
     fun formShouldBeBlankForNewApartment() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
 
         cut.initialize()
         cut.onNewApartment()
@@ -56,7 +59,7 @@ class ApartmentViewModelTest {
 
     @Test
     fun formShouldBeEditableForRealtorWhenAddingNew() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1","bkraszewski@gmail.com", Role.REALTOR))
 
         cut.initialize()
         cut.onNewApartment()
@@ -68,8 +71,8 @@ class ApartmentViewModelTest {
     }
 
     @Test
-    fun shouldValidateFormFields1Name() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+    fun shouldValidateFormFieldsName() {
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
         cut.initialize()
@@ -83,7 +86,7 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldValidateFormFields2Name() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
         cut.initialize()
@@ -97,7 +100,7 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldValidateFormFields3Desc() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
         cut.initialize()
@@ -112,7 +115,7 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldValidateFormFields4Desc() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
         cut.initialize()
@@ -127,7 +130,7 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldValidateFormFields5Rooms() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
         cut.initialize()
@@ -143,7 +146,7 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldValidateFormFields6Rooms() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
         cut.initialize()
@@ -159,7 +162,7 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldValidateFormFields7Area() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
         cut.initialize()
@@ -176,7 +179,7 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldValidateFormFields8Area() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
         cut.initialize()
@@ -193,7 +196,7 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldValidateFormFields9Lat() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
         cut.initialize()
@@ -211,7 +214,7 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldValidateFormFields10Lat() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
         cut.initialize()
@@ -229,7 +232,7 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldValidateFormFields11LatOutsideBounds() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
         cut.initialize()
@@ -250,7 +253,7 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldValidateFormFields12Lng() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
         cut.initialize()
@@ -259,7 +262,7 @@ class ApartmentViewModelTest {
         cut.apartmentName.set("Hello")
         cut.apartmentDescription.set("World")
         cut.apartmentRoomsCount.set("4")
-        cut.apartmentAreaSize.set("21")
+        cut.apartmentAreaSize.set("2")
         cut.apartmentLat.set("32.32432")
         cut.apartmentLng.set("")
         cut.onSave()
@@ -268,8 +271,8 @@ class ApartmentViewModelTest {
     }
 
     @Test
-    fun shouldValidateFormFields13Lng() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+    fun shouldValidateFormFields3Lng() {
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
         cut.initialize()
@@ -287,8 +290,8 @@ class ApartmentViewModelTest {
     }
 
     @Test
-    fun shouldValidateFormFields14LngNotValid() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+    fun shouldValidateFormFields4LngNotValid() {
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
         cut.initialize()
@@ -309,7 +312,7 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldValidateFormFields15Price() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
 
         cut.initialize()
@@ -329,7 +332,7 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldValidateFormFields16Price() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
         whenever(apiRepository.createApartment(any())).thenReturn(Single.error(Exception("Does not matter now")))
 
@@ -350,7 +353,7 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldCreateNewApartment() {
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.REALTOR))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.REALTOR))
         whenever(stringProvider.getString(any())).thenReturn("hello world")
         whenever(apiRepository.createApartment(any())).thenReturn(Single.error(Exception("Not important now")))
         //val argument = ArgumentCaptor.forClass(Apartment::class.java)
@@ -371,8 +374,8 @@ class ApartmentViewModelTest {
         cut.onSave()
 
 
-        val apartment = Apartment(id=-1, name="Hello", description = "World",
-            floorAreaSize = BigDecimal.valueOf(42.5),realtorEmail = "bkraszewski@gmail.com", realtorId = 1,
+        val apartment = Apartment(id="123", name="Hello", description = "World",
+            floorAreaSize = BigDecimal.valueOf(42.5),realtorEmail = "bkraszewski@gmail.com", realtorId = "1",
             latitude =43.332453, longitude = 33.23453, pricePerMonth = BigDecimal.valueOf(200),
             rooms = 4, state = ApartmentState.AVAILABLE, addedTimestamp = 2000)
 
@@ -381,12 +384,12 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldJustPreviewApartmentForUser(){
-        val apartment = Apartment(id=-1, name="Hello", description = "World",
-            floorAreaSize = BigDecimal.valueOf(42.5),realtorEmail = "bkraszewski@gmail.com", realtorId = 1,
+        val apartment = Apartment(id="1", name="Hello", description = "World",
+            floorAreaSize = BigDecimal.valueOf(42.5),realtorEmail = "bkraszewski@gmail.com", realtorId = "1",
             latitude =43.332453, longitude = 33.23453, pricePerMonth = BigDecimal.valueOf(200),
             rooms = 4, state = ApartmentState.AVAILABLE, addedTimestamp = 2000)
 
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.USER))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.USER))
 
         cut.initialize()
         cut.onShowExistingApartment(apartment)
@@ -400,12 +403,12 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldShowApartmentData(){
-        val apartment = Apartment(id=-1, name="Hello", description = "World",
-            floorAreaSize = BigDecimal.valueOf(42.5),realtorEmail = "bkraszewski@gmail.com", realtorId = 1,
+        val apartment = Apartment(id="1", name="Hello", description = "World",
+            floorAreaSize = BigDecimal.valueOf(42.5),realtorEmail = "bkraszewski@gmail.com", realtorId = "1",
             latitude =43.332453, longitude = 33.23453, pricePerMonth = BigDecimal.valueOf(200),
             rooms = 4, state = ApartmentState.RENTED, addedTimestamp = 2000L)
 
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.USER))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.USER))
 
         cut.initialize()
         cut.onShowExistingApartment(apartment)
@@ -418,7 +421,7 @@ class ApartmentViewModelTest {
         assertThat(cut.apartmentLng.get(), IsEqual("33.23453"))
         assertThat(cut.apartmentMonthlyPrice.get(), IsEqual("200"))
         assertThat(cut.apartmentRealtorEmail.get(), IsEqual("bkraszewski@gmail.com"))
-        assertThat(cut.apartmentRealtorId.get(), IsEqual(1L))
+        assertThat(cut.apartmentRealtorId.get(), IsEqual("1"))
         assertThat(cut.apartmentStatusIndex.get(), IsEqual(1))
         assertThat(cut.addedTimestamp, IsEqual(2000L))
 
@@ -426,12 +429,12 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldDeleteApartment(){
-        val apartment = Apartment(id=-1, name="Hello", description = "World",
-            floorAreaSize = BigDecimal.valueOf(42.5),realtorEmail = "bkraszewski@gmail.com", realtorId = 1,
+        val apartment = Apartment(id="1", name="Hello", description = "World",
+            floorAreaSize = BigDecimal.valueOf(42.5),realtorEmail = "bkraszewski@gmail.com", realtorId = "1",
             latitude =43.332453, longitude = 33.23453, pricePerMonth = BigDecimal.valueOf(200),
             rooms = 4, state = ApartmentState.RENTED, addedTimestamp = 2000L)
 
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.USER))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.USER))
         whenever(apiRepository.deleteApartment(any())).thenReturn(Completable.complete())
 
         cut.initialize()
@@ -443,12 +446,12 @@ class ApartmentViewModelTest {
 
     @Test
     fun shouldEditApartment(){
-        val apartment = Apartment(id=20, name="Hello", description = "World",
-            floorAreaSize = BigDecimal.valueOf(42.5),realtorEmail = "bkraszewski@gmail.com", realtorId = 1,
+        val apartment = Apartment(id="20", name="Hello", description = "World",
+            floorAreaSize = BigDecimal.valueOf(42.5),realtorEmail = "bkraszewski@gmail.com", realtorId = "1",
             latitude =43.332453, longitude = 33.23453, pricePerMonth = BigDecimal.valueOf(200),
             rooms = 4, state = ApartmentState.RENTED, addedTimestamp = 2000L)
 
-        whenever(userRepository.getUser()).thenReturn(User(1, "bkraszewski@gmail.com", Role.USER))
+        whenever(userRepository.getUser()).thenReturn(User("1", "bkraszewski@gmail.com", Role.USER))
         whenever(apiRepository.editApartment(any())).thenReturn(Single.just(apartment))
 
         cut.initialize()

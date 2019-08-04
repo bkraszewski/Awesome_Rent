@@ -1,5 +1,6 @@
 package pl.starter.android.service
 
+import com.google.firebase.auth.FirebaseAuth
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -19,8 +20,8 @@ interface ApiRepository {
     fun observeApartmentChanges(): Observable<Any>
 
     fun getUsers(): Single<List<User>>
-    fun editUser(userId: Long, user: User): Single<User>
-    fun deleteUser(userId: Long): Completable
+    fun editUser(userId: String, user: User): Single<User>
+    fun deleteUser(userId: String): Completable
     fun createUser(user: User): Single<User>
     fun observeUsersChanges(): Observable<Any>
 }
@@ -28,6 +29,7 @@ interface ApiRepository {
 class ApiRepositoryImpl(
     private val apiService: ApiService,
     private val userRepository: UserRepository,
+    private val firebaseAuth: FirebaseAuth,
     private val sessionRepository: SessionRepository) : ApiRepository {
 
     private val usersChangesSubject = PublishSubject.create<Any>()
@@ -38,13 +40,13 @@ class ApiRepositoryImpl(
         return apiService.getUsers()
     }
 
-    override fun editUser(userId: Long, user: User): Single<User> {
+    override fun editUser(userId: String, user: User): Single<User> {
         return apiService.editUser(userId, user).doOnSuccess {
             usersChangesSubject.onNext(1)
         }
     }
 
-    override fun deleteUser(userId: Long): Completable {
+    override fun deleteUser(userId: String): Completable {
         return apiService.deleteUser(userId).doOnComplete {
             usersChangesSubject.onNext(1)
         }
@@ -78,16 +80,13 @@ class ApiRepositoryImpl(
     }
 
     override fun register(email: String, password: String): Single<AuthReponse> {
-        return apiService.register(RegisterRequest(email, password)).doOnSuccess {
-            userRepository.update(it.user)
-            sessionRepository.saveToken(it.token)
-        }
+        return apiService.register(RegisterRequest(email, password))
     }
 
     override fun login(email: String, password: String): Single<AuthReponse> {
         return apiService.login(LoginRequest(email, password)).doOnSuccess {
-            userRepository.update(it.user)
-            sessionRepository.saveToken(it.token)
+//            userRepository.update(it.user)
+//            sessionRepository.saveToken(it.token)
         }
     }
 

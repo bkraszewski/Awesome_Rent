@@ -77,7 +77,7 @@ class LoginViewModelTest {
     @Test
     fun shouldNavigateToMainScreenOnSuccessLogin() {
 
-        whenever(apiRepository.login(any(), any())).thenReturn(Single.just(AuthReponse("", User(1,""))))
+        whenever(apiRepository.login(any(), any())).thenReturn(Single.just(AuthReponse("", User("1",""))))
         cut.login.set("bkraszewski@gmail.com")
         cut.password.set("pass")
         cut.onLogin()

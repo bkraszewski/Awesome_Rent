@@ -31,7 +31,7 @@ class UserListViewModelTest{
     @Test
     fun shouldShowListOfUsers(){
 
-        whenever(apiRepository.getUsers()).thenReturn(Single.just(listOf(User(1, "test@wp.pl"))))
+        whenever(apiRepository.getUsers()).thenReturn(Single.just(listOf(User("1", "test@wp.pl"))))
         cut.requestUsers()
 
         assertThat(cut.users.size, Is(IsEqual.equalTo(1)))

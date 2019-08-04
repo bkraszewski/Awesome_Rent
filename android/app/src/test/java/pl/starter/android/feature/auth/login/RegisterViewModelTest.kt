@@ -99,7 +99,7 @@ class RegisterViewModelTest {
     @Test
     fun shouldNavigateToMainScreenOnSuccessRegister() {
 
-        whenever(apiRepository.register(any(), any())).thenReturn(Single.just(AuthReponse("", User(1,""))))
+        whenever(apiRepository.register(any(), any())).thenReturn(Single.just(AuthReponse("", User("1",""))))
         cut.email.set("bkraszewski@gmail.com")
         cut.password.set("pass")
         cut.repeatPassword.set("pass")
