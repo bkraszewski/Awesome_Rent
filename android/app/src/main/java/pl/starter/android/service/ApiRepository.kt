@@ -24,39 +24,42 @@ interface ApiRepository {
     fun deleteUser(userId: String): Completable
     fun createUser(user: User): Single<User>
     fun observeUsersChanges(): Observable<Any>
+    fun observeAdminChanges():Observable<Any>
 }
 
 class ApiRepositoryImpl(
     private val apiService: ApiService,
     private val userRepository: UserRepository,
-    private val firebaseAuth: FirebaseAuth,
-    private val sessionRepository: SessionRepository) : ApiRepository {
+    private val adminService: AdminService) : ApiRepository {
+
 
     private val usersChangesSubject = PublishSubject.create<Any>()
     private val apartmentsChangesSubject = PublishSubject.create<Any>()
+    private val adminChangesSubject = PublishSubject.create<Any>()
 
+
+    override fun observeAdminChanges(): Observable<Any> {
+        return adminChangesSubject
+    }
 
     override fun getUsers(): Single<List<User>> {
-        return apiService.getUsers()
+        return adminService.listUsers().flatMap {
+            Single.just(it.users)
+        }
     }
 
     override fun editUser(userId: String, user: User): Single<User> {
-        return apiService.editUser(userId, user).doOnSuccess {
-            usersChangesSubject.onNext(1)
-        }
+        return Single.never()
     }
 
     override fun deleteUser(userId: String): Completable {
-        return apiService.deleteUser(userId).doOnComplete {
-            usersChangesSubject.onNext(1)
-        }
+        return Completable.never()
     }
 
     override fun createUser(user: User): Single<User> {
-        return apiService.createUser(user)
-            .doOnSuccess {
-                usersChangesSubject.onNext(1)
-            }
+        return adminService.createUser(UserRequest(user.email, user.role.toString())).doOnSuccess {
+            adminChangesSubject.onNext(1)
+        }
     }
 
     override fun editApartment(apartment: Apartment): Single<Apartment> {

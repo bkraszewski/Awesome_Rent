@@ -20,8 +20,8 @@ open class RepositoryProvidersModule {
     @Singleton
     fun provideApiRepository(apiService: ApiService,
                              userRepository: UserRepository,
-                             firebaseAuth: FirebaseAuth,
-                             sessionRepository: SessionRepository): ApiRepository = ApiRepositoryImpl(apiService, userRepository, firebaseAuth, sessionRepository)
+                             adminService: AdminService
+                             ): ApiRepository = ApiRepositoryImpl(apiService, userRepository, adminService)
 
     @Provides
     @Singleton

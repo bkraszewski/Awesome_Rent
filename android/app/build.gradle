@@ -15,7 +15,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "BASE_URL", '"http://test.pl/"'
+        buildConfigField "String", "BASE_URL", '"https://awesome-rent.herokuapp.com/"'
     }
 
     dataBinding {

@@ -4,6 +4,7 @@ import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
+import io.reactivex.Completable
 import io.reactivex.Single
 import org.hamcrest.core.IsEqual
 import org.junit.Before
@@ -83,6 +84,7 @@ class ProfileViewModelTest {
         val oldUser = User("1", "Hello@world.com")
         val newUser = User("1", "Hello@test.com", Role.ADMIN)
         whenever(userRepository.getUser()).thenReturn(oldUser)
+        whenever(userRepository.update(any())).thenReturn(Completable.complete())
         cut.onAttach(view)
         cut.onCurrentUserEditRequested()
 

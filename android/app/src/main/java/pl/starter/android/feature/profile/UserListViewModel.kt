@@ -35,6 +35,13 @@ class UserListViewModel @Inject constructor(
 
     val showNoResults = ObservableBoolean(false)
 
+    init {
+        apiRepository.observeAdminChanges()
+            .subscribe {
+                requestUsers()
+            }.disposeOnClear()
+    }
+
     fun requestUsers() {
         inProgress.set(true)
         apiRepository.getUsers()

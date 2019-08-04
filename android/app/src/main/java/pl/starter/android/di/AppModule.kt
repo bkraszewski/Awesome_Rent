@@ -14,6 +14,7 @@ import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import pl.starter.android.BuildConfig
 import pl.starter.android.base.BaseApp
+import pl.starter.android.service.AdminService
 import pl.starter.android.utils.*
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -58,6 +59,12 @@ open class AppModule(private val app: BaseApp) {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAdminService(retrofit: Retrofit): AdminService{
+        return retrofit.create(AdminService::class.java)
     }
 
 

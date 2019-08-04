@@ -154,20 +154,6 @@ class FirebaseApiServiceImpl(
         }
     }
 
-    override fun getUsers(): Single<List<User>> {
-        return Single.never()
-    }
 
-    override fun editUser(userId: String, user: User): Single<User> {
-        return Single.never()
-    }
-
-    override fun deleteUser(userId: String): Completable {
-        return Completable.never()
-    }
-
-    override fun createUser(user: User): Single<User> {
-        return Single.never()
-    }
 
 }

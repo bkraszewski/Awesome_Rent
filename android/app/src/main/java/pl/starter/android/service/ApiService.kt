@@ -17,10 +17,6 @@ interface ApiService {
     fun getApartments(): Single<List<Apartment>>
     fun getApartments(filters: Filters): Single<List<Apartment>>
 
-    fun getUsers(): Single<List<User>>
-    fun editUser(userId: String, user: User): Single<User>
-    fun deleteUser(userId: String): Completable
-    fun createUser(user: User): Single<User>
 
 }
 
@@ -127,29 +123,5 @@ class ApiServiceImpl(private val baseSchedulers: BaseSchedulers) : ApiService {
             .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
     }
 
-    override fun getUsers(): Single<List<User>> {
-        return Single.just(fakeUsers.toList())
-            .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
-    }
-
-    override fun editUser(userId: String, user: User): Single<User> {
-        fakeUsers.removeAll { it.id == userId }
-        fakeUsers.add(user)
-        return Single.just(user)
-            .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
-    }
-
-    override fun deleteUser(userId: String): Completable {
-        return Completable.fromAction{
-            fakeUsers.removeAll { it.id == userId }
-        }
-    }
-
-    override fun createUser(user: User): Single<User> {
-        val newUser = user.copy(id = (++highestId).toString())
-        fakeUsers.add(newUser)
-        return Single.just(newUser)
-            .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
-    }
 
 }
