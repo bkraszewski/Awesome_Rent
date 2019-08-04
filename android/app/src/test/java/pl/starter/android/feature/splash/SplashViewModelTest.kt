@@ -21,7 +21,7 @@ class SplashViewModelTest {
 
     @Test
     fun shouldShowAuthScreenWhenUserNotLogged() {
-        doReturn(null).`when`(sessionRepository).getToken()
+        doReturn(false).`when`(sessionRepository).isLoggedIn()
 
         cut.onAttach(splashView)
         verify(splashView).navigateToAuth()
@@ -29,7 +29,7 @@ class SplashViewModelTest {
 
     @Test
     fun shouldShowMainScreenWhenUserIsLogged() {
-        doReturn("hello toptal").`when`(sessionRepository).getToken()
+        doReturn(true).`when`(sessionRepository).isLoggedIn()
 
         cut.onAttach(splashView)
         verify(splashView).navigateToMain()

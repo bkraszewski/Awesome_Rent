@@ -14,8 +14,8 @@ open class RepositoryProvidersModule {
 
     @Provides
     @Singleton
-    fun provideSessionRepository(sharedPreferences: SharedPreferences): SessionRepository =
-        SessionRepositoryImpl(sharedPreferences)
+    fun provideSessionRepository(firebaseAuth: FirebaseAuth): SessionRepository =
+        SessionRepositoryImpl(firebaseAuth)
 
     @Provides
     @Singleton

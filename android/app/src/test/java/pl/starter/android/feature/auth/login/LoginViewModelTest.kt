@@ -9,7 +9,6 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyString
 import pl.starter.android.service.ApiRepository
-import pl.starter.android.service.AuthReponse
 import pl.starter.android.service.User
 import pl.starter.android.utils.BaseSchedulers
 import pl.starter.android.utils.StringProvider
@@ -77,7 +76,7 @@ class LoginViewModelTest {
     @Test
     fun shouldNavigateToMainScreenOnSuccessLogin() {
 
-        whenever(apiRepository.login(any(), any())).thenReturn(Single.just(AuthReponse("", User("1",""))))
+        whenever(apiRepository.login(any(), any())).thenReturn(Single.just(User("1","")))
         cut.login.set("bkraszewski@gmail.com")
         cut.password.set("pass")
         cut.onLogin()

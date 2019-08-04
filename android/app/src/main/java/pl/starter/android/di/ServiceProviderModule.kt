@@ -4,10 +4,9 @@ import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import pl.starter.android.service.ApiService
-import pl.starter.android.service.ApiServiceImpl
+import pl.starter.android.service.FirebaseApiServiceImpl
 import pl.starter.android.service.UuidGenerator
 import pl.starter.android.service.UuidGeneratorImpl
-import pl.starter.android.utils.BaseSchedulers
 import javax.inject.Singleton
 
 @Module
@@ -15,20 +14,21 @@ open class ServiceProviderModule {
 
     @Provides
     @Singleton
-    fun provideApiService(baseSchedulers: BaseSchedulers): ApiService{
+    fun provideApiService(
+        firebaseAuth: FirebaseAuth): ApiService {
         //todo replace later with actual implementation
-        return ApiServiceImpl(baseSchedulers)
+        return FirebaseApiServiceImpl(firebaseAuth)
     }
 
     @Provides
     @Singleton
-    fun provideFirebaseAuth() : FirebaseAuth{
+    fun provideFirebaseAuth(): FirebaseAuth {
         return FirebaseAuth.getInstance()
     }
 
     @Provides
     @Singleton
-    fun provideUuidGenerator(): UuidGenerator{
+    fun provideUuidGenerator(): UuidGenerator {
         return UuidGeneratorImpl()
     }
 

@@ -41,9 +41,9 @@ open class AppModule(private val app: BaseApp) {
         .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
         .create()!!
 
-    @Provides
-    @Singleton
-    fun provideTokenInterceptor(sessionsRepository: SessionRepository) = TokenInterceptor(sessionsRepository)
+//    @Provides
+//    @Singleton
+//    fun provideTokenInterceptor(sessionsRepository: SessionRepository) = TokenInterceptor(sessionsRepository)
 
     @Singleton
     @Provides
@@ -64,7 +64,6 @@ open class AppModule(private val app: BaseApp) {
     @Singleton
     @Provides
     fun provideOkHttp(
-        tokenInterceptor: TokenInterceptor
     ): OkHttpClient {
 
         val httpLoggingInterceptor = HttpLoggingInterceptor()
@@ -89,7 +88,6 @@ open class AppModule(private val app: BaseApp) {
                     .build()
             }
         }
-        okHttpBuilder.addNetworkInterceptor(tokenInterceptor)
         if (BuildConfig.DEBUG) {
             okHttpBuilder.addNetworkInterceptor(httpLoggingInterceptor)
         }

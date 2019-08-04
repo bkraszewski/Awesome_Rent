@@ -90,7 +90,8 @@ class RegisterViewModel @Inject constructor(
                 inProgress.set(false)
 
                 if(error != null){
-                    view?.showMessage(stringProvider.getString(R.string.register_error_server_side))
+                    view?.showMessage(error.message)
+                    error.printStackTrace()
                     return@subscribe
                 }
 

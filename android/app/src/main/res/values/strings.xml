@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Starter App</string>
+    <string name="app_name">Awesome Rent</string>
     // GENERIC
     <string name="generic.error.offline">Offline</string>
     <string name="generic.error.timeout">Timeout</string>

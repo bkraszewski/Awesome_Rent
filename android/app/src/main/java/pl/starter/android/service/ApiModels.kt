@@ -1,6 +1,8 @@
 package pl.starter.android.service
 
 import android.os.Parcelable
+import android.text.TextUtils
+import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.parcel.Parcelize
 import java.math.BigDecimal
 
@@ -9,8 +11,21 @@ import java.math.BigDecimal
 //const val ROLE_ADMIN = "ADMIN"
 
 enum class Role {
-    USER, REALTOR, ADMIN
+    USER, REALTOR, ADMIN;
+
+    companion object{
+        fun fromUser(user:FirebaseUser) : Role{
+            val roleString = user.displayName
+            return if (TextUtils.isEmpty(roleString)) {
+                Role.USER
+            } else {
+                Role.valueOf(roleString!!)
+            }
+        }
+    }
 }
+
+
 
 @Parcelize
 data class User(val id: String, val email: String, val role: Role = Role.USER) :Parcelable
@@ -18,7 +33,6 @@ data class User(val id: String, val email: String, val role: Role = Role.USER) :
 data class LoginRequest(val email: String, val password: String)
 data class RegisterRequest(val email: String, val password: String)
 
-data class AuthReponse(val token: String, val user: User)
 
 enum class ApartmentState {
     AVAILABLE, RENTED

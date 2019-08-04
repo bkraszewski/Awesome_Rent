@@ -5,13 +5,14 @@ import okhttp3.Response
 
 const val AUTHORIZATION_HEADER = "Authorization"
 
-class TokenInterceptor(private val sessionsRepository: SessionRepository) : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-        val builder = chain.request().newBuilder()
-        val token = sessionsRepository.getToken()
-        token?.let {
-            builder.addHeader(AUTHORIZATION_HEADER, "Token $token")
-        }
-        return chain.proceed(builder.build())
-    }
-}
+//class TokenInterceptor(private val sessionsRepository: SessionRepository) : Interceptor {
+//    override fun intercept(chain: Interceptor.Chain): Response {
+////        val builder = chain.request().newBuilder()
+////        val token = sessionsRepository.getToken()
+////        token?.let {
+////            builder.addHeader(AUTHORIZATION_HEADER, "Token $token")
+////        }
+//
+//        return chain.
+//    }
+//}

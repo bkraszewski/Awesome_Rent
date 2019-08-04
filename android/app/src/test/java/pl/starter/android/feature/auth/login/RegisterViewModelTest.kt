@@ -10,7 +10,6 @@ import org.mockito.ArgumentMatchers.anyString
 import pl.starter.android.feature.auth.register.RegisterView
 import pl.starter.android.feature.auth.register.RegisterViewModel
 import pl.starter.android.service.ApiRepository
-import pl.starter.android.service.AuthReponse
 import pl.starter.android.service.User
 import pl.starter.android.utils.BaseSchedulers
 import pl.starter.android.utils.StringProvider
@@ -99,7 +98,7 @@ class RegisterViewModelTest {
     @Test
     fun shouldNavigateToMainScreenOnSuccessRegister() {
 
-        whenever(apiRepository.register(any(), any())).thenReturn(Single.just(AuthReponse("", User("1",""))))
+        whenever(apiRepository.register(any(), any())).thenReturn(Single.just(User("1","")))
         cut.email.set("bkraszewski@gmail.com")
         cut.password.set("pass")
         cut.repeatPassword.set("pass")

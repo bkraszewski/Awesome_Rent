@@ -34,7 +34,7 @@ class UserRepositoryImpl(
 //            Role.ADMIN)
 
         return firebaseAuth.currentUser?.let {
-            User(it.uid, it.email!!, Role.valueOf(it.displayName!!))
+            User(it.uid, it.email!!, Role.fromUser(it))
         } ?: throw Exception("User not authorized!")
 
 

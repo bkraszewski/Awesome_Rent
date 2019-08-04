@@ -2,28 +2,20 @@ package pl.starter.android.utils
 
 import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import com.google.firebase.auth.FirebaseAuth
 
 interface SessionRepository {
-    fun saveToken(token: String)
-    fun getToken(): String?
-    fun removeToken()
+    fun isLoggedIn(): Boolean
 }
 
 const val API_TOKEN = "api_token"
 
-class SessionRepositoryImpl constructor(private val sharedPreferences: SharedPreferences) :
+class SessionRepositoryImpl constructor(
+    private val firebaseAuth: FirebaseAuth) :
     SessionRepository {
-
-    @SuppressLint("ApplySharedPref")
-    override fun removeToken() {
-        sharedPreferences.edit().remove(API_TOKEN).commit()
+    override fun isLoggedIn(): Boolean {
+        return firebaseAuth.currentUser?.isAnonymous == false
     }
 
-    override fun saveToken(token: String) {
-        sharedPreferences.edit().putString(API_TOKEN, token).apply()
-    }
 
-    override fun getToken(): String? {
-        return sharedPreferences.getString(API_TOKEN, null)
-    }
 }

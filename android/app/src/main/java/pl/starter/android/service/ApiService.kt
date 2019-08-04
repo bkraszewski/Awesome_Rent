@@ -7,8 +7,8 @@ import java.math.BigDecimal
 import java.util.concurrent.TimeUnit
 
 interface ApiService {
-    fun login(request: LoginRequest): Single<AuthReponse>
-    fun register(request: RegisterRequest): Single<AuthReponse>
+    fun login(request: LoginRequest): Single<User>
+    fun register(request: RegisterRequest): Single<User>
 
     fun createApartment(apartment: Apartment): Single<Apartment>
     fun deleteApartment(id: String): Completable
@@ -68,13 +68,13 @@ class ApiServiceImpl(private val baseSchedulers: BaseSchedulers) : ApiService {
             .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
     }
 
-    override fun login(request: LoginRequest): Single<AuthReponse> {
-        return Single.just(AuthReponse("token", User("1", "bkraszewski@gmail.com")))
+    override fun login(request: LoginRequest): Single<User> {
+        return Single.just( User("1", "bkraszewski@gmail.com"))
             .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
     }
 
-    override fun register(request: RegisterRequest): Single<AuthReponse> {
-        return Single.just(AuthReponse("token", User("1", "bkraszewski@gmail.com")))
+    override fun register(request: RegisterRequest): Single<User> {
+        return Single.just(User("1", "bkraszewski@gmail.com"))
             .delay(2, TimeUnit.SECONDS, baseSchedulers.computation())
     }
 

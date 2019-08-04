@@ -17,9 +17,8 @@ class SplashViewModel @Inject constructor(
     override fun onAttach(view: SplashView) {
         super.onAttach(view)
 
-        val token = sessionRepository.getToken()
 
-        if (token == null) {
+        if (!sessionRepository.isLoggedIn()) {
             view.navigateToAuth()
         } else {
             view.navigateToMain()

@@ -8,8 +8,8 @@ import io.reactivex.subjects.PublishSubject
 import pl.starter.android.utils.SessionRepository
 
 interface ApiRepository {
-    fun login(email: String, password: String): Single<AuthReponse>
-    fun register(email: String, password: String): Single<AuthReponse>
+    fun login(email: String, password: String): Single<User>
+    fun register(email: String, password: String): Single<User>
     fun logout()
 
     fun getApartments(): Single<List<Apartment>>
@@ -79,11 +79,11 @@ class ApiRepositoryImpl(
         }
     }
 
-    override fun register(email: String, password: String): Single<AuthReponse> {
+    override fun register(email: String, password: String): Single<User> {
         return apiService.register(RegisterRequest(email, password))
     }
 
-    override fun login(email: String, password: String): Single<AuthReponse> {
+    override fun login(email: String, password: String): Single<User> {
         return apiService.login(LoginRequest(email, password)).doOnSuccess {
 //            userRepository.update(it.user)
 //            sessionRepository.saveToken(it.token)
@@ -91,7 +91,6 @@ class ApiRepositoryImpl(
     }
 
     override fun logout() {
-        sessionRepository.removeToken()
         userRepository.logout()
     }
 
