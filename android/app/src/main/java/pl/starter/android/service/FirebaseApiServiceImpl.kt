@@ -106,9 +106,14 @@ class FirebaseApiServiceImpl(
     override fun getApartments(filters: Filters): Single<List<Apartment>> {
         return Single.create { emitter ->
             val ref = firestore.collection("apartments")
-            ref.whereGreaterThanOrEqualTo("price", filters.priceMin.toDouble())
+            var query = ref.whereGreaterThanOrEqualTo("price", filters.priceMin.toDouble())
                 .whereLessThanOrEqualTo("price", filters.priceMax.toDouble())
-                .get()
+
+            if(filters.stateFilter != ApartmentStateFilter.ALL){
+                query = query.whereEqualTo("apartment_state", filters.stateFilter.toString())
+            }
+
+                query.get()
                 .addOnSuccessListener { task ->
                     val apartments = mutableListOf<Apartment>()
                     for (document in task.documents) {
