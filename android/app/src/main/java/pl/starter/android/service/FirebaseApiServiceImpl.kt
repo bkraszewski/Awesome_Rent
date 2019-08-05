@@ -56,12 +56,12 @@ class FirebaseApiServiceImpl(
             "addedTimestamp" to apartment.addedTimestamp,
             "apartment_state" to apartment.state.toString(),
             "rooms" to apartment.rooms,
-            "price" to apartment.pricePerMonth.toString(),
+            "price" to apartment.pricePerMonth.toDouble(),
             "lng" to apartment.longitude,
             "lat" to apartment.latitude,
             "realtor_id" to apartment.realtorId,
             "realtor_email" to apartment.realtorEmail,
-            "floor_area_size" to apartment.floorAreaSize.toString(),
+            "floor_area_size" to apartment.floorAreaSize.toDouble(),
             "description" to apartment.description,
             "name" to apartment.name
         )
@@ -91,13 +91,13 @@ class FirebaseApiServiceImpl(
         return Apartment(id = document["id"] as String,
             addedTimestamp = document["addedTimestamp"] as Long,
             state = ApartmentState.valueOf(document["apartment_state"] as String),
-            rooms = document["rooms"] as Int,
-            pricePerMonth = BigDecimal(document["price"] as String),
+            rooms = (document["rooms"] as Long).toInt(),
+            pricePerMonth = BigDecimal((document["price"] as Number).toString()),
             longitude = document["lng"] as Double,
             latitude = document["lat"] as Double,
             realtorId = document["realtor_id"] as String,
             realtorEmail = document["realtor_email"] as String,
-            floorAreaSize = BigDecimal(document["floor_area_size"] as String),
+            floorAreaSize = BigDecimal((document["floor_area_size"] as Number).toString()),
             description = document["description"] as String,
             name = document["name"] as String
         )
@@ -105,26 +105,22 @@ class FirebaseApiServiceImpl(
 
     override fun getApartments(filters: Filters): Single<List<Apartment>> {
         return Single.create { emitter ->
-            firestore.collection("apartments")
+            val ref = firestore.collection("apartments")
+            ref.whereGreaterThanOrEqualTo("price", filters.priceMin.toDouble())
+                .whereLessThanOrEqualTo("price", filters.priceMax.toDouble())
                 .get()
                 .addOnSuccessListener { task ->
                     val apartments = mutableListOf<Apartment>()
                     for (document in task.documents) {
-                        val apartment = Apartment(id = document["id"] as String,
-                            addedTimestamp = document["addedTimestamp"] as Long,
-                            state = ApartmentState.valueOf(document["apartment_state"] as String),
-                            rooms = (document["rooms"] as Long).toInt(),
-                            pricePerMonth = BigDecimal(document["price"] as String),
-                            longitude = document["lng"] as Double,
-                            latitude = document["lat"] as Double,
-                            realtorId = document["realtor_id"] as String,
-                            realtorEmail = document["realtor_email"] as String,
-                            floorAreaSize = BigDecimal(document["floor_area_size"] as String),
-                            description = document["description"] as String,
-                            name = document["name"] as String
-                        )
-                        apartments.add(apartment)
+                        val apartment = apartmentFromDoc(document)
 
+                        //filtering on device because firestore allows to filter by just 1 field lol
+                        if (apartment.rooms >= filters.roomsMin && apartment.rooms <= filters.roomsMax
+                            && apartment.floorAreaSize >= BigDecimal.valueOf(filters.areaMin.toLong())
+                            && apartment.floorAreaSize <= BigDecimal.valueOf(filters.areaMax.toLong())
+                        ) {
+                            apartments.add(apartment)
+                        }
                     }
 
                     emitter.onSuccess(apartments)
@@ -143,7 +139,7 @@ class FirebaseApiServiceImpl(
     }
 
     override fun editApartment(id: String, apartment: Apartment): Single<Apartment> {
-        return Single.create {emitter ->
+        return Single.create { emitter ->
             val doc = apartmentToDoc(apartment)
             firestore.collection("apartments").document(id)
                 .set(doc).addOnSuccessListener {
@@ -153,7 +149,6 @@ class FirebaseApiServiceImpl(
                 }
         }
     }
-
 
 
 }
