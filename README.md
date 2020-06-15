@@ -22,3 +22,9 @@ Functional UI/UX design is needed. You are not required to create a unique desig
 Bonus: unit and e2e tests.
 
 Screens:
+![alt text](https://github.com/bkraszewski/Awesome_Rent/blob/master/Screenshot_1592205739.png?raw=true)
+![alt text](https://github.com/bkraszewski/Awesome_Rent/blob/master/Screenshot_1592205745.png)
+![alt text](https://github.com/bkraszewski/Awesome_Rent/blob/master/Screenshot_1592205836.png)
+![alt text](https://github.com/bkraszewski/Awesome_Rent/blob/master/Screenshot_1592205862.png)
+![alt text](https://github.com/bkraszewski/Awesome_Rent/blob/master/Screenshot_1592205872.png)
+![alt text](https://github.com/bkraszewski/Awesome_Rent/blob/master/Screenshot_1592205881.png)
