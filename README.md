@@ -19,6 +19,7 @@ REST API. Make it possible to perform all user actions via the API, including au
 In both cases, you should be able to explain how a REST API works and demonstrate that by creating functional tests that use the REST Layer directly. Please be prepared to use REST clients like Postman, cURL, etc. for this purpose.
 If it’s a web application, it must be a single-page application. All actions need to be done client side using AJAX, refreshing the page is not acceptable. (If a mobile application, disregard this).
 Functional UI/UX design is needed. You are not required to create a unique design, however, do follow best practices to make the project as functional as possible.
+
 Bonus: unit and e2e tests.
 
 Screens:
