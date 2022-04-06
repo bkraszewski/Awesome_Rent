@@ -28,3 +28,5 @@ Screens:
 ![alt text](https://github.com/bkraszewski/Awesome_Rent/blob/master/Screenshot_1592205862.png)
 ![alt text](https://github.com/bkraszewski/Awesome_Rent/blob/master/Screenshot_1592205872.png)
 ![alt text](https://github.com/bkraszewski/Awesome_Rent/blob/master/Screenshot_1592205881.png)
+
+
